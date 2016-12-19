@@ -1,0 +1,42 @@
+ <?php 
+session_start();
+include '../../koneksi/koneksi.php';
+$kode=$_SESSION['kode'];
+        $tahun=date("Y"); 
+
+        ?>
+                $(function () {
+                Morris.Area({
+                    element: 'graph_line',
+                    data: [
+                    <?php 
+                    $cek_order_pertama=mysql_fetch_row(mysql_query("select substr(wkt_order,1,4) as th from t4t_order where id_comp='$kode' order by th limit 1"));
+                    $jarak=$tahun-$cek_order_pertama[0]+1;
+
+                    for ($i=0; $i < $jarak ; $i++) { 
+                        $period=$tahun-$i;
+                        $q_tag=mysql_query("select sum(jml_wins) as jml from t4t_order where id_comp='$kode' AND wkt_order like '%$period%' and acc=1");
+                        $tag=mysql_fetch_row($q_tag);
+
+                    $or_req_tt=mysql_query("select sum(b.jml) from t4t_order a, t4t_orderrequest b where a.no_order=b.no_order and a.id_comp='$kode' and b.no_req=1 AND wkt_order like '%$period%' and a.acc=1");
+                    $or_req_a1=mysql_query("select sum(b.jml) from t4t_order a, t4t_orderrequest b where a.no_order=b.no_order and a.id_comp='$kode' and b.no_req=2 AND wkt_order like '%$period%' a.acc=1");
+                    $or_req_a4=mysql_query("select sum(b.jml) from t4t_order a, t4t_orderrequest b where a.no_order=b.no_order and a.id_comp='$kode' and b.no_req=3 AND wkt_order like '%$period%' a.acc=1");
+                    $tt=mysql_fetch_row($or_req_tt);
+                    $a1=mysql_fetch_row($or_req_a1);
+                    $a4=mysql_fetch_row($or_req_a4);
+
+                    ?>
+                         {year: '<?php echo $period ?>', hang: <?php echo json_encode($tag[0]) ?>, posta1: <?php echo json_encode($a1[0]) ?>, posta4: <?php echo json_encode($a4[0]) ?>, table_t: <?php echo json_encode($tt[0]) ?> },
+                    <?php
+                    } ?>
+                       
+                    ],
+                    xkey: 'year',
+                    ykeys: ['hang', 'posta1', 'posta4', 'table_t'],
+                    lineColors: ['#26B99A'],
+                    labels: ['Hang Tags', 'Table Tent', 'Poster A1', 'Poster A4'],
+                    pointSize: 2,
+                    hideHover: 'auto'
+                });
+
+            });
