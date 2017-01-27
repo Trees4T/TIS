@@ -81,8 +81,8 @@
                             
                             $no=1;
                             $id_part=$_SESSION['id_part'];
-                            $retailers=mysql_query("select * from t4t_retailer where id_partisipan='$id_part' order by id_retailer desc");
-                            while ($data=mysql_fetch_array($retailers)) {
+                            $retailers=$conn->query("select * from t4t_retailer where id_partisipan='$id_part' order by id_retailer desc");
+                            while ($data=$retailers->fetch()) {
                                 
                             
                              ?>

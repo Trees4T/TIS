@@ -6,7 +6,9 @@ ob_start();
 include '../koneksi/koneksi.php';
 
 date_default_timezone_set('Asia/Jakarta');
-$kode=$_SESSION['kode']; 
+$kode  = $_SESSION['kode']; 
+$member= $_POST['member'];
+$link  = $_POST['link'];
 
   $tanggal=$_POST['range_tanggal'];
         $exp_tanggal=explode("-", $tanggal);
@@ -21,9 +23,19 @@ $kode=$_SESSION['kode'];
 
         $status=$_POST['status'];
 
-        if ($status=="null") {
-           echo '<META HTTP-EQUIV="Refresh" Content="0; URL=member.php?a66fedde1bcb88d81db5be1cf4a4b873cf3c9c33710cada6ca0b583e68404bd74d7a522c94fb56feb9d632ffbb8f9017">'; 
-           $_SESSION['message']=2;
+        if ($_SESSION['level']=='fin') {
+            if ($status=="null") {
+               echo '<META HTTP-EQUIV="Refresh" Content="0; URL=finance-office.php?'.$link.'">'; 
+               $_SESSION['message']=2;
+            }elseif ($member=='null') {
+                echo '<META HTTP-EQUIV="Refresh" Content="0; URL=finance-office.php?'.$link.'">'; 
+               $_SESSION['message']=3;
+            }
+        }else{
+            if ($status=="null") {
+               echo '<META HTTP-EQUIV="Refresh" Content="0; URL=member.php?a66fedde1bcb88d81db5be1cf4a4b873cf3c9c33710cada6ca0b583e68404bd74d7a522c94fb56feb9d632ffbb8f9017">'; 
+               $_SESSION['message']=2;
+            }
         }
  ?>
 
@@ -59,7 +71,11 @@ $kode=$_SESSION['kode'];
                                         <td>Company Name</td>
                                         <td>:</td>
                                         <td class="font-hijau"><?php 
-                                        $comp_name=mysql_fetch_array(mysql_query("select nama from t4t_partisipan where id='$kode'"));
+                                        if ($_SESSION['level']=='fin') {
+                                          $comp_name=$conn->query("select nama from t4t_partisipan where id='$member'")->fetch();
+                                        }else{
+                                          $comp_name=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
+                                        }
                                         echo $comp_name[0]; ?></td>
                                     </tr>
                                     <tr>
@@ -89,6 +105,7 @@ $kode=$_SESSION['kode'];
                                 <input type="hidden" name="status" value="<?php echo $status ?>">
                                 <input type="hidden" name="awal" value="<?php echo $nilai_t_awal ?>">
                                 <input type="hidden" name="akhir" value="<?php echo $nilai_t_akhir ?>">
+                                <input type="hidden" name="member" value="<?php echo $member ?>">
                                 <button type="submit" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Export to Excel</button>
                                 </form>
                                 </div>
@@ -124,23 +141,43 @@ $kode=$_SESSION['kode'];
                             
                             $no=1;
                             if ($status==2) {
-                              $out_payment=mysql_query("select substr(wkt_shipment,1,4) as th_ship,
-                              substr(wkt_shipment,6,2) as bln_ship,
-                              substr(wkt_shipment,9,2) as dt_ship,
-                              bl,fee,diskon,no_shipment,no_order,
-                              wins_used,tgl_paid,acc_paid from t4t_shipment where id_comp='$kode' and
-                              bl_tgl BETWEEN '$nilai_t_awal' and '$nilai_t_akhir' 
-                              order by substr(wkt_shipment,1,4) desc");
+                              if ($_SESSION['level']=='fin') {
+                                $out_payment=$conn->query("select substr(wkt_shipment,1,4) as th_ship,
+                                substr(wkt_shipment,6,2) as bln_ship,
+                                substr(wkt_shipment,9,2) as dt_ship,
+                                bl,fee,diskon,no_shipment,no_order,
+                                wins_used,tgl_paid,acc_paid from t4t_shipment where id_comp='$member' and
+                                bl_tgl BETWEEN '$nilai_t_awal' and '$nilai_t_akhir' 
+                                order by substr(wkt_shipment,1,4) desc");
+                              }else{
+                                $out_payment=$conn->query("select substr(wkt_shipment,1,4) as th_ship,
+                                substr(wkt_shipment,6,2) as bln_ship,
+                                substr(wkt_shipment,9,2) as dt_ship,
+                                bl,fee,diskon,no_shipment,no_order,
+                                wins_used,tgl_paid,acc_paid from t4t_shipment where id_comp='$kode' and
+                                bl_tgl BETWEEN '$nilai_t_awal' and '$nilai_t_akhir' 
+                                order by substr(wkt_shipment,1,4) desc");
+                              }
                             }else{
-                              $out_payment=mysql_query("select substr(wkt_shipment,1,4) as th_ship,
-                              substr(wkt_shipment,6,2) as bln_ship,
-                              substr(wkt_shipment,9,2) as dt_ship,
-                              bl,fee,diskon,no_shipment,no_order,
-                              wins_used,tgl_paid,acc_paid from t4t_shipment where id_comp='$kode' and
-                              bl_tgl BETWEEN '$nilai_t_awal' and '$nilai_t_akhir' 
-                              and acc_paid='$status' order by substr(wkt_shipment,1,4) desc");
+                              if ($_SESSION['level']=='fin') {
+                                $out_payment=$conn->query("select substr(wkt_shipment,1,4) as th_ship,
+                                substr(wkt_shipment,6,2) as bln_ship,
+                                substr(wkt_shipment,9,2) as dt_ship,
+                                bl,fee,diskon,no_shipment,no_order,
+                                wins_used,tgl_paid,acc_paid from t4t_shipment where id_comp='$member' and
+                                bl_tgl BETWEEN '$nilai_t_awal' and '$nilai_t_akhir' 
+                                and acc_paid='$status' order by substr(wkt_shipment,1,4) desc");
+                              }else{
+                                $out_payment=$conn->query("select substr(wkt_shipment,1,4) as th_ship,
+                                substr(wkt_shipment,6,2) as bln_ship,
+                                substr(wkt_shipment,9,2) as dt_ship,
+                                bl,fee,diskon,no_shipment,no_order,
+                                wins_used,tgl_paid,acc_paid from t4t_shipment where id_comp='$kode' and
+                                bl_tgl BETWEEN '$nilai_t_awal' and '$nilai_t_akhir' 
+                                and acc_paid='$status' order by substr(wkt_shipment,1,4) desc");
+                              }
                             }
-                            while ($data=mysql_fetch_array($out_payment)) {
+                            while ($data=$out_payment->fetch()) {
                                 
                             
                              ?>
@@ -151,22 +188,21 @@ $kode=$_SESSION['kode'];
                                     $th_ship=$data['th_ship'];
                                     $bln_ship=$data['bln_ship'];
                                     $dt_ship=$data['dt_ship'];
-                                    $wkt_shipment=$dt_ship."/".$bln_ship."/".$th_ship;
+                                    $wkt_shipment=$th_ship."-".$bln_ship."-".$dt_ship;
                                     echo $wkt_shipment;
                                      ?></td>
                                     <td class=" "><?php echo $data['no_shipment'] ?></td>
                                     <td class=" "><?php echo $data['bl'] ?></td>
                                     <?php 
                 $no_ship=$data['no_shipment'];
-                $cont1=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=1"));
-                $cont2=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=2"));
-                $cont3=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=3"));
-                $cont4=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=4"));
-                $cont5=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=5"));
+                $cont1=$conn->query("select jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=1")->fetch();
+                $cont2=$conn->query("select jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=2")->fetch();
+                $cont3=$conn->query("select jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=3")->fetch();
+                $cont4=$conn->query("select jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=4")->fetch();
+                $cont5=$conn->query("select jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=5")->fetch();
 
                 $no_order=$data['no_order'];
-                $tipe_prod=mysql_fetch_array(mysql_query("select tipe_prod from t4t_order where no_order='$no_order'"));
-
+                $tipe_prod=$conn->query("select tipe_prod from t4t_order where no_order='$no_order'")->fetch();
                                      ?>
 
                                     <td class=" " align="center"><?php echo $cont1[0] ?></td>
@@ -270,7 +306,7 @@ $kode=$_SESSION['kode'];
                                        }
                                        
 
-                                       $tipe=mysql_fetch_row(mysql_query("select tipe_prod from t4t_order where no_order='$ordr1'"));
+                                       $tipe=$conn->query("select tipe_prod from t4t_order where no_order='$ordr1'")->fetch();
                                        echo strtoupper($tipe[0]);
                                        ?></td>
 
@@ -288,7 +324,8 @@ $kode=$_SESSION['kode'];
                                          echo "-";
                                        }else{
                                        $ex_wkt_paid=explode("-", $data['tgl_paid']);
-                                       echo $ex_wkt_paid[2].'/'.$ex_wkt_paid[1].'/'.$ex_wkt_paid[0]; 
+                                       //echo $ex_wkt_paid[2].'/'.$ex_wkt_paid[1].'/'.$ex_wkt_paid[0]; 
+                                       echo $data['tgl_paid'];
                                        }
                                        ?></td>
 

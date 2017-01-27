@@ -23,9 +23,9 @@
             <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
                 <?php 
                 $kode=$_SESSION['kode'];
-                $tahun=mysql_query("select substr(bl_tgl,1,4) as th,bl_tgl,bl,kota_tujuan,fee,acc from t4t_shipment where id_comp='$kode' group by th order by th desc");
-                echo mysql_error();
-                while ($load_tahun=mysql_fetch_array($tahun)) {
+                $tahun=$conn->query("select substr(bl_tgl,1,4) as th,bl_tgl,bl,kota_tujuan,fee,acc from t4t_shipment where id_comp='$kode' group by th order by th desc");
+                //echo mysql_error();
+                while ($load_tahun=$tahun->fetch()) {
                    
                 ?>
 
@@ -63,8 +63,8 @@
                         <?php 
                         $th=$load_tahun['th'];
                         
-                        $shipment=mysql_query("select * from t4t_shipment where bl_tgl like '%$th%' and id_comp='$kode' order by bl_tgl desc");
-                        while ($load_shipment=mysql_fetch_array($shipment)) {
+                        $shipment=$conn->query("select * from t4t_shipment where bl_tgl like '%$th%' and id_comp='$kode' order by bl_tgl desc");
+                        while ($load_shipment=$shipment->fetch()) {
                              
                          
                         ?>
@@ -85,38 +85,38 @@
                                         <td align="center">
                                             <?php 
                                             $no_shipment=$load_shipment['no_shipment']; //definisi no shipment
-                                            $a=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='1'"));
+                                            $a=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='1'")->fetch();
                                             echo $a[0];
                                             ?>
                                         </td>
                                         <td align="center">
                                             <?php 
-                                            $b=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='2'")); 
+                                            $b=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='2'")->fetch();
                                             echo $b[0];
                                             ?>
                                         </td>
                                         <td align="center">
                                             <?php 
-                                            $b=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='3'")); 
-                                            echo $b[0];
-                                            ?>
-                                        </td>
-                                        <td align="center">
-                                            <?php 
-                                            $c=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='4'")); 
+                                            $c=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='3'")->fetch();
                                             echo $c[0];
                                             ?>
                                         </td>
                                         <td align="center">
                                             <?php 
-                                            $d=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='5'")); 
+                                            $d=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='4'")->fetch();
                                             echo $d[0];
+                                            ?>
+                                        </td>
+                                        <td align="center">
+                                            <?php 
+                                            $e=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='5'")->fetch();
+                                            echo $e[0];
                                             ?>
                                         </td>
                                         <td align="center"><?php echo $load_shipment['fee'] ?></td>
                                         <td align="center">
                                             <?php 
-                                            $approve=mysql_fetch_array(mysql_query("select acc from t4t_shipment where no_shipment='$no_shipment'"));
+                                            $approve=$conn->query("select acc from t4t_shipment where no_shipment='$no_shipment'")->fetch();
                                             if ($approve[0]=="1") {
                                                 ?>
                                                 <i class="fa fa-check-square-o"></i>
@@ -206,7 +206,7 @@
                       <div class="col-md-8 font-hijau">
                         <?php 
                   
-                        $company=mysql_fetch_array(mysql_query("select nama from t4t_partisipan where id='$kode'"));
+                        $company=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
                         echo $company[0];
                          ?>
                           <input type="hidden" name="id_comp" value="<?php echo $kode; ?>" >
@@ -221,12 +221,12 @@
                       <label class="col-md-6">QTY</label>
                       <?php 
                       $no=1;
-                      $kontainer=mysql_query("select * from t4t_container");
+                      $kontainer=$conn->query("select * from t4t_container");
 
-                      while ($data_kont=mysql_fetch_array($kontainer)) {
+                      while ($data_kont=$kontainer->fetch()) {
 
                       $no_sh=$load_shipment['no_shipment'];
-                      $cont=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_sh' and no_cont='$no'"));
+                      $cont=$conn->query("select jml from t4t_ordercontainer where no_order='$no_sh' and no_cont='$no'")->fetch();
                       ?>
                       <div class="font-hijau">
                       <label class="col-md-6"><?php echo $data_kont['cont'] ?></label>
@@ -248,7 +248,7 @@
                     </div>
 
                     <?php 
-                        $pic_name=mysql_fetch_array(mysql_query("select pic from t4t_partisipan where id='$kode'"));
+                        $pic_name=$conn->query("select pic from t4t_partisipan where id='$kode'")->fetch();
                          if ($pic_name[0]=="") {
                           
                          }else{
@@ -280,10 +280,10 @@
                       </div>
                     </div>
 <?php 
-$no_id=mysql_fetch_array(mysql_query("select no from t4t_partisipan where id='$kode'"));
+$no_id=$conn->query("select no from t4t_partisipan where id='$kode'")->fetch();
 $kode_buyer=$load_shipment['buyer'];
-$cek_customer=mysql_fetch_row(mysql_query("select kode_retailer,retailer_name from t4t_retailer where id_partisipan='$no_id[0]' and kode_retailer='$kode_buyer'"));
-echo mysql_error();
+$cek_customer=$conn->query("select kode_retailer,retailer_name from t4t_retailer where id_partisipan='$no_id[0]' and kode_retailer='$kode_buyer'")->fetch();
+//echo mysql_error();
 if ($cek_customer==true) {
   
  ?>

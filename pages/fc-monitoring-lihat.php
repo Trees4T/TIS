@@ -24,8 +24,8 @@
                 <?php 
                 $kode_fc=$_SESSION['kode'];
                 $kode_ta=$_SESSION['ta'];
-                $desa=mysql_query("select * from t4t_lahan where kd_ta='$kode_ta' group by id_desa");
-                while ($load_desa=mysql_fetch_array($desa)) {
+                $desa=$conn->query("select * from t4t_lahan where kd_ta='$kode_ta' group by id_desa");
+                while ($load_desa=$desa->fetch()) {
                     
                 
                 ?>
@@ -36,13 +36,13 @@
                         <i class="fa fa-caret-square-o-down"></i>
                         <?php 
                         $id_desa  =$load_desa['id_desa'];
-                        $nama_desa=mysql_fetch_array(mysql_query("select * from t4t_desa where id_desa='$id_desa'"));
+                        $nama_desa=$conn->query("select * from t4t_desa where id_desa='$id_desa'")->fetch();
                         $id_kec   =$nama_desa['id_kec'];
                         $id_kab   =$nama_desa['kab_code'];
-                        $nama_kec =mysql_fetch_array(mysql_query("select * from t4t_kec where id_kec='$id_kec'"));
-                        $nama_kab =mysql_fetch_array(mysql_query("select * from t4t_kab where kab_code='$id_kab'"));
+                        $nama_kec =$conn->query("select * from t4t_kec where id_kec='$id_kec'")->fetch();
+                        $nama_kab =$conn->query("select * from t4t_kab where kab_code='$id_kab'")->fetch();
                         // $jml_part =mysql_fetch_array(mysql_query("select count(*) from t4t_lahan where id_desa='$id_desa' and kd_fc='$kode_fc'"));
-                        $jml_tanaman=mysql_fetch_array(mysql_query("select sum(jml_realisasi) from t4t_lahan where id_desa='$id_desa'"));
+                        $jml_tanaman=$conn->query("select sum(jml_realisasi) from t4t_lahan where id_desa='$id_desa'")->fetch();
 
                         echo " Desa ".$nama_desa['desa']; echo " - Kec. ".$nama_kec['kecamatan']; echo " - Kab. ".$nama_kab['nama']; 
                         ?>
@@ -55,8 +55,8 @@
                             <!-- isi accordion 1 -->
                             <div class="accordion" id="accordion2" role="tablist" aria-multiselectable="true">
                                <?php 
-                               $tahun=mysql_query("select * from t4t_lahan where id_desa='$id_desa' and kd_ta='$kode_ta' group by thn_tanam order by thn_tanam desc ");
-                               while ($load_tahun=mysql_fetch_array($tahun)) {
+                               $tahun=$conn->query("select * from t4t_lahan where id_desa='$id_desa' and kd_ta='$kode_ta' group by thn_tanam order by thn_tanam desc ");
+                               while ($load_tahun=$tahun->fetch()) {
                                ?>
                                 <div class="panel">
                                     <a class="panel-heading" role="tab" id="heading<?php echo $load_tahun['thn_tanam'].''.$load_tahun['id_desa'] ?>" data-toggle="collapse" data-parent="#accordion2" href="#collapse<?php echo $load_tahun['thn_tanam'].''.$load_tahun['id_desa'] ?>" aria-expanded="true" aria-controls="collapse<?php echo $load_tahun['thn_tanam'].''.$load_tahun['id_desa'] ?>">
@@ -64,7 +64,7 @@
                                        <i class="fa fa-caret-square-o-down"></i> Lahan pada tahun <?php echo $load_tahun['thn_tanam'] ?>
                                        <?php 
                                        $th=$load_tahun['thn_tanam'];
-                                       $jml_tanaman2=mysql_fetch_row(mysql_query("select sum(jml_realisasi) from t4t_lahan where id_desa='$id_desa' and thn_tanam='$th' "));
+                                       $jml_tanaman2=$conn->query("select sum(jml_realisasi) from t4t_lahan where id_desa='$id_desa' and thn_tanam='$th' ")->fetch();
                                        ?>
                                       
                                         </h4>
@@ -90,8 +90,8 @@
                             <?php 
                             $th=$load_tahun['thn_tanam'];
                             
-                            $lahan=mysql_query("select * from t4t_lahan where id_desa='$id_desa' and kd_ta='$kode_ta' and thn_tanam='$th'");
-                            while ($load_lahan=mysql_fetch_array($lahan)) {
+                            $lahan=$conn->query("select * from t4t_lahan where id_desa='$id_desa' and kd_ta='$kode_ta' and thn_tanam='$th'");
+                            while ($load_lahan=$lahan->fetch()) {
                              
                             ?>
                                         <tr>

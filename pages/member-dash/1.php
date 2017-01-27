@@ -2,7 +2,7 @@
 session_start();
 include '../../koneksi/koneksi.php';
 $kode=$_SESSION['kode'];
-$unpaid=mysql_fetch_array(mysql_query("select count(*) from t4t_shipment where id_comp='$kode' and acc_paid=0 "));
+$unpaid=$conn->query("select count(*) from t4t_shipment where id_comp='$kode' and acc_paid=0 ")->fetch();
  ?>
  <div class="left"></div>
                         <div class="right">

@@ -16,8 +16,8 @@
     
 
 
-    $query_wkt_shipment=mysql_query("select wkt_shipment from t4t_shipment where id_comp='$kode'");
-    $wkt_shipment=mysql_fetch_row($query_wkt_shipment);
+    $query_wkt_shipment=$conn->query("select wkt_shipment from t4t_shipment where id_comp='$kode'");
+    $wkt_shipment=$query_wkt_shipment->fetch();
 
     ?>
 
@@ -117,8 +117,8 @@
                     $i="09";
                   }
                   
-                  $ship=mysql_query("select count(no_shipment) from t4t_shipment where wkt_shipment like '%-$i-%' and id_comp='$kode' and wkt_shipment like '%$tahun%' and acc_paid=1");
-                  $ship2=mysql_fetch_row($ship);
+                  $ship=$conn->query("select count(no_shipment) from t4t_shipment where wkt_shipment like '%-$i-%' and id_comp='$kode' and wkt_shipment like '%$tahun%' and acc_paid=1");
+                  $ship2=$ship->fetch();
                   echo json_encode($ship2[0]).",";
 
               ?>
@@ -169,8 +169,8 @@
                     $i="09";
                   }
                   
-                  $item=mysql_query("select sum(item_qty) from t4t_shipment where wkt_shipment like '%-$i-%' and id_comp='$kode' and wkt_shipment like '%$tahun%' and acc_paid=1");
-                  $item2=mysql_fetch_row($item);
+                  $item=$conn->query("select sum(item_qty) from t4t_shipment where wkt_shipment like '%-$i-%' and id_comp='$kode' and wkt_shipment like '%$tahun%' and acc_paid=1");
+                  $item2=$item->fetch();
                   if ($item2[0]=="") {
                     echo "0,";
                   }else{

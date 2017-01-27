@@ -61,7 +61,7 @@
                                     <h2>Shipments Activities
 <?php  
     $kode=$_SESSION['kode'];
-    $wkt_shipment=mysql_fetch_row(mysql_query("select wkt_shipment from t4t_shipment where id_comp='$kode' and acc=1 order by wkt_shipment limit 1"));
+    $wkt_shipment=$conn->query("select wkt_shipment from t4t_shipment where id_comp='$kode' and acc=1 order by wkt_shipment limit 1")->fetch();
 
     $ex_wkt_ship=explode("-", $wkt_shipment[0]);
     $th=date("Y");
@@ -106,7 +106,7 @@
                             <div class="x_panel">
                                 <div class="x_title">
                                 <?php 
-                                $cek_order_pertama=mysql_fetch_row(mysql_query("select substr(wkt_order,1,4) as th from t4t_order where id_comp='$kode' order by th limit 1"));
+                                $cek_order_pertama=$conn->query("select substr(wkt_order,1,4) as th from t4t_order where id_comp='$kode' order by th limit 1")->fetch();
                                 $jarak=$th-$cek_order_pertama[0]+1; 
                                 ?>
                                     <h2>Orders Activities<small><?php if ($jarak>0) {
@@ -171,8 +171,8 @@
     } ?>  
     </script>
     <script src="../js/moris/member-grafik-shipment-year-to-year.php"></script>
-    <script src="../js/moris/member-grafik-order-all-year.php"></script>
     <script src="../js/moris/member-grafik-order.php"></script>
+  <!--   <script src="../js/moris/member-grafik-order.php"></script> -->
 </body>
 
 </html>

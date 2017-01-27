@@ -10,59 +10,55 @@ if ($_POST['no_order']) {
 	
 
 
-$kode=$_SESSION['kode'];
-$no_order=$_POST['no_order'];
-$company=$_POST['comp'];
-$type_prod=$_POST['type_prod'];
-$tags=$_POST['tags'];
-$destination=$_POST['destination'];
-$pic=$_POST['pic'];
-$tanggal=date("Y-m-d");
-$tanggal_indo=date("d/m/Y H:i:s");
-$last_wins=mysql_fetch_array(mysql_query("SELECT FLOOR(wins) as win FROM t4t_wins where bl!='' and no_shipment!=''  order by win desc limit 1"));
-$last=$last_wins[0];
-
-$wins1=$last+1;
-$wins2=$last+$tags;
+$kode         =$_SESSION['kode'];
+$no_order     =$_POST['no_order'];
+$company      =$_POST['comp'];
+$type_prod    =$_POST['type_prod'];
+$tags         =$_POST['tags'];
+$destination  =$_POST['destination'];
+$pic          =$_POST['pic'];
+$tanggal      =date("Y-m-d");
+$tanggal_indo =date("d/m/Y H:i:s");
+$last_wins    =$conn->query("SELECT FLOOR(wins) as win FROM t4t_wins where bl!='' and no_shipment!=''  order by win desc limit 1")->fetch();
+$last         =$last_wins[0];
+$wins1        =$last+1;
+$wins2        =$last+$tags;
 
 //update t4t_order
 // # - no order - id comp - tipe prod - jml wins - kota tujuan - wkt order - # - # - wins1 - wins2 - quantity - #
-// mysql_query("insert into t4t_order 
-// (no,no_order,id_comp,tipe_prod,jml_wins,kota_tujuan,wkt_order,acc,acc2,wins1,wins2,quantity) 
-// values ('','$no_order','$kode','$type_prod','$tags','$destination','$tanggal','','','','','$tags')");
-mysql_query("update t4t_order set tipe_prod='$type_prod',jml_wins='$tags',quantity='$tags' where no_order='$no_order'");
+$conn->query("UPDATE t4t_order set tipe_prod='$type_prod',jml_wins='$tags',quantity='$tags' where no_order='$no_order'");
 
-echo mysql_error();
-//insert t4t_orderphn
+//echo mysql_error();
+//INSERT t4t_orderphn
 // no - no order - no phnen2
 $jumlah = count($_POST['item']);
 
-//delete old
-	mysql_query("delete from t4t_orderphn where no_order='$no_order'");
+//DELETE old
+	$conn->query("DELETE from t4t_orderphn where no_order='$no_order'");
 
 for($i=0; $i < $jumlah; $i++)
 {
    echo $pohon=$_POST['item'][$i];
-   mysql_query("insert into t4t_orderphn (no,no_order,no_phnen2) values ('','$no_order','$pohon')");  
+   $conn->query("INSERT into t4t_orderphn (no,no_order,no_phnen2) values ('','$no_order','$pohon')");  
 }
 
 
-//insert t4t_orderrequest
-	#delete old
-	mysql_query("delete from t4t_orderrequest where no_order='$no_order'");
+//INSERT t4t_orderrequest
+	#DELETE old
+	$conn->query("DELETE from t4t_orderrequest where no_order='$no_order'");
 
 //no - no order - no req - jml
-$jml_req=mysql_fetch_array(mysql_query("select count(no) from t4t_req"));
+$jml_req=$conn->query("SELECT count(no) from t4t_req")->fetch();
 $jml_req[0];
 for ($i=1; $i <= $jml_req[0] ; $i++) { 
 	$req=$_POST['req'.$i];
-	mysql_query("insert into t4t_orderrequest (no,no_order,no_req,jml) values ('','$no_order','$i','$req')");
+	$conn->query("INSERT into t4t_orderrequest (no,no_order,no_req,jml) values ('','$no_order','$i','$req')");
 
 }
 
-//insert t4t_container
-	#delete old
-	mysql_query("delete from t4t_ordercontainer where no_order='$no_order'");
+//INSERT t4t_container
+	#DELETE old
+	$conn->query("DELETE from t4t_ordercontainer where no_order='$no_order'");
 $jml_input=$_POST['forinput'];
 echo $jml_input;
 for($i=1;$i<=$jml_input;$i++)
@@ -81,48 +77,49 @@ $get_tgl=$tgl2[2]."-".$tgl2[1]."-".$tgl2[0];
 	if ($tgl=="") {
 		# 
 	}elseif ($cont20!="") {
-		mysql_query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','1','$cont20','$get_tgl')");
+		$conn->query("INSERT into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','1','$cont20','$get_tgl')");
 	}else{
-		mysql_query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','1','0','$get_tgl')");
+		$conn->query("INSERT into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','1','0','$get_tgl')");
 	}
 
 	if ($tgl=="") {
 		# 
 	}elseif ($cont40!="") {
-		mysql_query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','2','$cont40','$get_tgl')");
+		$conn->query("INSERT into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','2','$cont40','$get_tgl')");
 	}else{
-		mysql_query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','2','0','$get_tgl')");
+		$conn->query("INSERT into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','2','0','$get_tgl')");
 	}
 
 	if ($tgl=="") {
 		# 
 	}elseif ($cont40hc!="") {
-		mysql_query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','3','$cont40hc','$get_tgl')");
+		$conn->query("INSERT into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','3','$cont40hc','$get_tgl')");
 	}else{
-		mysql_query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','3','0','$get_tgl')");
+		$conn->query("INSERT into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','3','0','$get_tgl')");
 	}
 
 	if ($tgl=="") {
 		# 
 	}elseif ($cont45!="") {
-		mysql_query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','4','$cont45','$get_tgl')");
+		$conn->query("INSERT into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','4','$cont45','$get_tgl')");
 	}else{
-		mysql_query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','4','0','$get_tgl')");
+		$conn->query("INSERT into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','4','0','$get_tgl')");
 	}
 
 	if ($tgl=="") {
 		# 
 	}elseif ($cont60!="") {
-		mysql_query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','5','$cont60','$get_tgl')");
+		$conn->query("INSERT into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','5','$cont60','$get_tgl')");
 	}else{
-		mysql_query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','5','0','$get_tgl')");
+		$conn->query("INSERT into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','5','0','$get_tgl')");
 	}
 	
-	//insert t4t_orderwkt
+	//INSERT t4t_orderwkt
 	if ($tgl=="") {
 		#
 	}else{
-		mysql_query("insert into t4t_orderwkt (no,no_order,wkt_kirim) values ('','$no_order','$get_tgl')");
+		//$conn->query("INSERT into t4t_orderwkt (no,no_order,wkt_kirim) values ('','$no_order','$get_tgl')");
+    $conn->query("update t4t_orderwkt set wkt_kirim='$get_tgl' where no_order='$no_order'");
 	}
 
 }
@@ -189,7 +186,7 @@ $mail->Body    = '
  <tr>
   <td bgcolor="#0b6454" align="center">
   <br>
-  <font color="#fff" size="0.5">&copy; 2016 Trees4Trees&trade; </font>
+  <font color="#fff" size="0.5">&copy; '.date("Y").' Trees4Trees&trade; </font>
   <br><br>
   </td>
  </tr>

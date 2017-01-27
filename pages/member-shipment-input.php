@@ -72,7 +72,7 @@
 $kode=$_SESSION['kode'];
 
 $tgl=date("dmy");
-$cek_nosh=mysql_fetch_array(mysql_query("select floor(substr(no_shipment,12,10)) as no_sh from t4t_shipment where id_comp='$kode' and no_shipment like '%$tgl%' order by no_sh desc limit 1"));
+$cek_nosh=$conn->query("select floor(substr(no_shipment,12,10)) as no_sh from t4t_shipment where id_comp='$kode' and no_shipment like '%$tgl%' order by no_sh desc limit 1")->fetch();
 $no_sh=$cek_nosh[0]+1;
 ?>
                     <label class="control-label"><?php echo $_SESSION['kode']."".$tgl."".$no_sh; ?></label>
@@ -105,8 +105,8 @@ $no_sh=$cek_nosh[0]+1;
                         <select multiple="" class="form-control" name="order[]" required>
 <?php  
 
-$no_order=mysql_query("select no_order from t4t_order where id_comp='$kode' and acc=1 order by no desc");
-while ($data_order=mysql_fetch_array($no_order)) {
+$no_order=$conn->query("select no_order from t4t_order where id_comp='$kode' and acc=1 order by no desc");
+while ($data_order=$no_order->fetch()) {
   
 ?>
                           <option><?php echo $data_order[0] ?></option>
@@ -135,7 +135,7 @@ while ($data_order=mysql_fetch_array($no_order)) {
                       <div class="col-md-4 font-hijau">
                         <?php 
                   
-                        $company=mysql_fetch_array(mysql_query("select nama from t4t_partisipan where id='$kode'"));
+                        $company=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
                          ?>
                       <label class="control-label"><?php echo $company[0]; ?></label>
                           <input type="hidden" name="id_comp" value="<?php echo $kode; ?>" >
@@ -154,8 +154,8 @@ while ($data_order=mysql_fetch_array($no_order)) {
                           </thead>
                           <tbody>
 <?php 
-$container=mysql_query("select * from t4t_container");
-while ($data_container=mysql_fetch_array($container)) {
+$container=$conn->query("select * from t4t_container");
+while ($data_container=$container->fetch()) {
  ?>
                             <tr>
                               <td><?php echo $data_container[1] ?></td>
@@ -179,7 +179,7 @@ while ($data_container=mysql_fetch_array($container)) {
                     </div>
 
                     <?php 
-                        $pic_name=mysql_fetch_array(mysql_query("select pic from t4t_partisipan where id='$kode'"));
+                        $pic_name=$conn->query("select pic from t4t_partisipan where id='$kode'")->fetch();
                          if ($pic_name[0]=="") {
                            #
                          }else{
@@ -215,10 +215,10 @@ while ($data_container=mysql_fetch_array($container)) {
                       </div>
                     </div>
 <?php 
-$no_id=mysql_fetch_array(mysql_query("select no from t4t_partisipan where id='$kode'"));
-$cek_customer=mysql_query("select kode_retailer from t4t_retailer where id_partisipan='$no_id[0]'");
+$no_id=$conn->query("select no from t4t_partisipan where id='$kode'")->fetch();
+$cek_customer=$conn->query("select kode_retailer from t4t_retailer where id_partisipan='$no_id[0]'");
 
-if ($cek=mysql_fetch_array($cek_customer)==true) {
+if ($cek=$cek_customer->fetch()==true) {
   
 
  ?>
@@ -229,8 +229,8 @@ if ($cek=mysql_fetch_array($cek_customer)==true) {
                         <select class="form-control" name="c_code">
                           <option value="">- Choose -</option>
       <?php 
-      $customer=mysql_query("select kode_retailer,retailer_name from t4t_retailer where id_partisipan='$no_id[0]'"); 
-      while ( $data_customer=mysql_fetch_array($customer)) {
+      $customer=$conn->query("select kode_retailer,retailer_name from t4t_retailer where id_partisipan='$no_id[0]'"); 
+      while ( $data_customer=$customer->fetch()) {
       ?>
                           <option value="<?php echo $data_customer[0] ?>"><?php echo $data_customer[0]; echo " (".$data_customer[1].")"; ?></option>
     <?php 

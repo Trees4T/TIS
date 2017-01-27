@@ -23,9 +23,9 @@
             <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
                 <?php 
                 $kode=$_SESSION['kode'];
-                $tahun=mysql_query("select substr(t4t_order.wkt_order,1,4) AS `th`,no_order,wkt_order from t4t_order where id_comp='$kode' group by th order by th desc");
-                echo mysql_error();
-                while ($load_tahun=mysql_fetch_array($tahun)) {
+                $tahun=$conn->query("select substr(t4t_order.wkt_order,1,4) AS `th`,no_order,wkt_order from t4t_order where id_comp='$kode' group by th order by th desc");
+                
+                while ($load_tahun=$tahun->fetch()) {
                    
                 ?>
 
@@ -60,8 +60,8 @@
                         <?php 
                         $th=$load_tahun['th'];
                         
-                        $order=mysql_query("select no,wkt_order,no_order,jml_wins,acc,tipe_prod from t4t_order where wkt_order like '%$th%' and id_comp='$kode'");
-                        while ($load_order=mysql_fetch_array($order)) {
+                        $order=$conn->query("select no,wkt_order,no_order,jml_wins,acc,tipe_prod from t4t_order where wkt_order like '%$th%' and id_comp='$kode'");
+                        while ($load_order=$order->fetch()) {
                             $id_order=$load_order['no'];
                          
                         ?>
@@ -85,31 +85,31 @@
                                         <td align="center">
                                             <?php 
                                             $no_order=$load_order['no_order']; //definisi no order
-                                            $htag=mysql_fetch_array(mysql_query("select jml_wins from t4t_order where no_order='$no_order'"));
+                                            $htag=$conn->query("select jml_wins from t4t_order where no_order='$no_order'")->fetch();
                                             echo $htag[0];
                                             ?>
                                         </td>
                                         <td align="center">
                                             <?php 
-                                            $ttent=mysql_fetch_array(mysql_query("select jml from t4t_orderrequest where no_order='$no_order' and no_req='1'")); 
+                                            $ttent=$conn->query("select jml from t4t_orderrequest where no_order='$no_order' and no_req='1'")->fetch();
                                             echo $ttent[0];
                                             ?>
                                         </td>
                                         <td align="center">
                                             <?php 
-                                            $ttent=mysql_fetch_array(mysql_query("select jml from t4t_orderrequest where no_order='$no_order' and no_req='2'")); 
+                                            $ttent=$conn->query("select jml from t4t_orderrequest where no_order='$no_order' and no_req='2'")->fetch(); 
                                             echo $ttent[0];
                                             ?>
                                         </td>
                                         <td align="center">
                                             <?php 
-                                            $ttent=mysql_fetch_array(mysql_query("select jml from t4t_orderrequest where no_order='$no_order' and no_req='3'")); 
+                                            $ttent=$conn->query("select jml from t4t_orderrequest where no_order='$no_order' and no_req='3'")->fetch();
                                             echo $ttent[0];
                                             ?>
                                         </td>
                                         <td align="center">
                                             <?php 
-                                            $approve=mysql_fetch_array(mysql_query("select acc from t4t_order where no_order='$no_order'"));
+                                            $approve=$conn->query("select acc from t4t_order where no_order='$no_order'")->fetch();
                                             if ($approve[0]=="1") {
                                                 ?>
                                                 <i class="fa fa-check-square-o"></i>
@@ -160,7 +160,7 @@
             <div class="col-md-8 font-hijau">
               <?php 
               $kode=$_SESSION['kode'];
-              $comp_name=mysql_fetch_array(mysql_query("select nama from t4t_partisipan where id='$kode'"));
+              $comp_name=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
               echo $comp_name[0];
               ?>
               <input type="hidden" name="comp" value="<?php echo $comp_name[0]; ?>" >
@@ -182,21 +182,21 @@
 
             <?php 
           $no_order=$load_order['no_order'];
-          $jml_cont=mysql_fetch_array(mysql_query("select count(no) from t4t_ordercontainer where no_order='$no_order'"));
+          $jml_cont=$conn->query("select count(no) from t4t_ordercontainer where no_order='$no_order'")->fetch();
           $i=1;
-          $container=mysql_query("select * from t4t_ordercontainer where no_order='$no_order' group by tgl_stuf");
-          while ($load_cont=mysql_fetch_array($container)) {
+          $container=$conn->query("select * from t4t_ordercontainer where no_order='$no_order' group by tgl_stuf");
+          while ($load_cont=$container->fetch()) {
             $ii=$i-1;
 
             $tgl_stuf=$load_cont['tgl_stuf'];
             $ex_tgl=explode("-", $tgl_stuf);
             $tanggal_stf=$ex_tgl[2]."-".$ex_tgl[1]."-".$ex_tgl[0];  
 
-            $container1=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_cont=1 and no_order='$no_order' limit $ii,1")); 
-            $container2=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_cont=2 and no_order='$no_order' limit $ii,1")); 
-            $container3=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_cont=3 and no_order='$no_order' limit $ii,1")); 
-            $container4=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_cont=4 and no_order='$no_order' limit $ii,1")); 
-            $container5=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_cont=5 and no_order='$no_order' limit $ii,1"));                        
+            $container1=$conn->query("select jml from t4t_ordercontainer where no_cont=1 and no_order='$no_order' limit $ii,1")->fetch(); 
+            $container2=$conn->query("select jml from t4t_ordercontainer where no_cont=2 and no_order='$no_order' limit $ii,1")->fetch(); 
+            $container3=$conn->query("select jml from t4t_ordercontainer where no_cont=3 and no_order='$no_order' limit $ii,1")->fetch(); 
+            $container4=$conn->query("select jml from t4t_ordercontainer where no_cont=4 and no_order='$no_order' limit $ii,1")->fetch(); 
+            $container5=$conn->query("select jml from t4t_ordercontainer where no_cont=5 and no_order='$no_order' limit $ii,1")->fetch();                        
            ?>
 
           <label class="col-md-2 font-hijau"><?php echo $container1[0] ?></label>
@@ -232,11 +232,11 @@
               <div class="col-md-8">
                 <ul class="to_do">
                 <?php 
-                $wood=mysql_query("select * from t4t_pohonen");
+                $wood=$conn->query("select * from t4t_pohonen");
 
-                while ($data_pohon=mysql_fetch_array($wood)) {
+                while ($data_pohon=$wood->fetch()) {
                   $id_pohon=$data_pohon[0];
-                  $pohon=mysql_fetch_array(mysql_query("select a.id_pohon,b.no from t4t_pohonen a, t4t_orderphn b where a.id_pohon=b.no_phnen2 and no_order='$no_order' and a.id_pohon=$id_pohon"));
+                  $pohon=$conn->query("select a.id_pohon,b.no from t4t_pohonen a, t4t_orderphn b where a.id_pohon=b.no_phnen2 and no_order='$no_order' and a.id_pohon=$id_pohon")->fetch();
                  ?>
                   <?php 
                     if ($pohon[0]!="") {
@@ -265,7 +265,7 @@
               <label class="control-label col-md-4" for="first-name"> Quantity Hang Tags Requested <span class="required"></span>
               </label>
               <div class="col-md-8 font-hijau">
-              <?php $jml_tag=mysql_fetch_array(mysql_query("select jml_wins from t4t_order where no_order='$no_order'"));
+              <?php $jml_tag=$conn->query("select jml_wins from t4t_order where no_order='$no_order'")->fetch();
                echo $jml_tag[0] ?>
               </div>
             </div>
@@ -278,11 +278,11 @@
               <div class="col-md-8">
                 <ul class="to_do">
                 <?php 
-                $other=mysql_query("select * from t4t_req");
-                while ($data_other=mysql_fetch_array($other)) {
+                $other=$conn->query("select * from t4t_req");
+                while ($data_other=$other->fetch()) {
                   
                   $no_req=$data_other[0];
-                  $request=mysql_fetch_array(mysql_query("select a.jml,b.no from t4t_orderrequest a, t4t_req b where a.no_req=b.no and a.no_order='$no_order' and a.no_req=$no_req "));
+                  $request=$conn->query("select a.jml,b.no from t4t_orderrequest a, t4t_req b where a.no_req=b.no and a.no_order='$no_order' and a.no_req=$no_req ")->fetch();
 
                  ?>
                     <li>
@@ -296,7 +296,7 @@
             </div>
 
             <?php 
-               $pic_name=mysql_fetch_array(mysql_query("select pic from t4t_partisipan where id='$kode'"));
+               $pic_name=$conn->query("select pic from t4t_partisipan where id='$kode'")->fetch();
                if ($pic_name[0]=="") {
                  
                }else{

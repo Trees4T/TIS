@@ -7,7 +7,11 @@ include '../../koneksi/koneksi.php';
 $awal 	=$_POST['awal'];
 $akhir 	=$_POST['akhir']; 
 $status =$_POST['status']; 
-$kode 	=$_SESSION['kode']; 
+if ($_SESSION['level']=='fin') {
+	$kode 	=$_POST['member']; 
+}else{
+	$kode 	=$_SESSION['kode']; 
+}
 /**
  * PHPExcel
  *
@@ -72,13 +76,15 @@ $BStyle = array(
 $objPHPExcel->setActiveSheetIndex(0)	
             
             ->setCellValue('A1', 'Ship Report Date')
-            ->setCellValue('B1', 'BL Date')
-            ->setCellValue('C1', 'BL')
-            ->setCellValue('D1', 'Farmer')
-            ->setCellValue('E1', 'Village')
-            ->setCellValue('F1', 'Target Area')
-            ->setCellValue('G1', 'M. Unit')
-            ->setCellValue('H1', 'Trees QTY')
+            ->setCellValue('B1', 'Shipment')
+            ->setCellValue('C1', 'BL Date')
+            ->setCellValue('D1', 'BL')
+            ->setCellValue('E1', 'Farmer')
+            ->setCellValue('F1', 'Village')
+            // ->setCellValue('F1', 'Target Area')
+            // ->setCellValue('G1', 'M. Unit')
+            ->setCellValue('G1', 'Trees QTY')
+            ->setCellValue('H1', 'Retailer Code')
            
 
             ->getStyle('A1:H1')
@@ -89,21 +95,23 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 $objPHPExcel->getActiveSheet()->getStyle('A1:H1')->getFont()->setBold(true);
 
-$kode=$_SESSION['kode'];
+
 $no=1;
 $i=1;
-$tree_planted=mysql_query("select s.wkt_shipment,s.bl,s.id_comp,s.no,h.bl,h.jml_phn,s.bl_tgl,h.petani,h.desa,h.ta,h.mu from t4t_shipment s join t4t_htc h on s.bl=h.bl AND s.id_comp='$kode' and s.wkt_shipment between '$awal' and '$akhir' order by h.no desc");
+$tree_planted=mysql_query("select s.wkt_shipment,s.no_shipment,s.bl_tgl,s.bl,h.petani,h.desa,h.jml_phn,s.buyer,s.id_comp,s.no,h.bl from t4t_shipment s join t4t_htc h on s.bl=h.bl AND s.id_comp='$kode' and s.wkt_shipment between '$awal' and '$akhir' order by h.no desc");
 while ($data=mysql_fetch_array($tree_planted)) 
 	
 	{
 				$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(18);
-				$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(11);
-				$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(18);
+				$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(15);
+				$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(11);
 				$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(18);
 				$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(18);
 				$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(18);
-				$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(18);
-				$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(9);
+				// $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(18);
+				// $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(18);
+				$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(9);
+				$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(14);
 
 				$i=$i+1;
 			                $A='A'.$i;
@@ -120,13 +128,13 @@ while ($data=mysql_fetch_array($tree_planted))
        //data loop         
        $objPHPExcel->setActiveSheetIndex(0)
 							->setCellValue($A,$data[0])
-							->setCellValue($B,$data[6])
-							->setCellValue($C,$data[1])
-							->setCellValue($D,$data[7])
-							->setCellValue($E,$data[8])
-							->setCellValue($F,$data[9])
-							->setCellValue($G,$data[10])
-							->setCellValue($H,$data[5]);
+							->setCellValue($B,$data[1])
+							->setCellValue($C,$data[2])
+							->setCellValue($D,$data[3])
+							->setCellValue($E,$data[4])
+							->setCellValue($F,$data[5])
+							->setCellValue($G,$data[6])
+							->setCellValue($H,$data[7]);
 
 			$jml_loop[]=$i;
 							
@@ -137,8 +145,8 @@ while ($data=mysql_fetch_array($tree_planted))
 
 
 		$objPHPExcel->setActiveSheetIndex(0)
-					->setCellValue('H'.$jml_loop2, ''.$_SESSION['tot_tree'].'')
-					->getStyle('H'.$jml_loop2)
+					->setCellValue('G'.$jml_loop2, ''.$_SESSION['tot_tree'].'')
+					->getStyle('G'.$jml_loop2)
 				    ->getAlignment()
 				    ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 

@@ -10,42 +10,41 @@ date_default_timezone_set('Asia/Jakarta');
 if ($_POST['no_ship']) {
 
 
-  $no_shipment=$_POST['no_ship'];
-  $bl=$_POST['bl'];
+  $no_shipment =$_POST['no_ship'];
+  $bl          =$_POST['bl'];
 
-  $tglbl=$_POST['tglbl'];
-  $exp_tglbl=explode("/", $tglbl);
-  $tgl=$exp_tglbl[2]."-".$exp_tglbl[1]."-".$exp_tglbl[0];
-  $tanggal=date("Y-m-d");
+  $tglbl       =$_POST['tglbl'];
+  $exp_tglbl   =explode("/", $tglbl);
+  $tgl         =$exp_tglbl[2]."-".$exp_tglbl[1]."-".$exp_tglbl[0];
+  $tanggal     =date("Y-m-d");
   $tanggal_indo=date("d/m/Y H:i:s");
 
-  $wins_used		=$_POST['wins_used'];
-  $id_comp		=$_POST['id_comp'];
-  $item_qty		=$_POST['item_qty'];
-  $pic			=$_POST['pic'];
-  $destination	=$_POST['destination'];
-  $note 			=$_POST['note'];
-  $c_code 		=$_POST['c_code'];
+  $wins_used	 =$_POST['wins_used'];
+  $id_comp		 =$_POST['id_comp'];
+  $item_qty		 =$_POST['item_qty'];
+  $pic			   =$_POST['pic'];
+  $destination =$_POST['destination'];
+  $note 			 =$_POST['note'];
+  $c_code 		 =$_POST['c_code'];
+  $waktu       =date("His");
 
-  $waktu=date("His");
-
-  $company=mysql_fetch_row(mysql_query("select nama from t4t_partisipan where id='$id_comp'"));
+  $company=$conn->query("SELECT nama from t4t_partisipan where id='$id_comp'")->fetch();
   //insert shipment
   # no - no ship - id_comp - bl - bl tgl - win used - win unused - wkt ship - foto - acc - no order - kota - tujuan - fee - diskon - tgl paid - acc paid - note buyer - item qty
 
 
 
-  $maxsize = 1024 * 10000; // maksimal 200 KB (1KB = 1024 Byte)
-  $bl_files=$_POST['bl_files'];
-  		$bl_files=$_FILES['bl_files'];
-  		$tmp_name=$bl_files['tmp_name'];
-  		$namafile=$bl_files['name'];
+  $maxsize      = 1024 * 10000; // maksimal 200 KB (1KB = 1024 Byte)
+  $bl_files     =$_POST['bl_files'];
+  		$bl_files =$_FILES['bl_files'];
+  		$tmp_name =$bl_files['tmp_name'];
+  		$namafile =$bl_files['name'];
   		$namafile2=$no_shipment.'-'.$waktu.'-'.$namafile;
 
-  		$tujuan="../../management_t4t/gbr/shipment/$namafile2";
+  		$tujuan   ="../../management_t4t/gbr/shipment/$namafile2";
 
       //cek no bl
-  		$cek_bl=mysql_fetch_row(mysql_query("select bl from t4t_shipment where bl='$bl'"));
+  		$cek_bl=$conn->query("SELECT bl from t4t_shipment where bl='$bl'")->fetch();
       if ($cek_bl!="") {
         echo $error_unique_bl="BL No. has already been taken";
       }
@@ -60,10 +59,10 @@ if ($_POST['no_ship']) {
   		if ($ukuran<=$maxsize && $error_unique_bl==false && $required_cont==true) {
 
   			copy($tmp_name,$tujuan);
-  			mysql_query("insert into t4t_shipment 
-  	(no, no_shipment, id_comp, bl, bl_tgl, wins_used, wkt_shipment, foto, kota_tujuan, fee, diskon, note, buyer, item_qty) values ('','$no_shipment','$id_comp','$bl','$tgl','$wins_used','$tanggal','$namafile2','$destination','','','$note','$c_code','$item_qty')");
-  			//mysql_query("update t4t_shipment set foto ='$namafile' where no_shipment='$no_shipment' ");
-  			mysql_error();
+  			$conn->query("INSERT into t4t_shipment 
+  	(no, no_shipment, id_comp, bl, bl_tgl, wins_used, wkt_shipment, foto, kota_tujuan, fee, diskon, note, buyer, item_qty) values
+    ('','$no_shipment','$id_comp','$bl','$tgl','$wins_used','$tanggal','$namafile2','$destination','','','$note','$c_code','$item_qty')")->fetch();
+  			
   			
   		}else{
   			echo $error_max_file="max file is 200kb";
@@ -78,7 +77,7 @@ if ($_POST['no_ship']) {
   	$jml_order=count($_POST['order']);
   	for ($i=0; $i < $jml_order ; $i++) { 
 
-  		$old_order=mysql_fetch_array(mysql_query("select no_order from t4t_shipment where no_shipment='$no_shipment'"));
+  		$old_order=$conn->query("SELECT no_order from t4t_shipment where no_shipment='$no_shipment'")->fetch();
   		$old_order2=$old_order[0];
   		//echo $old_order2."<br>";
 
@@ -92,22 +91,22 @@ if ($_POST['no_ship']) {
   		}
   		
 
-  		 mysql_query("update t4t_shipment set no_order='$data_order' where no_shipment='$no_shipment'");
+  		 $conn->query("update t4t_shipment set no_order='$data_order' where no_shipment='$no_shipment'")->fetch();
   		 //order container
   		 //mysql_query("update t4t_ordercontainer set no_order='$no_shipment' where no_order='$no_order'");
 
   	}
 
   	//order container
-  	$jml_cont=mysql_fetch_array(mysql_query("select count(no) from t4t_container"));
+  	$jml_cont=$conn->query("SELECT count(no) from t4t_container")->fetch();
   	$jml_cont[0];
   	for ($i=1; $i <= $jml_cont[0] ; $i++) { 
   		$cont=$_POST['cont'.$i];
-  		mysql_query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_shipment','$i','$cont','$tanggal')");
+  		$conn->query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_shipment','$i','$cont','$tanggal')")->fetch();
 
   	}
 
-  	$no_order_get=mysql_fetch_row(mysql_query("select no_order from t4t_shipment where no_shipment='$no_shipment'"));
+  	$no_order_get=$conn->query("SELECT no_order from t4t_shipment where no_shipment='$no_shipment'")->fetch();
   ################email##############
   require '../assets/PHPMailer/PHPMailerAutoload.php';
 
@@ -176,7 +175,7 @@ if ($_POST['no_ship']) {
    <tr>
     <td bgcolor="#0b6454" align="center">
     <br>
-    <font color="#fff" size="0.5">&copy; 2016 Trees4Trees&trade; </font>
+    <font color="#fff" size="0.5">&copy; '.date("Y").' Trees4Trees&trade; </font>
     <br><br>
     </td>
    </tr>

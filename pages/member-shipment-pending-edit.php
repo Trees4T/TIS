@@ -72,7 +72,7 @@ $id_ship=$_SESSION['id_ship']
                       <div class="col-md-4 font-hijau">
 <?php 
 $kode=$_SESSION['kode'];
-$data=mysql_fetch_array(mysql_query("select * from t4t_shipment where no='$id_ship'"));
+$data=$conn->query("select * from t4t_shipment where no='$id_ship'")->fetch();
 
 ?>
                       <label class="control-label"><?php echo $data['no_shipment']; ?></label>
@@ -110,7 +110,7 @@ $data=mysql_fetch_array(mysql_query("select * from t4t_shipment where no='$id_sh
                       <div class="col-md-4">
                       <div class="font-hijau">
                       <?php 
-                       $no_ordership=mysql_fetch_array(mysql_query("select no_order from t4t_shipment where no='$id_ship'"));
+                       $no_ordership=$conn->query("select no_order from t4t_shipment where no='$id_ship'")->fetch();
                        
                        ?>
                        <label class="control-label"><?php echo $no_ordership[0]; ?></label>
@@ -119,8 +119,8 @@ $data=mysql_fetch_array(mysql_query("select * from t4t_shipment where no='$id_sh
                         <select multiple="" class="form-control" name="order[]" >
 <?php  
 
-$no_order=mysql_query("select no_order from t4t_order where id_comp='$kode' and acc=1 order by no desc");
-while ($data_order=mysql_fetch_array($no_order)) {
+$no_order=$conn->query("select no_order from t4t_order where id_comp='$kode' and acc=1 order by no desc");
+while ($data_order=$no_order->fetch()) {
 
 ?>
   
@@ -152,7 +152,7 @@ while ($data_order=mysql_fetch_array($no_order)) {
                       <div class="col-md-4 font-hijau">
                         <?php 
                   
-                        $company=mysql_fetch_array(mysql_query("select nama from t4t_partisipan where id='$kode'"));
+                        $company=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
                         
                          ?>
                          <label class="control-label"><?php echo $company[0]; ?></label>
@@ -173,10 +173,10 @@ while ($data_order=mysql_fetch_array($no_order)) {
                           <tbody>
 <?php 
 $no=1;
-$container=mysql_query("select * from t4t_container");
-while ($data_container=mysql_fetch_array($container)) {
+$container=$conn->query("select * from t4t_container");
+while ($data_container=$container->fetch()) {
   $no_sh=$data['no_shipment'];
-  $cont=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_sh' and no_cont='$no'"));
+  $cont=$conn->query("select jml from t4t_ordercontainer where no_order='$no_sh' and no_cont='$no'")->fetch();
   
  ?>
                             <tr>
@@ -202,7 +202,7 @@ $no++;
                     </div>
 
                     <?php 
-                        $pic_name=mysql_fetch_array(mysql_query("select pic from t4t_partisipan where id='$kode'"));
+                        $pic_name=$conn->query("select pic from t4t_partisipan where id='$kode'")->fetch();
                          if ($pic_name[0]=="") {
                            #
                          }else{
@@ -238,10 +238,10 @@ $no++;
                       </div>
                     </div>
 <?php 
-$no_id=mysql_fetch_array(mysql_query("select no from t4t_partisipan where id='$kode'"));
-$cek_customer=mysql_query("select kode_retailer,retailer_name from t4t_retailer where id_partisipan='$no_id[0]'");
+$no_id=$conn->query("select no from t4t_partisipan where id='$kode'")->fetch();
+$cek_customer=$conn->query("select kode_retailer,retailer_name from t4t_retailer where id_partisipan='$no_id[0]'");
 
-if ($cek=mysql_fetch_array($cek_customer)==true) {
+if ($cek=$cek_customer->fetch()==true) {
   
 
  ?>
@@ -260,8 +260,8 @@ if ($cek=mysql_fetch_array($cek_customer)==true) {
                           ?>
                           - Choose - <?php } ?></option>
       <?php 
-      $customer=mysql_query("select kode_retailer,retailer_name from t4t_retailer where id_partisipan='$no_id[0]'"); 
-      while ( $data_customer=mysql_fetch_array($customer)) {
+      $customer=$conn->query("select kode_retailer,retailer_name from t4t_retailer where id_partisipan='$no_id[0]'"); 
+      while ( $data_customer=$customer->fetch()) {
       ?>
                           <option value="<?php echo $data_customer[0] ?>"><?php echo $data_customer[0]; echo " (".$data_customer[1].")"; ?></option>
     <?php 
@@ -283,7 +283,9 @@ if ($cek=mysql_fetch_array($cek_customer)==true) {
                         <?php 
                         $foto=$data['foto'];
                         $ex_foto=explode("-", $foto);
-                        echo $ex_foto[2];
+                        ?>
+                        <a href="" data-toggle="modal" data-target="#img-bl-attatch"><?php  echo $ex_foto[2] ?></a>
+                        <?php 
                         if ($foto=="") {
                             echo "no attached file found.";
                           }  
@@ -292,7 +294,7 @@ if ($cek=mysql_fetch_array($cek_customer)==true) {
                       </div>
                     </div>
 
-                    
+                    <?php include 'modal/img-bl-attatch.php'; ?>
                     
   
 

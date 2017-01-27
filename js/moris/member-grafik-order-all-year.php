@@ -4,8 +4,8 @@
     $kode=$_SESSION['kode'];
     $tahun=date("Y");
     $bulan=date("m");
-    $query_wkt_shipment=mysql_query("select wkt_shipment from t4t_shipment where id_comp='$kode'");
-    $wkt_shipment=mysql_fetch_row($query_wkt_shipment);
+    $query_wkt_shipment=$conn->query("select wkt_shipment from t4t_shipment where id_comp='$kode'");
+    $wkt_shipment=$query_wkt_shipment->fetch();
 
     ?>
 

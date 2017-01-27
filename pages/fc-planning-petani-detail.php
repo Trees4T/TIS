@@ -1,9 +1,10 @@
 <?php 
-$data=mysql_fetch_array(mysql_query("select * from t4t_petani where id_desa='$id_desa' and kd_petani=$kd_petani"));
-$kode_kab=mysql_fetch_row(mysql_query("select kab_code,prov_code FROM t4t_kab where nama='$nama_kab'"));
-  $kode_kabupaten=$kode_kab[0];
-  $kode_provinsi=$kode_kab[1];
-$nama_mu=mysql_fetch_row(mysql_query("select kd_mu,nama from t4t_mu where kab_kode='$kode_kabupaten' and prov_code='$kode_provinsi'"));
+
+$data     = $conn->query("SELECT * from t4t_petani where id_desa='$id_desa' and kd_petani='$kd_petani'")->fetch(PDO::FETCH_OBJ);
+$kode_kab = $conn->query("SELECT kab_code,prov_code FROM t4t_kab where nama='$nama_kab'")->fetch(PDO::FETCH_OBJ);
+  $kode_kabupaten=$kode_kab->kab_code;
+  $kode_provinsi=$kode_kab->prov_code;
+$nama_mu  =$conn->query("SELECT kd_mu,nama from t4t_mu where kab_kode='$kode_kabupaten' and prov_code='$kode_provinsi'")->fetch(PDO::FETCH_OBJ);
 
  ?>
 <div class="">
@@ -45,7 +46,9 @@ $nama_mu=mysql_fetch_row(mysql_query("select kd_mu,nama from t4t_mu where kab_ko
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Desa <span class="required"></span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12 font-hijau">
+                      <label class="control-label">
                         <?php echo $nama_desa.' - Kec.'.$nama_kec.' - Kab.'.$nama_kab.'' ?> 
+                      </label>
                       </div>
                     </div>
 
@@ -53,56 +56,58 @@ $nama_mu=mysql_fetch_row(mysql_query("select kd_mu,nama from t4t_mu where kab_ko
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">No. Partisipan <span class="required"></span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12 font-hijau">
-                        <?php echo $data['kd_petani'] ?>
+                      <label class="control-label">
+                        <?php echo $data->kd_petani ?>
+                      </label>
                       </div>
                     </div>
                     
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama Partisipan <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama Partisipan <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $data['nm_petani'] ?>">
+                        <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $data->nm_petani ?>">
                       </div>
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">No. KTP <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">No. KTP <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="text" class="form-control" data-inputmask="'mask' : '9999-9999-9999-9999'" value="<?php echo $data['no_ktp'] ?>">
+                        <input type="text" class="form-control" data-inputmask="'mask' : '9999-9999-9999-9999'" value="<?php echo $data->no_ktp ?>">
                         
                       </div>
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Alamat Partisipan <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Alamat Partisipan <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <textarea type="text" required="required" class="form-control col-md-7 col-xs-12"><?php echo $data['alamat'] ?></textarea>
+                        <textarea type="text" required="required" class="form-control col-md-7 col-xs-12"><?php echo $data->alamat ?></textarea>
                       </div>
                     </div>
 <?php 
-$kel_tani=mysql_fetch_assoc(mysql_query("select * from anggota_kel_tani where kd_petani='$kd_petani' and id_desa='$id_desa' "));
-echo mysql_error();
+$kel_tani=$conn->query("SELECT * from anggota_kel_tani where kd_petani='$kd_petani' and id_desa='$id_desa' ")->fetch(PDO::FETCH_OBJ);
+
  ?>
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kelompok Tani <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kelompok Tani <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control">
                           <option><?php 
-                          if ($kel_tani['nama_kel_tani']=="") {
+                          if ($kel_tani->nama_kel_tani=="") {
                             echo "Tidak memiliki";
                           }else{ 
-                            echo $kel_tani['nama_kel_tani']; 
+                            echo $kel_tani->nama_kel_tani; 
                           } ?></option>
 
                           <?php 
-                          $nama_kel_tani=mysql_query("select nama_kel_tani from kel_tani where kd_mu='$nama_mu[0]' and aktif=1");
-                          while ($data_keltani=mysql_fetch_row($nama_kel_tani)) {
+                          $nama_kel_tani=$conn->query("SELECT nama_kel_tani from kel_tani where kd_mu='$nama_mu->kd_mu' and aktif=1");
+                          while ($data_keltani=$nama_kel_tani->fetch(PDO::FETCH_OBJ)) {
                             
                            ?>
-                          <option><?php echo $data_keltani[0] ?></option>
+                          <option><?php echo $data_keltani->nama_kel_tani ?></option>
                           <?php 
                           }
                            ?>
@@ -111,7 +116,7 @@ echo mysql_error();
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Keanggotaan Dalam Kelompok <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Keanggotaan Dalam Kelompok <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control">
@@ -121,7 +126,7 @@ echo mysql_error();
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Jenis Kelamin <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Jenis Kelamin <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control">
@@ -131,7 +136,7 @@ echo mysql_error();
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Umur <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Umur <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
@@ -139,14 +144,14 @@ echo mysql_error();
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Profesi <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Profesi <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control">
-                          <option><?php if ($data['profesi']=='') {
+                          <option><?php if ($data->profesi=='') {
                             echo "Belum ada data";
                           }else{
-                            echo $data['profesi'];
+                            echo $data->profesi;
                             } ?></option>
 
                             <option>Petani / Nelayan</option>
@@ -158,7 +163,7 @@ echo mysql_error();
                     </div>
                     
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tujuan Menanam Pohon <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tujuan Menanam Pohon <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control">
@@ -168,7 +173,7 @@ echo mysql_error();
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Rencana Penebangan <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Rencana Penebangan <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control">
@@ -178,7 +183,7 @@ echo mysql_error();
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Pendapatan / Tahun <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Pendapatan / Tahun <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
@@ -186,7 +191,7 @@ echo mysql_error();
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Persepsi Tentang T4T <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Persepsi Tentang T4T <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">

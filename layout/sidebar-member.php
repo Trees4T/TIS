@@ -9,6 +9,5 @@
         <li><a href="?<?php echo paramEncrypt('hal=member-report-trees-planted')?>">Trees Planted </a></li>
         <!-- <li><a href="?<?php echo paramEncrypt('hal=member-report-contribution')?>">Contribution</a> -->
         <!-- <li><a href="?<?php echo paramEncrypt('hal=member-report-win')?>">WIN</a></li> -->
-        </li>
     </ul>
 </li>

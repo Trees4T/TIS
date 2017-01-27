@@ -1,4 +1,3 @@
-
 <div class="">
 
           <div class="page-title">
@@ -54,7 +53,7 @@
                         $bln=date("m");
                         $thn=date("Y");
 
-                        $order_no=mysql_fetch_array(mysql_query("select no_order from t4t_order where no_order like '%T4T-E/$bln/$thn%' ORDER BY no desc limit 1"));
+                        $order_no=$conn->query("select no_order from t4t_order where no_order like '%T4T-E/$bln/$thn%' ORDER BY no desc limit 1")->fetch();
 
                         $ex_order=explode("/", $order_no[0]);
                         $gen_order=$ex_order[0]+1;
@@ -71,7 +70,7 @@
                       <div class="col-md-4 font-hijau">
                         <?php 
                         $kode=$_SESSION['kode'];
-                        $comp_name=mysql_fetch_array(mysql_query("select nama from t4t_partisipan where id='$kode'"));
+                        $comp_name=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
                         ?>
                         <label class="control-label"><?php echo $comp_name[0]; ?></label>
                         <input type="hidden" name="comp" value="<?php echo $comp_name[0]; ?>" >
@@ -131,8 +130,8 @@
                       <div class="col-md-4">
                         <ul class="to_do">
                         <?php 
-                        $wood=mysql_query("select * from t4t_pohonen");
-                        while ($data_pohon=mysql_fetch_array($wood)) {
+                        $wood=$conn->query("select * from t4t_pohonen");
+                        while ($data_pohon=$wood->fetch()) {
                           
                          ?>
                             <li>
@@ -165,8 +164,8 @@
                           </thead>
                           <tbody>
                           <?php 
-                          $other=mysql_query("select * from t4t_req");
-                          while ($data_other=mysql_fetch_array($other)) {
+                          $other=$conn->query("select * from t4t_req");
+                          while ($data_other=$other->fetch()) {
                             
                            ?>
                             <tr>
@@ -191,7 +190,7 @@
                     </div> -->
 
                     <?php 
-                      $pic_name=mysql_fetch_array(mysql_query("select pic from t4t_partisipan where id='$kode'"));
+                      $pic_name=$conn->query("select pic from t4t_partisipan where id='$kode'")->fetch();
                        if ($pic_name[0]=="") {
                          #none
                        }else{

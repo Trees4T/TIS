@@ -15,6 +15,10 @@
             $group='Field Coordinator';
         }elseif ($id_group=='part') {
             $group='Participant';
+        }elseif ($id_group=='admoff') {
+            $group='Admin Officer';
+        }elseif ($id_group=='fin') {
+            $group='Finance';
         }
     ?>
 
@@ -34,11 +38,11 @@
                         <?php 
                         if ($id_group=='fc') {
                             $kode=$_SESSION['kode'];
-                            $foto_fc=mysql_fetch_row(mysql_query("select foto from t4t_fc where kode='$kode'"));
+                            $foto_fc  = $conn->query("SELECT foto from t4t_fc where kode='$kode'")->fetch(PDO::FETCH_OBJ);
                         ?>
-                            <img src="../../management_t4t/gbr/poto/<?php echo $foto_fc[0] ?>" alt="..." class="img-circle profile_img" height='60' width='60'>
+                            <img src="../../management_t4t/gbr/poto/<?php echo $foto_fc->foto ?>" alt="..." class="img-circle profile_img" height='60' width='60'>
                         <?php
-                        }elseif ($id_group=='part') {
+                        }elseif ($id_group=='part' or $id_group=='admoff' or $id_group=='fin') {
                             # code...
                         }else{
                          ?>
@@ -54,6 +58,8 @@
                             <h2><?php echo $_SESSION['nama_part'] ?></h2>
                         </div><br><br><br><br>
                         <?php
+                        }elseif($id_group=='admoff' or $id_group=='fin'){
+                        ### Empty ###
                         }else{
                          ?>
                         <div class="profile_info">
@@ -78,7 +84,11 @@
                                 include 'sidebar-fc.php';
                             }elseif ($_SESSION['level']=="part") {
                                 include 'sidebar-member.php';
-                            } 
+                            }elseif ($_SESSION['level']=="admoff") {
+                                include 'sidebar-admoff.php';
+                            }elseif ($_SESSION['level']=="fin") {
+                                include 'sidebar-fin.php';
+                            }    
 
                             ?>
 
@@ -91,7 +101,11 @@
 
                     </div>
                     <!-- /sidebar menu -->
-
+                    <?php 
+                    if ($id_group=='admoff' or $id_group=='fin') {
+                        # code...
+                    }else{
+                    ?>
                     <!-- /menu footer buttons -->
                     <div class="sidebar-footer hidden-small">
                         <a href="?<?php echo paramEncrypt('hal=member-setting-account')?>" data-toggle="tooltip" data-placement="top" title="Account">
@@ -108,6 +122,8 @@
                         </a>
                     </div>
                     <!-- /menu footer buttons -->
+                    <?php 
+                    } ?>
                 </div>
             </div>
 
@@ -124,13 +140,13 @@
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                 <?php 
-                                if ($id_group=='part') {
+                                if ($id_group=='part' or $id_group=='admoff' or $id_group=='fin') {
                                     echo " | ";
                                 }else{
                                  ?>
                                     <img src="<?php 
                                     if ($id_group=='fc') {
-                                        echo "../../management_t4t/gbr/poto/".$foto_fc[0]."";
+                                        echo "../../management_t4t/gbr/poto/".$foto_fc->foto."";
                                     }else{
                                         echo "../images/default.png";
                                     }
@@ -141,30 +157,39 @@
                                      <?php 
                                      if ($id_group=='part') {
                                          echo $_SESSION['nama_part'];
+                                     }elseif($id_group=='admoff'){
+                                         echo "Admin Officer";
+                                     }elseif($id_group=='fin'){
+                                         echo "Finance";
                                      }else{
-                                     echo $username;
+                                         echo $username;
                                      } ?>
                                     
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
+                            <?php 
+                            if ($id_group=='admoff' or $id_group=='fin') {
+                            ?>
+                                <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
+                                    <li><a href="?<?php echo paramEncrypt('hal=change-password')?>">  Change Password</a>
+                                    </li>
+                                    <li><a href="../login/logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                    </li>
+                                </ul>
+                            <?php
+                            }else{
+                            ?>
                                 <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
                                     <li><a href="?<?php echo paramEncrypt('hal=member-setting-account')?>">  Setting</a>
                                     </li>
                                     <li><a href="?<?php echo paramEncrypt('hal=change-password')?>">  Change Password</a>
                                     </li>
-                                    <!-- 
-                                    <li>
-                                        <a href="javascript:;">
-                                            <span class="badge bg-red pull-right">50%</span>
-                                            <span>Settings</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">Help</a>
-                                    </li> -->
                                     <li><a href="../login/logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                                     </li>
                                 </ul>
+                            <?php 
+                            } 
+                            ?>
                             </li>
 
                             <li role="" class="">
@@ -214,6 +239,11 @@
             $id_lahan   =$var['id_lahan'];
             $mon        =$var['mon'];
             ############# fc ############
+
+            ############# Adm Off #############
+            #order list
+            $id_member  =$var['id_member'];
+            ############# Adm Off #############
 
             //concate dengan nama file
             $halaman="../pages/$page.php";

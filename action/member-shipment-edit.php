@@ -11,13 +11,13 @@ if ($_POST['no_ship']) {
 
 
 
-$no_shipment=$_POST['no_ship'];
-$bl=$_POST['bl'];
+$no_shipment =$_POST['no_ship'];
+$bl 		 =$_POST['bl'];
 
-$tglbl=$_POST['tglbl'];
-$exp_tglbl=explode("/", $tglbl);
-$tgl=$exp_tglbl[2]."-".$exp_tglbl[1]."-".$exp_tglbl[0];
-$tanggal=date("Y-m-d");
+$tglbl 		 =$_POST['tglbl'];
+$exp_tglbl 	 =explode("/", $tglbl);
+$tgl 		 =$exp_tglbl[2]."-".$exp_tglbl[1]."-".$exp_tglbl[0];
+$tanggal 	 =date("Y-m-d");
 $tanggal_indo=date("d/m/Y H:i:s");
 
 $wins_used		=$_POST['wins_used'];
@@ -30,10 +30,12 @@ $c_code 		=$_POST['c_code'];
 
 $waktu=date("His");
 
-$company=mysql_fetch_row(mysql_query("select nama from t4t_partisipan where id='$id_comp'"));
+$company=$conn->query("select nama from t4t_partisipan where id='$id_comp'")->fetch();
 
-$cek_no_bl=mysql_fetch_row(mysql_query("select bl from t4t_shipment where no_shipment='$no_shipment' "));
-$cek_status_bl=mysql_fetch_row(mysql_query("select bl from t4t_shipment where bl='$bl'"));
+$cek_no_bl=$conn->query("select bl from t4t_shipment where no_shipment='$no_shipment' ")->fetch();
+
+$cek_status_bl=$conn->query("select bl from t4t_shipment where bl='$bl'")->fetch();
+
 
 	if ($cek_no_bl[0]==$bl or $cek_status_bl[0]==false) {
 			
@@ -49,7 +51,7 @@ $cek_status_bl=mysql_fetch_row(mysql_query("select bl from t4t_shipment where bl
 				$namafile2=$no_shipment.'-'.$waktu.'-'.$namafile;
 
 				$tujuan="../../management_t4t/gbr/shipment/$namafile2";
-				$target=mysql_fetch_array(mysql_query("select foto from t4t_shipment where no_shipment='$no_shipment'"));
+				$target=$con->query("select foto from t4t_shipment where no_shipment='$no_shipment'")->fetch();
 				$target2="../../management_t4t/gbr/shipment/$target[0]";
 				
 				
@@ -66,9 +68,9 @@ $cek_status_bl=mysql_fetch_row(mysql_query("select bl from t4t_shipment where bl
 
 				copy($tmp_name,$tujuan);
 
-				mysql_query("update t4t_shipment set bl='$bl',bl_tgl='$tgl',wins_used='$wins_used',item_qty='$item_qty',kota_tujuan='$destination',note='$note',buyer='$c_code',foto='$namafile2' where no_shipment='$no_shipment'");
+				$conn->query("update t4t_shipment set bl='$bl',bl_tgl='$tgl',wins_used='$wins_used',item_qty='$item_qty',kota_tujuan='$destination',note='$note',buyer='$c_code',foto='$namafile2' where no_shipment='$no_shipment'")->fetch();
 					
-					mysql_error();
+					//mysql_error();
 					
 				}else{
 					echo $error_max_file="max file is 200kb";
@@ -81,11 +83,11 @@ $cek_status_bl=mysql_fetch_row(mysql_query("select bl from t4t_shipment where bl
 				#
 			}else{
 				#hapus order
-				mysql_query("update t4t_shipment set no_order='' where no_shipment='$no_shipment'");
+				$conn->query("update t4t_shipment set no_order='' where no_shipment='$no_shipment'")->fetch();
 			$jml_order=count($_POST['order']);
 			for ($i=0; $i < $jml_order ; $i++) { 
 
-				$old_order=mysql_fetch_array(mysql_query("select no_order from t4t_shipment where no_shipment='$no_shipment'"));
+				$old_order=$conn->query("select no_order from t4t_shipment where no_shipment='$no_shipment'")->fetch();
 				$old_order2=$old_order[0];
 				//echo $old_order2."<br>";
 
@@ -98,20 +100,20 @@ $cek_status_bl=mysql_fetch_row(mysql_query("select bl from t4t_shipment where bl
 					$data_order=$old_order2.", ".$no_order;
 				}
 
-				 mysql_query("update t4t_shipment set no_order='$data_order' where no_shipment='$no_shipment'");
+				 $conn->query("update t4t_shipment set no_order='$data_order' where no_shipment='$no_shipment'")->fetch();
 
 			  }
 			}
 
 			//order container
-			$jml_cont=mysql_fetch_array(mysql_query("select count(no) from t4t_container"));
+			$jml_cont=$conn->query("select count(no) from t4t_container")->fetch();
 			$jml_cont[0];
 			for ($i=1; $i <= $jml_cont[0] ; $i++) { 
 				$cont=$_POST['cont'.$i];
 				// mysql_query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_shipment','$i','$cont','$tanggal')");
-				mysql_query("update t4t_ordercontainer set jml='$cont' where no_order='$no_shipment' and no_cont='$i'");
+				$conn->query("update t4t_ordercontainer set jml='$cont' where no_order='$no_shipment' and no_cont='$i'")->fetch();
 			  }
-			 $no_order_get=mysql_fetch_row(mysql_query("select no_order from t4t_shipment where no_shipment='$no_shipment'"));
+			 $no_order_get=$conn->query("select no_order from t4t_shipment where no_shipment='$no_shipment'")->fetch();
 			  ################email##############
 			  require '../assets/PHPMailer/PHPMailerAutoload.php';
 

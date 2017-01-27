@@ -2,7 +2,7 @@
 session_start();
 include '../../koneksi/koneksi.php';
 $kode=$_SESSION['kode'];
-$jml_win=mysql_fetch_array(mysql_query("select count(*) from t4t_wins where id_part='$kode' and bl!='' and no_shipment!='' "));
+$jml_win=$conn->query("select count(*) from t4t_wins where id_part='$kode' and bl!='' and no_shipment!='' ")->fetch();
  ?>
 <div class="left"></div>
     <div class="center">

@@ -2,7 +2,7 @@
 session_start();
 include '../../koneksi/koneksi.php';
 $kode=$_SESSION['kode'];
-$contrib=mysql_fetch_array(mysql_query("select sum(fee) from t4t_shipment where id_comp='$kode' and acc_paid='1' "));
+$contrib=$conn->query("select sum(fee) from t4t_shipment where id_comp='$kode' and acc_paid='1' ")->fetch();
  ?>
 <div class="left"></div>
                         <div class="center">

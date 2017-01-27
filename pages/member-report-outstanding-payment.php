@@ -1,3 +1,8 @@
+<?php 
+$actual_link0 = "$_SERVER[REQUEST_URI]";
+$actual_link1 = explode("?", $actual_link0);
+$actual_link  = $actual_link1[1];
+?>
 <div class="">
 
           <div class="page-title">
@@ -44,6 +49,16 @@ if ($_SESSION['message']==2) {
 <?php
 }
 
+if ($_SESSION['message']==3) {
+?>
+    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+    </button>
+    <b><i class="fa fa-ban"></i></b> Please choose member.
+    </div>
+<?php
+}
+
 unset($_SESSION['message']);
 ?>
 
@@ -55,10 +70,15 @@ unset($_SESSION['message']);
                                                 <?php 
                                                 date_default_timezone_set('Asia/Jakarta');
                                                 $waktu    = date("d/m/Y");
-                                                $bln_lalu = date("m")-1;
                                                 $tahun    = date("Y");
+                                                $bln_lalu = date("m")-1;
+                                                    if ($bln_lalu=='0') {
+                                                        $bln_lalu='12';
+                                                        $tahun=$tahun-1;
+                                                    }
+                                                
                                                  ?>
-                                              <label class="control-label">Date Range BL <span class="required">*</span>
+                                              <label class="control-label">Date Range BL <span class="required red">*</span>
                                               </label><br>  
                                                     <div class="controls">
                                                         <div class="input-prepend input-group">
@@ -69,8 +89,9 @@ unset($_SESSION['message']);
                                                 </div>
                                             </fieldset>
 
+                                            <fieldset>
                                             <div class="control-group">
-                                              <label class="control-label">Payment Status <span class="required">*</span>
+                                              <label class="control-label">Payment Status <span class="required red">*</span>
                                               </label><br>
                                               <div class="controls col-sm-3">
                                                 <select class="form-control" name="status">
@@ -79,12 +100,39 @@ unset($_SESSION['message']);
                                                   <option value="1">Paid</option>
                                                   <option value="0">Unpaid</option>
                                                 </select>
-                                                
                                               </div>
-
                                             </div>
+                                            </fieldset>
+                                            <?php 
+                                            if ($_SESSION['level']=='fin') {
+                                            ?>
+                                            <fieldset>
+                                            <div class="control-group">
+                                              <label class="control-label">Member <span class="required red">*</span>
+                                              </label><br>
+                                              <div class="controls col-sm-5">
+                                                <select class="form-control" name="member" required>
+                                                  <option value="null"> - Choose -</option>
+                                               <?php  
+                                               $nama = $conn->query("select id,nama from t4t_partisipan order by nama");
+                                               while ($data_nama=$nama->fetch()) {                                               
+                                               ?>   
+                                                  <option value="<?php echo $data_nama[0] ?>"><?php echo $data_nama[1] ?></option>
+                                                <?php 
+                                                } ?>
+                                                 
+                                                </select>
+                                              </div>
+                                            </div>
+                                            </fieldset>
+                                            <?php 
+                                            }
+                                             ?>
 
                                             <br>
+
+                                            <input type="hidden" name="link" value="<?php echo $actual_link ?>">
+
                                             <div class="ln_solid"></div>
                                             <div class="form-group">
                                               <div class="col-md-5 col-md-offset-5">

@@ -42,7 +42,7 @@ $id_order=$_SESSION['id_order'];
                   unset($_SESSION['order']);
                    ?>
                   
-                  <center><h2><strong>SHIPMENT VALIDATION APPLICATION FORM</strong></h2></center>
+                  <center><h2><strong>ORDER HANG TAGS / WINS</strong></h2></center>
                   <div class="ln_solid"></div>
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="../action/member-order-edit.php">
                     <font size="">
@@ -54,7 +54,7 @@ $id_order=$_SESSION['id_order'];
                       </label>
                       <div class="col-md-4 font-hijau">
                         <?php 
-                        $data=mysql_fetch_array(mysql_query("select * from t4t_order where no='$id_order'"));
+                        $data=$conn->query("select * from t4t_order where no='$id_order'")->fetch();
                         
                          ?>
                          <label class="control-label"><?php echo $data['no_order']; ?></label>
@@ -68,7 +68,7 @@ $id_order=$_SESSION['id_order'];
                       <div class="col-md-4 font-hijau">
                         <?php 
                         $kode=$_SESSION['kode'];
-                        $comp_name=mysql_fetch_array(mysql_query("select nama from t4t_partisipan where id='$kode'"));
+                        $comp_name=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
                        
                         ?>
                         <label class="control-label"><?php  echo $comp_name[0]; ?></label>
@@ -96,21 +96,21 @@ $id_order=$_SESSION['id_order'];
                         <tbody>
                         <?php 
                         $no_order=$data['no_order'];
-                        $jml_cont=mysql_fetch_array(mysql_query("select count(no) from t4t_ordercontainer where no_order='$no_order'"));
+                        $jml_cont=$conn->query("select count(no) from t4t_ordercontainer where no_order='$no_order'")->fetch();
                         $i=1;
-                        $container=mysql_query("select * from t4t_ordercontainer where no_order='$no_order' group by tgl_stuf");
-                        while ($load_cont=mysql_fetch_array($container)) {
+                        $container=$conn->query("select * from t4t_ordercontainer where no_order='$no_order' group by tgl_stuf");
+                        while ($load_cont=$container->fetch()) {
                           $ii=$i-1;
 
                           $tgl_stuf=$load_cont['tgl_stuf'];
                           $ex_tgl=explode("-", $tgl_stuf);
                           $tanggal_stf=$ex_tgl[2]."-".$ex_tgl[1]."-".$ex_tgl[0];  
 
-                          $container1=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_cont=1 and no_order='$no_order' limit $ii,1")); 
-                          $container2=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_cont=2 and no_order='$no_order' limit $ii,1")); 
-                          $container3=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_cont=3 and no_order='$no_order' limit $ii,1")); 
-                          $container4=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_cont=4 and no_order='$no_order' limit $ii,1")); 
-                          $container5=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_cont=5 and no_order='$no_order' limit $ii,1"));                        
+                          $container1=$conn->query("select jml from t4t_ordercontainer where no_cont=1 and no_order='$no_order' limit $ii,1")->fetch();
+                          $container2=$conn->query("select jml from t4t_ordercontainer where no_cont=2 and no_order='$no_order' limit $ii,1")->fetch();
+                          $container3=$conn->query("select jml from t4t_ordercontainer where no_cont=3 and no_order='$no_order' limit $ii,1")->fetch();
+                          $container4=$conn->query("select jml from t4t_ordercontainer where no_cont=4 and no_order='$no_order' limit $ii,1")->fetch();
+                          $container5=$conn->query("select jml from t4t_ordercontainer where no_cont=5 and no_order='$no_order' limit $ii,1")->fetch();                 
                          ?>
 <td><input type="" name="qty" value="QTY" class="form-control" readonly=""></td>
 <td><input type="number" name="n20<?php echo $i ?>" class="form-control" min="0" value="<?php echo $container1[0] ?>"></td>
@@ -151,11 +151,11 @@ $id_order=$_SESSION['id_order'];
                       <div class="col-md-4">
                         <ul class="to_do">
                         <?php 
-                        $wood=mysql_query("select * from t4t_pohonen");
+                        $wood=$conn->query("select * from t4t_pohonen");
 
-                        while ($data_pohon=mysql_fetch_array($wood)) {
+                        while ($data_pohon=$wood->fetch()) {
                           $id_pohon=$data_pohon[0];
-                          $pohon=mysql_fetch_array(mysql_query("select a.id_pohon,b.no from t4t_pohonen a, t4t_orderphn b where a.id_pohon=b.no_phnen2 and no_order='$no_order' and a.id_pohon=$id_pohon"));
+                          $pohon=$conn->query("select a.id_pohon,b.no from t4t_pohonen a, t4t_orderphn b where a.id_pohon=b.no_phnen2 and no_order='$no_order' and a.id_pohon=$id_pohon")->fetch();
                          ?>
                             <li>
                             <?php 
@@ -180,7 +180,7 @@ $id_order=$_SESSION['id_order'];
                       <label class="control-label col-md-5" for="first-name"> Quantity Hang Tags Requested <span class="required"></span>
                       </label>
                       <div class="col-md-2">
-                      <?php $jml_tag=mysql_fetch_array(mysql_query("select jml_wins from t4t_order where no_order='$no_order'")) ?>
+                      <?php $jml_tag=$conn->query("select jml_wins from t4t_order where no_order='$no_order'")->fetch(); ?>
                         <input type="number" class="form-control" min="1" name="tags" value="<?php echo $jml_tag[0] ?>">
                       </div>
                     </div>
@@ -197,12 +197,11 @@ $id_order=$_SESSION['id_order'];
                           </thead>
                           <tbody>
                           <?php 
-                          $other=mysql_query("select * from t4t_req");
-                          while ($data_other=mysql_fetch_array($other)) {
+                          $other=$conn->query("select * from t4t_req");
+                          while ($data_other=$other->fetch()) {
                             
                             $no_req=$data_other[0];
-                            $request=mysql_fetch_array(mysql_query("select a.jml,b.no from t4t_orderrequest a, t4t_req b where a.no_req=b.no and a.no_order='$no_order' and a.no_req=$no_req "));
-
+                            $request=$conn->query("select a.jml,b.no from t4t_orderrequest a, t4t_req b where a.no_req=b.no and a.no_order='$no_order' and a.no_req=$no_req ")->fetch();
                            ?>
                             <tr>
                               <td><?php echo $data_other[1] ?></td>
@@ -226,7 +225,7 @@ $id_order=$_SESSION['id_order'];
                     </div> -->
 
                     <?php 
-                      $pic_name=mysql_fetch_array(mysql_query("select pic from t4t_partisipan where id='$kode'"));
+                      $pic_name=$conn->query("select pic from t4t_partisipan where id='$kode'")->fetch();
                        if ($pic_name[0]=="") {
                          #none
                        }else{

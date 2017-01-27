@@ -10,20 +10,20 @@ $kode=$_SESSION['kode'];
                     element: 'graph_line',
                     data: [
                     <?php 
-                    $cek_order_pertama=mysql_fetch_row(mysql_query("select substr(wkt_order,1,4) as th from t4t_order where id_comp='$kode' order by th limit 1"));
+                    $cek_order_pertama=$conn->query("SELECT substr(wkt_order,1,4) as th from t4t_order where id_comp='$kode' order by th limit 1")->fetch();
                     $jarak=$tahun-$cek_order_pertama[0]+1;
 
                     for ($i=0; $i < $jarak ; $i++) { 
                         $period=$tahun-$i;
-                        $q_tag=mysql_query("select sum(jml_wins) as jml from t4t_order where id_comp='$kode' AND wkt_order like '%$period%' and acc=1");
-                        $tag=mysql_fetch_row($q_tag);
+                        $q_tag=$conn->query("SELECT sum(jml_wins) as jml from t4t_order where id_comp='$kode' AND wkt_order like '%$period%' and acc=1");
+                        $tag=$q_tag->fetch();
 
-                    $or_req_tt=mysql_query("select sum(b.jml) from t4t_order a, t4t_orderrequest b where a.no_order=b.no_order and a.id_comp='$kode' and b.no_req=1 AND wkt_order like '%$period%' and a.acc=1");
-                    $or_req_a1=mysql_query("select sum(b.jml) from t4t_order a, t4t_orderrequest b where a.no_order=b.no_order and a.id_comp='$kode' and b.no_req=2 AND wkt_order like '%$period%' a.acc=1");
-                    $or_req_a4=mysql_query("select sum(b.jml) from t4t_order a, t4t_orderrequest b where a.no_order=b.no_order and a.id_comp='$kode' and b.no_req=3 AND wkt_order like '%$period%' a.acc=1");
-                    $tt=mysql_fetch_row($or_req_tt);
-                    $a1=mysql_fetch_row($or_req_a1);
-                    $a4=mysql_fetch_row($or_req_a4);
+                    $or_req_tt=$conn->query("SELECT sum(b.jml) from t4t_order a, t4t_orderrequest b where a.no_order=b.no_order and a.id_comp='$kode' and b.no_req=1 AND wkt_order like '%$period%' and a.acc=1");
+                    $or_req_a1=$conn->query("SELECT sum(b.jml) from t4t_order a, t4t_orderrequest b where a.no_order=b.no_order and a.id_comp='$kode' and b.no_req=2 AND wkt_order like '%$period%' a.acc=1");
+                    $or_req_a4=$conn->query("SELECT sum(b.jml) from t4t_order a, t4t_orderrequest b where a.no_order=b.no_order and a.id_comp='$kode' and b.no_req=3 AND wkt_order like '%$period%' a.acc=1");
+                    $tt=$or_req_tt->fetch();
+                    $a1=$or_req_a1->fetch();
+                    $a4=$or_req_a4->fetch();
 
                     ?>
                          {year: '<?php echo $period ?>', hang: <?php echo json_encode($tag[0]) ?>, posta1: <?php echo json_encode($a1[0]) ?>, posta4: <?php echo json_encode($a4[0]) ?>, table_t: <?php echo json_encode($tt[0]) ?> },

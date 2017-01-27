@@ -7,7 +7,12 @@ include '../../koneksi/koneksi.php';
 $awal 	=$_POST['awal'];
 $akhir 	=$_POST['akhir']; 
 $status =$_POST['status']; 
-$kode 	=$_SESSION['kode']; 
+if ($_SESSION['level']=='fin') {
+	$kode 	=$_POST['member']; 
+}else{
+	$kode 	=$_SESSION['kode']; 
+}
+
 /**
  * PHPExcel
  *
