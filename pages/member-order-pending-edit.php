@@ -42,7 +42,7 @@ $id_order=$_SESSION['id_order'];
                   unset($_SESSION['order']);
                    ?>
                   
-                  <center><h2><strong>SHIPMENT VALIDATION APPLICATION FORM</strong></h2></center>
+                  <center><h2><strong>ORDER HANG TAGS / WINS</strong></h2></center>
                   <div class="ln_solid"></div>
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="../action/member-order-edit.php">
                     <font size="">

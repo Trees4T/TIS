@@ -1,3 +1,8 @@
+<?php 
+$actual_link0 = "$_SERVER[REQUEST_URI]";
+$actual_link1 = explode("dashboard/", $actual_link0);
+$actual_link  = $actual_link1[1];
+?>
 <div class="">
                 <div class="page-title">
                     <div class="title_left">
@@ -59,10 +64,12 @@
                                         </div>
                                     </div>
                                     
+                                    <input type="hidden" name="link" value="<?php echo $actual_link ?>">
+
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-md-offset-3">
-                                            <a href="?<?php echo paramEncrypt('hal=change-password')?>" class="btn btn-primary">Reset</a>
+                                            <a href="?<?php echo paramEncrypt('hal=change-password')?>" class="btn btn-primary">Clear</a>
                                             <button id="send" type="submit" name="btn_change_pass" class="btn btn-success">Save Changes</button>
                                         </div>
                                     </div>

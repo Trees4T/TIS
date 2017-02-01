@@ -13,6 +13,7 @@ if (isset($btn_save)) {
   $old_pass =$_POST['old_pass'];
   $password =$_POST['password'];
   $password2=$_POST['password2'];
+  $link     =$_POST['link'];
 
   $md5_password=md5($old_pass);
   $new_password=md5($password);
@@ -22,13 +23,15 @@ if (isset($btn_save)) {
   if ($cek[0]==false) {
 
     $_SESSION['success']=2;
-    header("location:../dashboard/member.php?6395214e8e018ee999140ed8f9a794dfd6f00c2062bf8aa477535c4ae459b986");
+    header("location:../dashboard/$link");
+    //header("location:../dashboard/member.php?6395214e8e018ee999140ed8f9a794dfd6f00c2062bf8aa477535c4ae459b986");
     
   }else{
 
-  $change=mysql_query("update otenuser set passwd='$new_password' where kode='$kode'");  
-  $_SESSION['success']=1;
-  header("location:../dashboard/member.php?6395214e8e018ee999140ed8f9a794dfd6f00c2062bf8aa477535c4ae459b986");
+    $change=mysql_query("update otenuser set passwd='$new_password' where kode='$kode'");  
+    $_SESSION['success']=1;
+    header("location:../dashboard/$link");
+    //header("location:../dashboard/member.php?6395214e8e018ee999140ed8f9a794dfd6f00c2062bf8aa477535c4ae459b986");
 
   }
 

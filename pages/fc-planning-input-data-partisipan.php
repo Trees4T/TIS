@@ -44,7 +44,7 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
 
                ?>
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Desa <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Desa <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control" name="desa" onchange="this.form.submit()">
@@ -78,18 +78,20 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">No. Partisipan <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">No. Partisipan <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12 font-hijau">
+                       <label class="control-label">
                         <?php  
                           $no_part=mysql_fetch_row(mysql_query("select kd_petani from t4t_petani where id_desa='$_desa' order by kd_petani desc limit 1"));
                           echo $no_part[0]+1;
                         ?>
+                        </label>
                       </div>
                     </div>
                     
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama Partisipan <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama Partisipan <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
@@ -97,7 +99,7 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">No. KTP <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">No. KTP <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <input type="text" class="form-control input" data-inputmask="'mask' : '99-99-99-999999-9999'">
@@ -106,7 +108,7 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Alamat Partisipan <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Alamat Partisipan <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <textarea type="text" required="required" class="form-control col-md-7 col-xs-12"></textarea>
@@ -114,7 +116,7 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kelompok Tani <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kelompok Tani <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control">
@@ -134,7 +136,7 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Keanggotaan Dalam Kelompok <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Keanggotaan Dalam Kelompok <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control">
@@ -144,7 +146,7 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Jenis Kelamin <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Jenis Kelamin <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control">
@@ -156,7 +158,7 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Umur <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Umur <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
@@ -164,7 +166,7 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Profesi <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Profesi <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control">
@@ -179,7 +181,7 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                     </div>
                     
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tujuan Menanam Pohon <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tujuan Menanam Pohon <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control">
@@ -189,7 +191,7 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Rencana Penebangan <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Rencana Penebangan <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control">
@@ -199,7 +201,7 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Pendapatan / Tahun <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Pendapatan / Tahun <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
@@ -207,7 +209,7 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Persepsi Tentang T4T <span class="required">*</span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Persepsi Tentang T4T <span class="required red">*</span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
@@ -218,7 +220,7 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Foto <span class="required"></span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="file"> 
+                        <input type="file" class="form-control"> 
                       </div>
                     </div>     
                      

@@ -2516,6 +2516,10 @@ legend {
     font-weight: bold;
 }
 
+.font-bold {
+    font-weight: bold;
+}
+
 .font-hijau-big {
     color:green;
     font-weight: bold;

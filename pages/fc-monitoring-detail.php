@@ -1,16 +1,16 @@
 <?php 
 $ta=$_SESSION['ta'];
-  $_ta=mysql_fetch_row(mysql_query("select kab_code,prov_code,nama from t4t_tamaster where kd_ta='$ta'"));
-$nama_mu=mysql_fetch_row(mysql_query("select kd_mu,nama from t4t_mu where kab_kode='$_ta[0]' and prov_code='$_ta[1]'"));
+  $_ta=$conn->query("SELECT kab_code,prov_code,nama from t4t_tamaster where kd_ta='$ta'")->fetch();
+$nama_mu=$conn->query("SELECT kd_mu,nama from t4t_mu where kab_kode='$_ta[0]' and prov_code='$_ta[1]'")->fetch();
 
-$data=mysql_fetch_array(mysql_query("select * from t4t_lahan where no='$id_lahan'"));
+$data=$conn->query("SELECT * from t4t_lahan where no='$id_lahan'")->fetch();
   $id_desa=$data['id_desa'];
   $kd_petani=$data['kd_petani'];
   $jenis_pohon=$data['id_pohon2'];
   $no_lahan=$data['no_lahan'];
 
   //data pohon
-  $rekapmon=mysql_fetch_row(mysql_query("select jml,sht1 from t4t_rekapmon where id_desa='$id_desa' and no_lahan='$no_lahan' and kd_petani='$kd_petani'"));
+  $rekapmon=$conn->query("SELECT jml,sht1 from t4t_rekapmon where id_desa='$id_desa' and no_lahan='$no_lahan' and kd_petani='$kd_petani'")->fetch();
  ?>
 
 
@@ -46,7 +46,7 @@ $data=mysql_fetch_array(mysql_query("select * from t4t_lahan where no='$id_lahan
                         <td class="col-md-5">Nama Petani</td>
                         <td> : </td>
                         <td><?php 
-                        $petani=mysql_fetch_row(mysql_query("select nm_petani,alamat from t4t_petani where id_desa='$id_desa' and kd_petani='$kd_petani'"));
+                        $petani=$conn->query("SELECT nm_petani,alamat from t4t_petani where id_desa='$id_desa' and kd_petani='$kd_petani'")->fetch();
                         echo $petani[0]; ?></td>
                       </tr>
                       <tr>
@@ -63,7 +63,7 @@ $data=mysql_fetch_array(mysql_query("select * from t4t_lahan where no='$id_lahan
                         <td class="col-md-5">Jenis Tanaman</td>
                         <td> : </td>
                         <td><?php 
-                        $jenis=mysql_fetch_row(mysql_query("select nama_pohon from t4t_pohon where id_pohon='$jenis_pohon'"));
+                        $jenis=$conn->query("SELECT nama_pohon from t4t_pohon where id_pohon='$jenis_pohon'")->fetch();
                         echo $jenis[0];
                         ?></td>
                       </tr>

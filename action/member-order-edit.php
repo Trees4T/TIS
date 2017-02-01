@@ -122,7 +122,9 @@ $get_tgl=$tgl2[2]."-".$tgl2[1]."-".$tgl2[0];
 	if ($tgl=="") {
 		#
 	}else{
-		mysql_query("insert into t4t_orderwkt (no,no_order,wkt_kirim) values ('','$no_order','$get_tgl')");
+    mysql_query("update t4t_orderwkt set wkt_kirim='$get_tgl' where no_order='$no_order'");
+		
+    //mysql_query("insert into t4t_orderwkt (no,no_order,wkt_kirim) values ('','$no_order','$get_tgl')");
 	}
 
 }
