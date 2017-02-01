@@ -56,7 +56,11 @@ echo "<div align='center'>
     }elseif ($_SESSION['level']=="fc") {
     	echo '<META HTTP-EQUIV="Refresh" Content="0; URL=../dashboard/fc.php?6deceb77fb286ef25a51ff7ab3efe0cc">'; 
     }elseif ($_SESSION['level']=="part") {
+<<<<<<< HEAD
         echo '<META HTTP-EQUIV="Refresh" Content="0; URL=../dashboard/member.php?bdf39ed9a84403ae14eda12a24f83767">'; 
+=======
+    	echo '<META HTTP-EQUIV="Refresh" Content="0; URL=../dashboard/member.php?bdf39ed9a84403ae14eda12a24f83767">'; 
+>>>>>>> f6c0241a68551097e4b23e066ecf8eb64a1bd10b
     }elseif ($_SESSION['level']=="admoff") {
         echo '<META HTTP-EQUIV="Refresh" Content="0; URL=../dashboard/admin-office.php?dcb6309a5e101c4834be5bfa0aa100be">'; 
     }elseif ($_SESSION['level']=="fin") {

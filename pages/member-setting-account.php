@@ -1,6 +1,10 @@
 <?php 
 $kode=$_SESSION['kode'];
+<<<<<<< HEAD
 $data=$conn->query("select id, nama, alamat, tlp, fax, email, direktur, pic, prod_utama, bhn_utama,email2, email3, website from t4t_partisipan where id='$kode'")->fetch();
+=======
+$data=mysql_fetch_row(mysql_query("select id, nama, alamat, tlp, fax, email, direktur, pic, prod_utama, bhn_utama,email2, email3, website from t4t_partisipan where id='$kode'"));
+>>>>>>> f6c0241a68551097e4b23e066ecf8eb64a1bd10b
 ?>
 <div class="">
 

@@ -10,6 +10,10 @@ date_default_timezone_set('Asia/Jakarta');
 if ($_POST['no_ship']) {
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f6c0241a68551097e4b23e066ecf8eb64a1bd10b
 $no_shipment =$_POST['no_ship'];
 $bl 		 =$_POST['bl'];
 
@@ -50,7 +54,11 @@ $cek_status_bl=$conn->query("select bl from t4t_shipment where bl='$bl'")->fetch
 				$namafile2=$no_shipment.'-'.$waktu.'-'.$namafile;
 
 				$tujuan="../../management_t4t/gbr/shipment/$namafile2";
+<<<<<<< HEAD
 				$target=$conn->query("select foto from t4t_shipment where no_shipment='$no_shipment'")->fetch();
+=======
+				$target=$con->query("select foto from t4t_shipment where no_shipment='$no_shipment'")->fetch();
+>>>>>>> f6c0241a68551097e4b23e066ecf8eb64a1bd10b
 				$target2="../../management_t4t/gbr/shipment/$target[0]";
 				
 				
@@ -181,7 +189,11 @@ $cek_status_bl=$conn->query("select bl from t4t_shipment where bl='$bl'")->fetch
 			   <tr>
 			    <td bgcolor="#0b6454" align="center">
 			    <br>
+<<<<<<< HEAD
 			    <font color="#fff" size="0.5">&copy; '.date("Y").' Trees4Trees&trade; </font>
+=======
+			    <font color="#fff" size="0.5">&copy; 2016 Trees4Trees&trade; </font>
+>>>>>>> f6c0241a68551097e4b23e066ecf8eb64a1bd10b
 			    <br><br>
 			    </td>
 			   </tr>

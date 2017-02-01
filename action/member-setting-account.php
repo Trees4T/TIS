@@ -22,8 +22,13 @@ if (isset($btn_save)) {
   $wood     =$_POST['wood'];
   $pic      =$_POST['pic'];
 
+<<<<<<< HEAD
   $conn->query("update t4t_partisipan set nama='$comp_name', alamat='$address', tlp='$telp', fax='$fax', email='$email1', email2='$email2', email3='$email3', website='$website', direktur='$director', pic='$pic', prod_utama='$wood' where id='$kode'");
   //echo mysql_error();
+=======
+  mysql_query("update t4t_partisipan set nama='$comp_name', alamat='$address', tlp='$telp', fax='$fax', email='$email1', email2='$email2', email3='$email3', website='$website', direktur='$director', pic='$pic', prod_utama='$wood' where id='$kode'");
+  echo mysql_error();
+>>>>>>> f6c0241a68551097e4b23e066ecf8eb64a1bd10b
   $_SESSION['success']=1;
   header("location:../dashboard/member.php?e4744a4ac1300c2709b543daa52128adba8407366100d6893624739e93be6d95");
 
