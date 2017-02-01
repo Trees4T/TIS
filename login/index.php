@@ -82,7 +82,7 @@ if ($_SESSION['kode']!="") {
                             <div class="clearfix"></div>
                             <br />
                             <div>
-                                <h1><img src="../images/logo.png" height="120"> <!-- Trees4Trees&trade; --></h1>
+                                <h1><img src="../images/logo-theme.png" height="120"> <!-- Trees4Trees&trade; --></h1>
 
                                 <p>©<?php echo date("Y") ?> Trees4Trees&trade; All Rights Reserved.  </p>
                             </div>
