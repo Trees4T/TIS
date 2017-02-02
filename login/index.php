@@ -82,9 +82,9 @@ if ($_SESSION['kode']!="") {
                             <div class="clearfix"></div>
                             <br />
                             <div>
-                                <h1><i class="fa fa-tree" style="font-size: 26px;"></i> Trees4Trees&trade;</h1>
+                                <h1><img src="../images/logo-theme.png" width="185"></h1>
 
-                                <p>©2016 Trees4Trees&trade; All Rights Reserved.  </p>
+                                <p>©<?php echo date("Y") ?> Trees4Trees&trade; All Rights Reserved.  </p>
                             </div>
                         </div>
                     </form>
@@ -113,7 +113,7 @@ if ($_SESSION['kode']!="") {
                             <div>
                                 <h1><i class="fa fa-tree" style="font-size: 26px;"></i> Trees4Trees&trade;</h1>
 
-                                <p>©2016 Trees4Trees&trade; All Rights Reserved.  </p>
+                                <p>©<?php echo date("Y") ?> Trees4Trees&trade; All Rights Reserved.  </p>
                             </div>
                         </div>
                     </form>
