@@ -1,4 +1,4 @@
-<?php 
+<?php
 error_reporting(0);
 session_start();
 
@@ -20,20 +20,26 @@ $id_member       =$_POST['id_member'];
 $btn_save_fee    =$_POST['btn_save_fee'];
 $fee             =$_POST['fee'];
 
-$email_member =mysql_fetch_row(mysql_query("select email from t4t_partisipan where id='$id_member'"));
+$email_member =$conn->query("SELECT email from t4t_partisipan where id='$id_member'")->fetch();
 
 date_default_timezone_set('Asia/Jakarta');
-$tahun=date("Y");
+$tahun        =date("Y");
 $tanggal_indo =date("d/m/Y H:i:s");
-$tanggal = date("Y-m-d");
+$tanggal      =date("Y-m-d");
 
-$wkt_shipment=mysql_fetch_row(mysql_query("select wkt_shipment from t4t_shipment where bl='$bl'"));
+$wkt_shipment =$conn->query("SELECT wkt_shipment from t4t_shipment where bl='$bl'")->fetch();
 $data_wkt_ship=$wkt_shipment[0];
 
 if(isset($btn_save_unpaid)) {
+  try {
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $update_acc1=$conn->query("UPDATE t4t_shipment set acc_paid='0',tgl_paid='',wkt_shipment='$data_wkt_ship' where bl='$bl'");
+  } catch (PDOException $e) {
+    $error_acc1 = $e->getMessage();
+  }
 
-  $update_acc1=mysql_fetch_row(mysql_query("update t4t_shipment set acc_paid='0',tgl_paid='',wkt_shipment='$data_wkt_ship' where bl='$bl'"));
-  echo $error_acc1=mysql_error();
+
+//  echo $error_acc1=mysql_error();
 
   if ($error_acc1==false) {
     $_SESSION['success']=3;  // success
@@ -46,12 +52,16 @@ if(isset($btn_save_unpaid)) {
   }
 
 }elseif(isset($btn_save_paid)) {
+  try {
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $update_acc0=$conn->query("UPDATE t4t_shipment set acc_paid='1',tgl_paid='$tanggal',wkt_shipment='$data_wkt_ship' where bl='$bl'");
+  } catch (PDOException $e) {
+    $error_acc0= $e->getMessage();
+  }
 
-  $update_acc0=mysql_fetch_row(mysql_query("update t4t_shipment set acc_paid='1',tgl_paid='$tanggal',wkt_shipment='$data_wkt_ship' where bl='$bl'"));
-  $error_acc0=mysql_error();
   $_SESSION['email_member']=$email_member[0];
   $_SESSION['company_name']=$comp;
-  
+
   if ($error_acc0==false) {
     $_SESSION['success']=5;  // success
     $_SESSION['bl']=$bl;
@@ -68,19 +78,19 @@ if(isset($btn_save_unpaid)) {
 
        <tr>
          <td bgcolor="#0b6454" align="center">
-           <br><br><h2><font color="white">Shipment Confirmation! </font></h2> 
+           <br><br><h2><font color="white">Shipment Confirmation! </font></h2>
          </td>
        </tr>
-       <tr align="center">         
+       <tr align="center">
         <td bgcolor="#fff">
                 <br>
-                
-         <table align="center" class="table">                        
+
+         <table align="center" class="table">
                         <tr>
                           <td >&nbsp;</td>
                           <td>&nbsp;</td>
                           <td>&nbsp;</td>
-                        </tr> 
+                        </tr>
                         <tr>
                           <td ><b>Status</td>
                           <td>:</td>
@@ -95,7 +105,7 @@ if(isset($btn_save_unpaid)) {
                           <td ><b>Company Name</td>
                           <td>:</td>
                           <td>'.$comp.'</td>
-                        </tr>                                                                              
+                        </tr>
                         <tr class="active" >
                           <td ><b>BL No.</td>
                           <td>:</td>
@@ -105,7 +115,7 @@ if(isset($btn_save_unpaid)) {
                           <td ><b>WINS Used</td>
                           <td>:</td>
                           <td>'. $wins_used.'</td>
-                        </tr>  
+                        </tr>
                         <tr class="active" >
                           <td ><b>Processed Time</td>
                           <td>:</td>
@@ -115,14 +125,14 @@ if(isset($btn_save_unpaid)) {
                           <td ><b>Order No.</td>
                           <td>:</td>
                           <td>'. $order.'</td>
-                        </tr> 
+                        </tr>
                         <tr>
                           <td ><b>Item Qty</td>
                           <td>:</td>
                           <td>'. $item.'</td>
-                        </tr>  
-                       
-                        <br>               
+                        </tr>
+
+                        <br>
                     </table>
                     <br>
                     <br>
@@ -148,7 +158,7 @@ if(isset($btn_save_unpaid)) {
           $_SESSION['mail']=1;
       }
       ###############end mail############
-    
+
 
     header("location:../dashboard/finance-office.php?$link");
   }else{
@@ -158,9 +168,12 @@ if(isset($btn_save_unpaid)) {
   }
 
 }elseif(isset($btn_save_fee)) {
-
-  $update_fee=mysql_fetch_row(mysql_query("update t4t_shipment set fee='$fee',wkt_shipment='$data_wkt_ship' where bl='$bl'"));
-  echo $error=mysql_error();
+  try {
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $update_fee=$conn->query("UPDATE t4t_shipment set fee='$fee',wkt_shipment='$data_wkt_ship' where bl='$bl'");
+  } catch (PDOException $e) {
+    $error= $e->getMessage();
+  }
 
   if ($error==false) {
     $_SESSION['success']=7;  // success fee
@@ -169,7 +182,7 @@ if(isset($btn_save_unpaid)) {
     $_SESSION['id_member']=$id_member;
     $_SESSION['link']=$link;
     include 'report/excel-invoice.php';
-   
+
   }else{
     $_SESSION['success']=8;  // error fee
     $_SESSION['bl']=$bl;

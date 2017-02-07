@@ -32,7 +32,7 @@
           <div class="col-md-8 font-hijau">
             <?php 
            
-            $comp_name=mysql_fetch_array(mysql_query("select nama from t4t_partisipan where id='$kode'"));
+            $comp_name=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
             echo $comp_name[0];
             ?>
           </div>

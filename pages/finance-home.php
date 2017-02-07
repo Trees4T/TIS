@@ -35,7 +35,7 @@
                                     <h2>Contribution
 <?php  
     $kode=$_SESSION['kode'];
-    $wkt_shipment=mysql_fetch_row(mysql_query("select wkt_shipment from t4t_shipment where acc_paid=1 order by wkt_shipment limit 1"));
+    $wkt_shipment=$conn->query("select wkt_shipment from t4t_shipment where acc_paid=1 order by wkt_shipment limit 1")->fetch();
 
     $ex_wkt_ship=explode("-", $wkt_shipment[0]);
     $th=date("Y");

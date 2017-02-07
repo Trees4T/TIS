@@ -1,13 +1,13 @@
 <!-- Modal unpaid -->
   <div class="modal fade" id="unpaid<?php echo $load_shipment['no'] ?>" role="dialog">
     <div class="modal-dialog ">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">
-          <?php  
+          <?php
           if ($load_shipment['acc_paid']==1) {
           ?>
             <div class="font-hijau">
@@ -19,9 +19,9 @@
             <div class="red font-bold">
                &empty; Unpaid
             </div>
-          <?php 
+          <?php
           } ?>
-            
+
 
           </h4>
         </div>
@@ -31,9 +31,9 @@
           <label class="control-label col-md-4 ">Company Name
           </label>
           <div class="col-md-8 font-hijau">
-            <?php 
-            
-            $comp_name=mysql_fetch_array(mysql_query("select nama from t4t_partisipan where id='$kode'"));
+            <?php
+
+            $comp_name=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
             echo $comp_name[0];
             ?>
           </div>
@@ -44,7 +44,7 @@
           <label class="control-label col-md-4">Shipment No.
           </label>
           <div class="col-md-8 font-hijau">
-            <?php 
+            <?php
             echo $load_shipment['no_shipment'];
              ?>
              <input type="hidden" name="no_shipment" value="<?php echo $load_shipment['no_shipment']; ?>" >
@@ -56,7 +56,7 @@
           <label class="control-label col-md-4">BL No.
           </label>
           <div class="col-md-8 font-hijau">
-            <?php 
+            <?php
             echo $load_shipment['bl'];
              ?>
              <input type="hidden" name="bl" value="<?php echo $load_shipment['bl']; ?>" >
@@ -65,8 +65,8 @@
         <br><br>
 
 
-          
-          
+
+
         </div>
         <div class="modal-footer">
           <form method="post" action="../action/finance-paid-unpaid.php">
@@ -87,10 +87,10 @@
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
           </form>
         <br>
-          
+
         </div>
       </div>
-      
+
     </div>
   </div>
   <!-- end modal Unpaid -->

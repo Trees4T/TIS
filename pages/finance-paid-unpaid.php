@@ -27,8 +27,8 @@
           <tbody>
           <?php  
           $no=1;
-          $member=mysql_query("select no, nama, id from t4t_partisipan order by nama");
-          while ($data_meber=mysql_fetch_row($member)) {
+          $member=$conn->query("select no, nama, id from t4t_partisipan order by nama");
+          while ($data_meber=$member->fetch()) {
             $id_part=$data_meber[2];
           
           ?>

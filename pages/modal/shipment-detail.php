@@ -84,7 +84,7 @@
                       <div class="col-md-8 font-hijau">
                         <?php 
                         $kode=$load_shipment['id_comp'];
-                        $company=mysql_fetch_array(mysql_query("select nama from t4t_partisipan where id='$kode'"));
+                        $company=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
                         echo $company[0];
                          ?>
                           <input type="hidden" name="id_comp" value="<?php echo $kode; ?>" >
@@ -99,12 +99,12 @@
                       <label class="col-md-6">QTY</label>
                       <?php 
                       $no=1;
-                      $kontainer=mysql_query("select * from t4t_container");
+                      $kontainer=$conn->query("select * from t4t_container");
 
-                      while ($data_kont=mysql_fetch_array($kontainer)) {
+                      while ($data_kont=$kontainer->fetch()) {
 
                       $no_sh=$load_shipment['no_shipment'];
-                      $cont=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_sh' and no_cont='$no'"));
+                      $cont=$conn->query("select jml from t4t_ordercontainer where no_order='$no_sh' and no_cont='$no'")->fetch();
                       ?>
                       <div class="font-hijau">
                       <label class="col-md-6"><?php echo $data_kont['cont'] ?></label>
@@ -126,7 +126,7 @@
                     </div>
 
                     <?php 
-                        $pic_name=mysql_fetch_array(mysql_query("select pic from t4t_partisipan where id='$kode'"));
+                        $pic_name=$conn->query("select pic from t4t_partisipan where id='$kode'")->fetch();
                          if ($pic_name[0]=="") {
                           
                          }else{
@@ -158,10 +158,10 @@
                       </div>
                     </div>
 <?php 
-$no_id=mysql_fetch_array(mysql_query("select no from t4t_partisipan where id='$kode'"));
+$no_id=$conn->query("select no from t4t_partisipan where id='$kode'")->fetch();
 $kode_buyer=$load_shipment['buyer'];
-$cek_customer=mysql_fetch_row(mysql_query("select kode_retailer,retailer_name from t4t_retailer where id_partisipan='$no_id[0]' and kode_retailer='$kode_buyer'"));
-echo mysql_error();
+$cek_customer=$conn->query("select kode_retailer,retailer_name from t4t_retailer where id_partisipan='$no_id[0]' and kode_retailer='$kode_buyer'")->fetch();
+//echo mysql_error();
 if ($cek_customer==true) {
   
  ?>

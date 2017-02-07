@@ -3,7 +3,7 @@ session_start();
 include '../../koneksi/koneksi.php';
 $kode=$_SESSION['kode'];
 $waktu=date("Y-m");
-$jumlah=mysql_fetch_array(mysql_query("select count(*) from t4t_shipment where acc_paid=0 and acc=1 and wkt_shipment like '%$waktu%' "));
+$jumlah=$conn->query("select count(*) from t4t_shipment where acc_paid=0 and acc=1 and wkt_shipment like '%$waktu%' ")->fetch();
  ?>
  <div class="left"></div>
  
