@@ -56,7 +56,7 @@
 
         </div>
         <div class="modal-footer">
-          <form method="post" action="../action/finance-paid-unpaid.php">
+          <form method="get" action="../action/finance-paid-unpaid.php">
             <div class="form-group col-lg-12">
                 <label class="control-label col-md-4 ">Fee
                 </label>

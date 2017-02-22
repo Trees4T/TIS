@@ -1,4 +1,4 @@
-<?php 
+<?php
 $ta=$_SESSION['ta'];
   $_ta=$conn->query("SELECT kab_code,prov_code,nama from t4t_tamaster where kd_ta='$ta'")->fetch();
 $nama_mu=$conn->query("SELECT kd_mu,nama from t4t_mu where kab_kode='$_ta[0]' and prov_code='$_ta[1]'")->fetch();
@@ -22,7 +22,7 @@ $data=$conn->query("SELECT * from t4t_lahan where no='$id_lahan'")->fetch();
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
@@ -32,20 +32,20 @@ $data=$conn->query("SELECT * from t4t_lahan where no='$id_lahan'")->fetch();
               <div class="x_panel">
                 <div class="x_title">
                   <h2><i class="fa fa fa-circle-o"></i> No. Lahan <?php echo $data['no_lahan'] ?> </h2>
-                  <ul class="nav navbar-right panel_toolbox">
+                  <!-- <ul class="nav navbar-right panel_toolbox">
                     <a href="?<?php echo paramEncrypt('hal=fc-planning-lihat-rencana-tanam')?>" data-toggle="tooltip" data-placement="left" title="Lihat data rencana tanam"><i class="fa fa-eye"></i> Lihat Data Rencana Tanam</a>
-                  </ul>
+                  </ul> -->
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                   <br />
                   <form class="form-horizontal form-label-left" action="" method="post">
-                    
+
                     <table class="col-md-6">
                       <tr>
                         <td class="col-md-5">Nama Petani</td>
                         <td> : </td>
-                        <td><?php 
+                        <td><?php
                         $petani=$conn->query("SELECT nm_petani,alamat from t4t_petani where id_desa='$id_desa' and kd_petani='$kd_petani'")->fetch();
                         echo $petani[0]; ?></td>
                       </tr>
@@ -62,7 +62,7 @@ $data=$conn->query("SELECT * from t4t_lahan where no='$id_lahan'")->fetch();
                       <tr>
                         <td class="col-md-5">Jenis Tanaman</td>
                         <td> : </td>
-                        <td><?php 
+                        <td><?php
                         $jenis=$conn->query("SELECT nama_pohon from t4t_pohon where id_pohon='$jenis_pohon'")->fetch();
                         echo $jenis[0];
                         ?></td>
@@ -75,7 +75,7 @@ $data=$conn->query("SELECT * from t4t_lahan where no='$id_lahan'")->fetch();
                       <tr>
                         <td class="col-md-5">Tanggal Tanam</td>
                         <td> : </td>
-                        <td><?php 
+                        <td><?php
                           $w=$data['wkt_tanam'];
                           $ex_wtanam=explode("-", $w);
                           echo $ex_wtanam[2].'/'.$ex_wtanam[1].'/'.$ex_wtanam[0];
@@ -84,7 +84,7 @@ $data=$conn->query("SELECT * from t4t_lahan where no='$id_lahan'")->fetch();
                       <tr>
                         <td class="col-md-5">Batas akhir monitoring <?php echo $mon ?></td>
                         <td> : </td>
-                        <td><?php 
+                        <td><?php
                           $b=$data['endmon'.$mon];
                           $ex_btsmon=explode("-", $b);
                           echo $ex_btsmon[2].'/'.$ex_btsmon[1].'/'.$ex_btsmon[0];
@@ -106,7 +106,7 @@ $data=$conn->query("SELECT * from t4t_lahan where no='$id_lahan'")->fetch();
                       <tr>
                         <td class="col-md-4">Presentase Hidup</td>
                         <td> : </td>
-                        <td colspan="2"> <?php $presentase=($rekapmon[1]/$rekapmon[0])*100; 
+                        <td colspan="2"> <?php $presentase=($rekapmon[1]/$rekapmon[0])*100;
                               echo number_format($presentase,2) ?> %</td>
                       </tr>
                       <tr>
@@ -121,9 +121,9 @@ $data=$conn->query("SELECT * from t4t_lahan where no='$id_lahan'")->fetch();
                         <td class="col-md-3"><input type="number" class="form-control" value="0"></td>
                         <td class="col-md-5"><input type="text" class="form-control" placeholder="Keterangan"></td>
                       </tr>
-                 
+
                     </table>
-   
+
 
                   </form>
                   <br><br><br>
@@ -139,7 +139,7 @@ $data=$conn->query("SELECT * from t4t_lahan where no='$id_lahan'")->fetch();
                         </tr>
                     </thead>
                   </table>
-                
+
                 </div>
               </div>
             </div>
@@ -185,7 +185,7 @@ $data=$conn->query("SELECT * from t4t_lahan where no='$id_lahan'")->fetch();
     </script>
     <!-- /input mask -->
 
-   
+
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 date_default_timezone_set('Asia/Jakarta');
  ?>
 <!DOCTYPE html>
@@ -14,7 +14,7 @@ date_default_timezone_set('Asia/Jakarta');
     <title>Trees4Trees Information System </title>
 
     <!-- Bootstrap core CSS -->
-
+    
     <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <link href="../fonts/css/font-awesome.min.css" rel="stylesheet">
@@ -42,7 +42,7 @@ date_default_timezone_set('Asia/Jakarta');
     //buat object date berdasarkan waktu di client
     var clientTime = new Date();
     //hitung selisih
-    var Diff = serverTime.getTime() - clientTime.getTime();    
+    var Diff = serverTime.getTime() - clientTime.getTime();
     //fungsi displayTime yang dipanggil di bodyOnLoad dieksekusi tiap 1000ms = 1detik
     function displayServerTime(){
         //buat object date berdasarkan waktu di client

@@ -1,7 +1,7 @@
-<?php 
+<?php
 $ta=$_SESSION['ta'];
-$ta_master=mysql_fetch_row(mysql_query("select kab_code,prov_code from t4t_tamaster where kd_ta='$ta'"));
-$mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='$ta_master[0]' and prov_code='$ta_master[1]'"));
+$ta_master=$conn->query("select kab_code,prov_code from t4t_tamaster where kd_ta='$ta'")->fetch();
+$mu=$conn->query("select kd_mu, nama from t4t_mu where kab_kode='$ta_master[0]' and prov_code='$ta_master[1]'")->fetch();
  ?>
 <div class="">
 
@@ -11,7 +11,7 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
@@ -31,16 +31,16 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                   <form class="form-horizontal form-label-left" action="" method="post">
                     <font size="">
                     <div class="col-sm-2">
-                                
+
                     </div>
 
                     <div class="col-sm-10">
 
-              <?php 
+              <?php
               $_desa=$_REQUEST['desa'];
-                $desa2=mysql_fetch_row(mysql_query("select desa,id_kec,kab_code from t4t_desa where id_desa='$_desa'"));
-                $nama_kec2=mysql_fetch_row(mysql_query("select kecamatan from t4t_kec where id_kec='$desa2[1]' and id_kab='$desa2[2]'"));
-                $nama_kab2=mysql_fetch_row(mysql_query("select nama from t4t_kab where kab_code='$desa2[2]'"));
+                $desa2=$conn->query("select desa,id_kec,kab_code from t4t_desa where id_desa='$_desa'")->fetch();
+                $nama_kec2=$conn->query("select kecamatan from t4t_kec where id_kec='$desa2[1]' and id_kab='$desa2[2]'")->fetch();
+                $nama_kab2=$conn->query("select nama from t4t_kab where kab_code='$desa2[2]'")->fetch();
 
                ?>
                     <div class="form-group">
@@ -48,28 +48,28 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control" name="desa" onchange="this.form.submit()">
-                        <option value="<?php echo $_desa ?>"><?php 
+                        <option value="<?php echo $_desa ?>"><?php
                         if ($_desa=="") {
                           echo "- Pilih Desa -";
                         }else{
                         echo $desa2[0].' Kec.'.$nama_kec2[0].' Kab.'.$nama_kab2[0];
                         }
                         ?></option>
-              <?php  
-              $sel_desa=mysql_query("select det.id_desa,ta.kab_code,ta.prov_code,det.id_kec from t4t_tamaster ta
+              <?php
+              $sel_desa=$conn->query("select det.id_desa,ta.kab_code,ta.prov_code,det.id_kec from t4t_tamaster ta
  join t4t_tadetail det where ta.kd_ta=det.kd_ta and ta.kd_ta='$ta'");
-              while ($data_desa=mysql_fetch_row($sel_desa)) {
+              while ($data_desa=$sel_desa->fetch()) {
                   $id_desa=$data_desa[0];
-                $desa=mysql_fetch_row(mysql_query("select desa,id_kec,kab_code from t4t_desa where id_desa='$data_desa[0]'"));
+                $desa=$conn->query("select desa,id_kec,kab_code from t4t_desa where id_desa='$data_desa[0]'")->fetch();
                   $id_kec=$desa[1];
                   $id_kab=$desa[2];
 
-                $nama_kec=mysql_fetch_row(mysql_query("select kecamatan from t4t_kec where id_kec='$id_kec' and id_kab='$id_kab'"));
-                $nama_kab=mysql_fetch_row(mysql_query("select nama from t4t_kab where kab_code='$id_kab'"));
+                $nama_kec=$conn->query("select kecamatan from t4t_kec where id_kec='$id_kec' and id_kab='$id_kab'")->fetch();
+                $nama_kab=$conn->query("select nama from t4t_kab where kab_code='$id_kab'")->fetch();
 
               ?>
                     <option value="<?php echo $id_desa ?>"><?php echo $desa[0].' Kec.'.$nama_kec[0].' Kab.'.$nama_kab[0] ?></option>
-              <?php 
+              <?php
               }
               ?>
                         </select>
@@ -82,14 +82,14 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12 font-hijau">
                        <label class="control-label">
-                        <?php  
-                          $no_part=mysql_fetch_row(mysql_query("select kd_petani from t4t_petani where id_desa='$_desa' order by kd_petani desc limit 1"));
+                        <?php
+                          $no_part=$conn->query("select kd_petani from t4t_petani where id_desa='$_desa' order by kd_petani desc limit 1")->fetch();
                           echo $no_part[0]+1;
                         ?>
                         </label>
                       </div>
                     </div>
-                    
+
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama Partisipan <span class="required red">*</span>
                       </label>
@@ -122,13 +122,13 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                         <select class="form-control">
                           <option>- Pilih Kelompok Tani -</option>
 
-                          <?php 
-                          $nama_kel_tani=mysql_query("select nama_kel_tani from kel_tani where kd_mu='$mu[0]' and aktif=1");
-                          while ($data_keltani=mysql_fetch_row($nama_kel_tani)) {
-                            
+                          <?php
+                          $nama_kel_tani=$conn->query("select nama_kel_tani from kel_tani where kd_mu='$mu[0]' and aktif=1");
+                          while ($data_keltani=$nama_kel_tani->fetch()) {
+
                            ?>
                           <option><?php echo $data_keltani[0] ?></option>
-                          <?php 
+                          <?php
                           }
                            ?>
                         </select>
@@ -179,7 +179,7 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                         </select>
                       </div>
                     </div>
-                    
+
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tujuan Menanam Pohon <span class="required red">*</span>
                       </label>
@@ -220,10 +220,10 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
                       <label class="control-label col-md-3 col-sm-3 col-xs-12">Foto <span class="required"></span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="file" class="form-control"> 
+                        <input type="file" class="form-control">
                       </div>
-                    </div>     
-                     
+                    </div>
+
 
                     <div class="ln_solid"></div>
                     <div class="form-group">
@@ -281,7 +281,7 @@ $mu=mysql_fetch_row(mysql_query("select kd_mu, nama from t4t_mu where kab_kode='
     </script>
     <!-- /input mask -->
 
-   
+
 </body>
 
 </html>

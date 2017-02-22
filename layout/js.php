@@ -10,7 +10,7 @@
         <div class="clearfix"></div>
         <div id="notif-group" class="tabbed_notifications"></div>
     </div>
-              
+
     <script src="../js/bootstrap.min.js"></script>
 
     <!-- gauge js -->
@@ -100,7 +100,6 @@
             }
         });
     </script>
-
     <!-- worldmap -->
     <script type="text/javascript" src="../js/maps/jquery-jvectormap-2.0.3.min.js"></script>
     <script type="text/javascript" src="../js/maps/gdp-data.js"></script>
@@ -251,6 +250,10 @@
     </script>
     <!-- /datepicker -->
     <!-- /footer content -->
+
+    <script src="../js/datatables/js/jquery.dataTables.js"></script>
+    <script src="../js/datatables/tools/js/dataTables.tableTools.js"></script>
+
 </body>
 
 </html>

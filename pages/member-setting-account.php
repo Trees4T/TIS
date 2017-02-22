@@ -1,10 +1,8 @@
-<?php 
+<?php
 $kode=$_SESSION['kode'];
-<<<<<<< HEAD
+
 $data=$conn->query("select id, nama, alamat, tlp, fax, email, direktur, pic, prod_utama, bhn_utama,email2, email3, website from t4t_partisipan where id='$kode'")->fetch();
-=======
-$data=mysql_fetch_row(mysql_query("select id, nama, alamat, tlp, fax, email, direktur, pic, prod_utama, bhn_utama,email2, email3, website from t4t_partisipan where id='$kode'"));
->>>>>>> f6c0241a68551097e4b23e066ecf8eb64a1bd10b
+
 ?>
 <div class="">
 
@@ -14,7 +12,7 @@ $data=mysql_fetch_row(mysql_query("select id, nama, alamat, tlp, fax, email, dir
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
@@ -24,12 +22,12 @@ $data=mysql_fetch_row(mysql_query("select id, nama, alamat, tlp, fax, email, dir
               <div class="x_panel">
                 <div class="x_title">
                   <h2><i class="fa "></i> Account </h2>
-                 
+
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                   <br />
-                  <?php 
+                  <?php
                   if ($_SESSION['success']==1) {
                     ?>
                 <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -42,19 +40,19 @@ $data=mysql_fetch_row(mysql_query("select id, nama, alamat, tlp, fax, email, dir
 
                   unset($_SESSION['success']);
                    ?>
-                  
-                 
+
+
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="../action/member-setting-account.php">
                     <font size="">
-                   
 
-                    <div class="col-sm-12">                                                        
-                 
+
+                    <div class="col-sm-12">
+
                     <div class="form-group">
                       <label class="control-label col-md-4">Company Name <span class="required red">*</span>
                       </label>
                       <div class="col-md-5">
-                        <input type="text" class="form-control" name="comp_name" placeholder="Company Name" value="<?php echo $data[1] ?>" required>                        
+                        <input type="text" class="form-control" name="comp_name" placeholder="Company Name" value="<?php echo $data[1] ?>" required>
                       </div>
                     </div>
 
@@ -62,7 +60,7 @@ $data=mysql_fetch_row(mysql_query("select id, nama, alamat, tlp, fax, email, dir
                       <label class="control-label col-md-4">Address <span class="required"></span>
                       </label>
                       <div class="col-md-5">
-                        <textarea type="text" class="form-control" name="address" rows="3" placeholder=""><?php echo $data[2] ?></textarea>                        
+                        <textarea type="text" class="form-control" name="address" rows="3" placeholder=""><?php echo $data[2] ?></textarea>
                       </div>
                     </div>
 
@@ -70,7 +68,7 @@ $data=mysql_fetch_row(mysql_query("select id, nama, alamat, tlp, fax, email, dir
                       <label class="control-label col-md-4">Telephone <span class="required red">*</span>
                       </label>
                       <div class="col-md-5">
-                        <input type="text" class="form-control" name="telp" placeholder="Telephone" value="<?php echo $data[3] ?>" required>                        
+                        <input type="text" class="form-control" name="telp" placeholder="Telephone" value="<?php echo $data[3] ?>" required>
                       </div>
                     </div>
 
@@ -78,7 +76,7 @@ $data=mysql_fetch_row(mysql_query("select id, nama, alamat, tlp, fax, email, dir
                       <label class="control-label col-md-4">Fax <span class="required"></span>
                       </label>
                       <div class="col-md-5">
-                        <input type="text" class="form-control" name="fax" id="" placeholder="Fax" value="<?php echo $data[4] ?>">                        
+                        <input type="text" class="form-control" name="fax" id="" placeholder="Fax" value="<?php echo $data[4] ?>">
                       </div>
                     </div>
 
@@ -86,7 +84,7 @@ $data=mysql_fetch_row(mysql_query("select id, nama, alamat, tlp, fax, email, dir
                       <label class="control-label col-md-4">E-mail 1 <span class="required red">*</span>
                       </label>
                       <div class="col-md-5">
-                        <input type="text" class="form-control" name="email1" placeholder="E-mail 1" value="<?php echo $data[5] ?>" required>                        
+                        <input type="text" class="form-control" name="email1" placeholder="E-mail 1" value="<?php echo $data[5] ?>" required>
                       </div>
                     </div>
 
@@ -94,7 +92,7 @@ $data=mysql_fetch_row(mysql_query("select id, nama, alamat, tlp, fax, email, dir
                       <label class="control-label col-md-4">E-mail 2 <span class="required red">*</span>
                       </label>
                       <div class="col-md-5">
-                        <input type="text" class="form-control" name="email2" placeholder="E-mail 2" value="<?php echo $data[10] ?>" required>                        
+                        <input type="text" class="form-control" name="email2" placeholder="E-mail 2" value="<?php echo $data[10] ?>" required>
                       </div>
                     </div>
 
@@ -102,7 +100,7 @@ $data=mysql_fetch_row(mysql_query("select id, nama, alamat, tlp, fax, email, dir
                       <label class="control-label col-md-4">E-mail 3 <span class="required"></span>
                       </label>
                       <div class="col-md-5">
-                        <input type="text" class="form-control" name="email3" placeholder="E-mail 3" value="<?php echo $data[11] ?>">                        
+                        <input type="text" class="form-control" name="email3" placeholder="E-mail 3" value="<?php echo $data[11] ?>">
                       </div>
                     </div>
 
@@ -110,38 +108,38 @@ $data=mysql_fetch_row(mysql_query("select id, nama, alamat, tlp, fax, email, dir
                       <label class="control-label col-md-4">Website <span class="required"></span>
                       </label>
                       <div class="col-md-5">
-                        <input type="text" class="form-control" name="website" id="" placeholder="e.g. www.trees4trees.org" value="<?php echo $data[12] ?>">                        
+                        <input type="text" class="form-control" name="website" id="" placeholder="e.g. www.trees4trees.org" value="<?php echo $data[12] ?>">
                       </div>
-                    </div> 
+                    </div>
 
                     <div class="form-group">
                       <label class="control-label col-md-4">Name of Company Owner or
 Director <span class="required"></span>
                       </label>
                       <div class="col-md-5">
-                        <input type="text" class="form-control" name="director" value="<?php echo $data[6] ?>">                        
+                        <input type="text" class="form-control" name="director" value="<?php echo $data[6] ?>">
                       </div>
-                    </div> 
+                    </div>
 
                     <div class="form-group">
                       <label class="control-label col-md-4">Person In Contact <span class="required red">*</span>
                       </label>
                       <div class="col-md-5">
-                        <input type="text" class="form-control" name="pic" value="<?php echo $data[7] ?>" required>                        
+                        <input type="text" class="form-control" name="pic" value="<?php echo $data[7] ?>" required>
                       </div>
-                    </div> 
+                    </div>
 
                     <div class="form-group">
                       <label class="control-label col-md-4">Main Materials Used (Please mention wood by species)    <span class="required"></span>
                       </label>
                       <div class="col-md-5">
-                        <input type="text" class="form-control" name="wood" value="<?php echo $data[8] ?>">                        
+                        <input type="text" class="form-control" name="wood" value="<?php echo $data[8] ?>">
                       </div>
-                    </div>  
+                    </div>
 
 
 
-  
+
 
                     <div class="ln_solid"></div>
                     <div class="form-group">
@@ -155,14 +153,14 @@ Director <span class="required"></span>
                     </font>
                   </form>
 
-       
+
                 </div>
               </div>
             </div>
           </div>
 
           <?php
-          include '../js/riojs.php'; 
+          include '../js/riojs.php';
          // include '../layout/js.php';
 
            ?>
@@ -190,7 +188,7 @@ Director <span class="required"></span>
     <!-- pace -->
     <script src="../js/pace/pace.min.js"></script>
 
-   
+
 
 </body>
 

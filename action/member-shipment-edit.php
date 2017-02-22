@@ -1,4 +1,4 @@
-<?php 
+<?php
 error_reporting(0);
 session_start();
 
@@ -10,10 +10,6 @@ date_default_timezone_set('Asia/Jakarta');
 if ($_POST['no_ship']) {
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> f6c0241a68551097e4b23e066ecf8eb64a1bd10b
 $no_shipment =$_POST['no_ship'];
 $bl 		 =$_POST['bl'];
 
@@ -41,7 +37,7 @@ $cek_status_bl=$conn->query("select bl from t4t_shipment where bl='$bl'")->fetch
 
 
 	if ($cek_no_bl[0]==$bl or $cek_status_bl[0]==false) {
-			
+
 		//insert shipment
 		# no - no ship - id_comp - bl - bl tgl - win used - win unused - wkt ship - foto - acc - no order - kota - tujuan - fee - diskon - tgl paid - acc paid - note buyer - item qty
 
@@ -54,15 +50,11 @@ $cek_status_bl=$conn->query("select bl from t4t_shipment where bl='$bl'")->fetch
 				$namafile2=$no_shipment.'-'.$waktu.'-'.$namafile;
 
 				$tujuan="../../management_t4t/gbr/shipment/$namafile2";
-<<<<<<< HEAD
 				$target=$conn->query("select foto from t4t_shipment where no_shipment='$no_shipment'")->fetch();
-=======
-				$target=$con->query("select foto from t4t_shipment where no_shipment='$no_shipment'")->fetch();
->>>>>>> f6c0241a68551097e4b23e066ecf8eb64a1bd10b
 				$target2="../../management_t4t/gbr/shipment/$target[0]";
-				
-				
-				if ($namafile!="") {					
+
+
+				if ($namafile!="") {
 				unlink($target2);//hapus file
 				}
 				elseif($namafile==""){
@@ -76,9 +68,9 @@ $cek_status_bl=$conn->query("select bl from t4t_shipment where bl='$bl'")->fetch
 				copy($tmp_name,$tujuan);
 
 				$conn->query("update t4t_shipment set bl='$bl',bl_tgl='$tgl',wins_used='$wins_used',item_qty='$item_qty',kota_tujuan='$destination',note='$note',buyer='$c_code',foto='$namafile2' where no_shipment='$no_shipment'")->fetch();
-					
+
 					//mysql_error();
-					
+
 				}else{
 					echo $error_max_file="max file is 200kb";
 				}
@@ -92,7 +84,7 @@ $cek_status_bl=$conn->query("select bl from t4t_shipment where bl='$bl'")->fetch
 				#hapus order
 				$conn->query("update t4t_shipment set no_order='' where no_shipment='$no_shipment'")->fetch();
 			$jml_order=count($_POST['order']);
-			for ($i=0; $i < $jml_order ; $i++) { 
+			for ($i=0; $i < $jml_order ; $i++) {
 
 				$old_order=$conn->query("select no_order from t4t_shipment where no_shipment='$no_shipment'")->fetch();
 				$old_order2=$old_order[0];
@@ -115,7 +107,7 @@ $cek_status_bl=$conn->query("select bl from t4t_shipment where bl='$bl'")->fetch
 			//order container
 			$jml_cont=$conn->query("select count(no) from t4t_container")->fetch();
 			$jml_cont[0];
-			for ($i=1; $i <= $jml_cont[0] ; $i++) { 
+			for ($i=1; $i <= $jml_cont[0] ; $i++) {
 				$cont=$_POST['cont'.$i];
 				// mysql_query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_shipment','$i','$cont','$tanggal')");
 				$conn->query("update t4t_ordercontainer set jml='$cont' where no_order='$no_shipment' and no_cont='$i'")->fetch();
@@ -134,17 +126,17 @@ $cek_status_bl=$conn->query("select bl from t4t_shipment where bl='$bl'")->fetch
 
 			   <tr>
 			     <td bgcolor="#0b6454" align="center">
-			       <br><br><h2><font color="white">Shipment Update! </font></h2> 
+			       <br><br><h2><font color="white">Shipment Update! </font></h2>
 			     </td>
 			   </tr>
-			   <tr align="center">         
+			   <tr align="center">
 			    <td bgcolor="#fff">
-			     <table align="center" class="table">                        
+			     <table align="center" class="table">
 			                    <tr>
 			                      <td>&nbsp;</td>
 			                      <td>&nbsp;</td>
 			                      <td>&nbsp;</td>
-			                    </tr> 
+			                    </tr>
 			                    <tr>
 			                      <td><b>Shipment No.</td>
 			                      <td>:</td>
@@ -154,7 +146,7 @@ $cek_status_bl=$conn->query("select bl from t4t_shipment where bl='$bl'")->fetch
 			                      <td><b>Member</td>
 			                      <td>:</td>
 			                      <td>'.$company[0].'</td>
-			                    </tr>                                                                              
+			                    </tr>
 			                    <tr class="active" >
 			                      <td><b>BL No.</td>
 			                      <td>:</td>
@@ -164,7 +156,7 @@ $cek_status_bl=$conn->query("select bl from t4t_shipment where bl='$bl'")->fetch
 			                      <td><b>WINS Used</td>
 			                      <td>:</td>
 			                      <td>'. $wins_used.'</td>
-			                    </tr>  
+			                    </tr>
 			                    <tr class="active" >
 			                      <td><b>Update Time</td>
 			                      <td>:</td>
@@ -174,14 +166,14 @@ $cek_status_bl=$conn->query("select bl from t4t_shipment where bl='$bl'")->fetch
 			                      <td><b>Order No.</td>
 			                      <td>:</td>
 			                      <td>'. $no_order_get[0].'</td>
-			                    </tr>	
+			                    </tr>
 			                    <tr>
 			                      <td><b>Item Qty</td>
 			                      <td>:</td>
 			                      <td>'. $item_qty.'</td>
-			                    </tr>  
-			                   
-			                    <br>               
+			                    </tr>
+
+			                    <br>
 			                </table>
 			                <br><br>
 			    </td>
@@ -189,11 +181,8 @@ $cek_status_bl=$conn->query("select bl from t4t_shipment where bl='$bl'")->fetch
 			   <tr>
 			    <td bgcolor="#0b6454" align="center">
 			    <br>
-<<<<<<< HEAD
+
 			    <font color="#fff" size="0.5">&copy; '.date("Y").' Trees4Trees&trade; </font>
-=======
-			    <font color="#fff" size="0.5">&copy; 2016 Trees4Trees&trade; </font>
->>>>>>> f6c0241a68551097e4b23e066ecf8eb64a1bd10b
 			    <br><br>
 			    </td>
 			   </tr>
@@ -231,4 +220,3 @@ $cek_status_bl=$conn->query("select bl from t4t_shipment where bl='$bl'")->fetch
 
 
  ?>
-

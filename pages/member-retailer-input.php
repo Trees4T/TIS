@@ -6,7 +6,7 @@
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="x_content">
                   <br />
-                    <?php 
+                    <?php
                   if ($_SESSION['success']==1) {
                     ?>
                 <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -51,7 +51,7 @@
                   <div class="ln_solid"></div>
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="../action/member-retailer-input.php">
                     <font size="">
-                   
+
 
                     <div class="col-sm-12">
                     <div class="form-group">
@@ -59,7 +59,7 @@
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="code" required>
-                        
+
                       </div>
                     </div>
 
@@ -68,7 +68,7 @@
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="nama" required>
-                        
+
                       </div>
                     </div>
 
@@ -77,7 +77,7 @@
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="alamat" required>
-                        
+
                       </div>
                     </div>
 
@@ -86,7 +86,7 @@
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="kota" required>
-                        
+
                       </div>
                     </div>
 
@@ -95,7 +95,7 @@
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="negara" required>
-                        
+
                       </div>
                     </div>
 
@@ -104,16 +104,16 @@
                       </label>
                       <div class="col-md-4">
                         <input type="email" class="form-control" name="email" required>
-                        
+
                       </div>
                     </div>
-                    
+
                     <div class="form-group">
                       <label class="control-label col-md-5" for="first-name">Phone <span class="required"></span>
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="phone">
-                        
+
                       </div>
                     </div>
 
@@ -122,7 +122,7 @@
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="fax">
-                        
+
                       </div>
                     </div>
 
@@ -131,7 +131,7 @@
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="web">
-                        
+
                       </div>
                     </div>
 
@@ -140,7 +140,7 @@
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="cp" required>
-                        
+
                       </div>
                     </div>
 
@@ -149,14 +149,14 @@
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="director">
-                        
+
                       </div>
                     </div>
 
 
-                    
-                    
-  
+
+
+
 
                     <div class="ln_solid"></div>
                     <div class="form-group">
@@ -188,11 +188,8 @@
 
     <script src="../js/bootstrap.min.js"></script>
 
-<<<<<<< HEAD
-=======
     <!-- chart js -->
     <script src="../js/chartjs/chart.min.js"></script>
->>>>>>> f6c0241a68551097e4b23e066ecf8eb64a1bd10b
     <!-- bootstrap progress js -->
     <script src="../js/progressbar/bootstrap-progressbar.min.js"></script>
     <script src="../js/nicescroll/jquery.nicescroll.min.js"></script>
@@ -206,13 +203,13 @@
     <script src="../js/input_mask/jquery.inputmask.js"></script>
     <!-- knob -->
     <script src="../js/knob/jquery.knob.min.js"></script>
-<<<<<<< HEAD
+
     <!-- pace -->
     <script src="../js/pace/pace.min.js"></script>
 
-    
-    
-=======
+
+
+
     <!-- range slider -->
     <script src="../js/ion_range/ion.rangeSlider.min.js"></script>
     <!-- color picker -->
@@ -590,7 +587,6 @@
         });
     </script>
     <!-- /knob -->
->>>>>>> f6c0241a68551097e4b23e066ecf8eb64a1bd10b
 </body>
 
 </html>

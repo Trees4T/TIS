@@ -1,9 +1,9 @@
-<?php include '../../koneksi/koneksi.php';
+<?php include '../koneksi/koneksi.php';
 session_start();
 $kode=$_SESSION['kode_member'];
 $nama_member=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
 
-
+$actual_link=$_SESSION['link'];
  ?>
 <div id="myTabContent" class="tab-content">
     <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
@@ -30,6 +30,7 @@ $nama_member=$conn->query("select nama from t4t_partisipan where id='$kode'")->f
                     ?>
                     </h4>
                 </a>
+
                 <div id="collapse<?php echo $load_tahun['th'] ?>" class="panel-collapse collapse " role="tabpanel" aria-labelledby="heading<?php echo $load_tahun['th'] ?>">
                     <div class="panel-body">
                         <table class="table table-striped responsive-utilities jambo_table" border="1" id="unpaid_list<?php echo $load_tahun['th'] ?>">
@@ -141,9 +142,9 @@ $nama_member=$conn->query("select nama from t4t_partisipan where id='$kode'")->f
                                 </tr>
 <!-- Modal unpaid -->
 <?php
-include '../modal/unpaid-to-paid.php';
-include '../modal/shipment-detail.php';
-include '../modal/fee-update.php';
+include 'modal/unpaid-to-paid.php';
+include 'modal/shipment-detail.php';
+include 'modal/fee-update.php';
 ?>
 <!-- end modal Unpaid -->
                     <?php
@@ -158,8 +159,8 @@ include '../modal/fee-update.php';
 
 
 <!-- Datatables -->
-<script src="../../js/datatables/js/jquery.dataTables.js"></script>
-<script src="../../js/datatables/tools/js/dataTables.tableTools.js"></script>
+<script src="../js/datatables/js/jquery.dataTables.js"></script>
+<script src="../js/datatables/tools/js/dataTables.tableTools.js"></script>
 
 <script>
 $(function() {
@@ -316,9 +317,9 @@ $('#unpaid_list<?php echo $load_tahun['th'] ?>').DataTable( {
                                 </tr>
 <!-- Modal Paid -->
 <?php
-include '../modal/paid-to-unpaid.php';
-include '../modal/shipment-detail.php';
-include '../modal/fee-update.php';
+include 'modal/paid-to-unpaid.php';
+include 'modal/shipment-detail.php';
+include 'modal/fee-update.php';
 ?>
 <!-- end modal Paid -->
                     <?php
@@ -332,8 +333,8 @@ include '../modal/fee-update.php';
             </div>
 
 <!-- Datatables -->
-<script src="../../js/datatables/js/jquery.dataTables.js"></script>
-<script src="../../js/datatables/tools/js/dataTables.tableTools.js"></script>
+<script src="../js/datatables/js/jquery.dataTables.js"></script>
+<script src="../js/datatables/tools/js/dataTables.tableTools.js"></script>
 
 <script>
 $(function() {

@@ -1,11 +1,19 @@
-    <?php 
+    <?php
         error_reporting(0);
         include '../assets/lib-encript/function.php';
+        //untuk mendecode url yang di encrypt
+        $var     =decode($_SERVER['REQUEST_URI']);
+        $var2    =decode($_SERVER['REQUEST_URI']);
+        $content =$var2['content'];
+
+        if (!Empty($content)) {
+          # code...
+        }else{
     ?>
 <body class="nav-md" onload="setInterval('displayServerTime()', 1000);">
 
     <div class="container body">
-    <?php  
+    <?php
     $username  = $_SESSION['username'];
     $id_group  = $_SESSION['level'];
         if ($id_group=='adm') {
@@ -28,14 +36,14 @@
                 <div class="left_col scroll-view">
 
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="../index.php" class="site_title"><i class="fa fa-tree"></i> <span>Trees4Trees&trade;</span></a>
+                        <a href="../index.php" class="site_title"><img src="../images/T4TLogo.png" width="26"> <span>Trees4Trees&trade;</span></a>
                     </div>
                     <div class="clearfix"></div>
 
                     <!-- menu prile quick info -->
                     <div class="profile">
                         <div class="profile_pic">
-                        <?php 
+                        <?php
                         if ($id_group=='fc') {
                             $kode=$_SESSION['kode'];
                             $foto_fc  = $conn->query("SELECT foto from t4t_fc where kode='$kode'")->fetch(PDO::FETCH_OBJ);
@@ -50,7 +58,7 @@
                         <?php } ?>
                         </div>
 
-                        <?php 
+                        <?php
                         if ($id_group=='part') {
                         ?>
                         <div class="profile_info2">
@@ -88,20 +96,20 @@
                                 include 'sidebar-admoff.php';
                             }elseif ($_SESSION['level']=="fin") {
                                 include 'sidebar-fin.php';
-                            }    
+                            }
 
                             ?>
 
-                                
-                                
-                                
+
+
+
                             </ul>
                         </div>
-                        
+
 
                     </div>
                     <!-- /sidebar menu -->
-                    <?php 
+                    <?php
                     if ($id_group=='admoff' or $id_group=='fin') {
                         # code...
                     }else{
@@ -114,7 +122,7 @@
                         <a href="?<?php echo paramEncrypt('hal=change-password')?>" data-toggle="tooltip" data-placement="top" title="Change Password">
                             <span class="fa fa-key" aria-hidden="true"></span>
                         </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Help">
+                        <a data-toggle="tooltip" data-placement="top" title="V 0.2.12">
                             <span class="fa fa-question-circle" aria-hidden="true"></span>
                         </a>
                         <a href="../login/logout.php" data-toggle="tooltip" data-placement="top" title="Logout">
@@ -122,7 +130,7 @@
                         </a>
                     </div>
                     <!-- /menu footer buttons -->
-                    <?php 
+                    <?php
                     } ?>
                 </div>
             </div>
@@ -139,22 +147,22 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <?php 
+                                <?php
                                 if ($id_group=='part' or $id_group=='admoff' or $id_group=='fin') {
                                     echo " | ";
                                 }else{
                                  ?>
-                                    <img src="<?php 
+                                    <img src="<?php
                                     if ($id_group=='fc') {
                                         echo "../../management_t4t/gbr/poto/".$foto_fc->foto."";
                                     }else{
                                         echo "../images/default.png";
                                     }
                                      ?>" alt="">
-                                <?php 
+                                <?php
                                 }
                                  ?>
-                                     <?php 
+                                     <?php
                                      if ($id_group=='part') {
                                          echo $_SESSION['nama_part'];
                                      }elseif($id_group=='admoff'){
@@ -164,10 +172,10 @@
                                      }else{
                                          echo $username;
                                      } ?>
-                                    
+
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
-                            <?php 
+                            <?php
                             if ($id_group=='admoff' or $id_group=='fin') {
                             ?>
                                 <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
@@ -187,8 +195,8 @@
                                     <li><a href="../login/logout.php"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                                     </li>
                                 </ul>
-                            <?php 
-                            } 
+                            <?php
+                            }
                             ?>
                             </li>
 
@@ -197,7 +205,7 @@
                                     <i class="fa fa-clock-o"> <?php date_default_timezone_set('Asia/Jakarta'); echo " " . date("d F Y - "); ?><span id="clock"></span> WIB.</i>
                                     <!-- <span class="badge bg-green">6</span> -->
                                 </a>
-                                
+
                             </li>
 
                         </ul>
@@ -211,12 +219,13 @@
             <div class="right_col" role="main">
 
            <?php
-            //untuk mendecode url yang di encrypsi
-            $var=decode($_SERVER['REQUEST_URI']);
+          }
+         //end content
 
             //pecahkan nilai array
+
             $page=$var['hal'];
-            
+
             ############# member ############
             if ($id_order=$var['id_order']) {
                 $_SESSION['id_order']=$id_order;
@@ -249,6 +258,10 @@
             $halaman="../pages/$page.php";
             $report="../action/report/$page.php";
 
+
+          if (!Empty($content)) {
+            include "../pages/$content.php";
+          }else{
             //jika file yang diinclude tidak ada.
             if(!file_exists($halaman) || empty($page)){
                 include "../error/404.php";
@@ -257,10 +270,13 @@
             }else{
                 include "$halaman";
             }
+          }
             ?>
 
-            
-           <?php //include 'footer.php'; ?>
+
+           <?php
+
+           //include 'footer.php'; ?>
 
             </div>
             <!-- /page content -->

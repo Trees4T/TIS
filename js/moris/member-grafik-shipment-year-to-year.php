@@ -1,4 +1,4 @@
- <?php 
+ <?php
  session_start();
  include '../../koneksi/koneksi.php';
     $kode=$_SESSION['kode'];
@@ -12,8 +12,8 @@
       $tahun=$_SESSION['ship_act_year'];
       $bulan="12";
     }
-    
-    
+
+
 
 
     $query_wkt_shipment=$conn->query("select wkt_shipment from t4t_shipment where id_comp='$kode'");
@@ -27,11 +27,11 @@
         type: 'line',
         data: {
 
-          labels: 
+          labels:
           [
-          <?php for ($i=1; $i <= $bulan ; $i++) { 
+          <?php for ($i=1; $i <= $bulan ; $i++) {
            ?>
-          "<?php 
+          "<?php
               $i;
               if($i==1){
                 echo "January";
@@ -68,12 +68,12 @@
               }
               if($i==12){
                 echo "December";
-              }  
+              }
            ?>",
-          <?php 
+          <?php
           } ?>
           ],
-          
+
           datasets: [
 
             {
@@ -88,7 +88,7 @@
               data: [
               <?php for ($i=1; $i <= $bulan ; $i++) { ?>
 
-              <?php 
+              <?php
                   if($i==1){
                     $i="01";
                   }
@@ -116,7 +116,7 @@
                   if($i==9){
                     $i="09";
                   }
-                  
+
                   $ship=$conn->query("select count(no_shipment) from t4t_shipment where wkt_shipment like '%-$i-%' and id_comp='$kode' and wkt_shipment like '%$tahun%' and acc_paid=1");
                   $ship2=$ship->fetch();
                   echo json_encode($ship2[0]).",";
@@ -136,11 +136,11 @@
               pointHoverBackgroundColor: "#fff",
               pointHoverBorderColor: "rgba(151,187,205,1)",
               pointBorderWidth: 1,
-              data: 
+              data:
               [
               <?php for ($i=1; $i <= $bulan ; $i++) { ?>
 
-              <?php 
+              <?php
                   if($i==1){
                     $i="01";
                   }
@@ -168,7 +168,7 @@
                   if($i==9){
                     $i="09";
                   }
-                  
+
                   $item=$conn->query("select sum(item_qty) from t4t_shipment where wkt_shipment like '%-$i-%' and id_comp='$kode' and wkt_shipment like '%$tahun%' and acc_paid=1");
                   $item2=$item->fetch();
                   if ($item2[0]=="") {
