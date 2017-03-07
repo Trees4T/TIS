@@ -1,4 +1,4 @@
-<?php  
+<?php
 $kode=$id_member;
 $nama_member=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
 
@@ -16,7 +16,7 @@ $tahun_bulan = date("Y-m");
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
@@ -26,14 +26,14 @@ $tahun_bulan = date("Y-m");
     <div class="col-md-12">
         <div class="x_panel">
             <!-- <div class="x_title">
-                
+
                 <ul class="nav navbar-right panel_toolbox">
-                    
+
                 </ul>
                 <div class="clearfix"></div>
             </div> -->
             <div class="x_content">
-                 <?php 
+                 <?php
         if ($_SESSION['success']==7) {
         ?>
           <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -48,7 +48,7 @@ $tahun_bulan = date("Y-m");
           <div class="alert alert-success alert-dismissible fade in" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
               </button>
-              <strong><i class="fa fa-check-circle"></i> Success!</strong> <b><?php echo $_SESSION['bl'] ?></b> has been unapproved.
+              <strong><i class="fa fa-check-circle"></i> Success!</strong> <b><?php echo $_SESSION['bl'] ?></b> has been unpaid.
           </div>
         <?php
         }
@@ -57,7 +57,7 @@ $tahun_bulan = date("Y-m");
           <div class="alert alert-success alert-dismissible fade in" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
               </button>
-              <strong><i class="fa fa-check-circle"></i> Success!</strong> <b><?php echo $_SESSION['bl'] ?></b> has been approved.
+              <strong><i class="fa fa-check-circle"></i> Success!</strong> <b><?php echo $_SESSION['bl'] ?></b> has been paid.
           </div>
         <?php
         }
@@ -79,12 +79,12 @@ $tahun_bulan = date("Y-m");
                     <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Unpaid</a>
                         </li>
-                     
-                       
+
+
                     </ul>
                     <div id="myTabContent" class="tab-content">
                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
-                           
+
                           <div class="panel-body">
                                             <table class="table table-striped responsive-utilities jambo_table" border="1" id="unpaid_list<?php echo $load_tahun['th'] ?>">
                                                 <thead>
@@ -98,7 +98,7 @@ $tahun_bulan = date("Y-m");
                                                         <th rowspan="2"><center>Fee</center></th>
                                                         <th rowspan="2"><center>Paid</center></th>
                                                     </tr>
-                                                    <tr>   
+                                                    <tr>
                                                         <th width="5%"><center>20'</center></th>
                                                         <th width="5%"><center>40'</center></th>
                                                         <th width="5%"><center>40' HC</center></th>
@@ -106,15 +106,15 @@ $tahun_bulan = date("Y-m");
                                                         <th width="5%"><center>60'</center></th>
                                                     </tr>
                                                 </thead>
-                                        
+
                                                 <tbody>
-                                        <?php 
+                                        <?php
                                         $th=$load_tahun['th'];
 
                                         $shipment=$conn->query("select * from t4t_shipment where wkt_shipment like '%$th%' and acc_paid=0 and acc=1 and wkt_shipment like '%$tahun_bulan-%' order by wkt_shipment ");
                                         while ($load_shipment=$shipment->fetch()) {
-                                             
-                                         
+
+
                                         ?>
                                                     <tr>
                                                         <td align="center" width="10%"><?php echo $load_shipment['wkt_shipment'] ?></td>
@@ -126,39 +126,39 @@ $tahun_bulan = date("Y-m");
                                                         </td>
                                                         <td align=""><?php echo $load_shipment['no_order'] ?></td>
                                                         <td align="center">
-                                                            <?php 
+                                                            <?php
                                                             $no_shipment=$load_shipment['no_shipment']; //definisi no shipment
                                                             $a=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='1'")->fetch();
                                                             echo $a[0];
                                                             ?>
                                                         </td>
                                                         <td align="center">
-                                                            <?php 
+                                                            <?php
                                                             $b=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='2'")->fetch();
                                                             echo $b[0];
                                                             ?>
                                                         </td>
                                                         <td align="center">
-                                                            <?php 
+                                                            <?php
                                                             $b=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='3'")->fetch();
                                                             echo $b[0];
                                                             ?>
                                                         </td>
                                                         <td align="center">
-                                                            <?php 
-                                                            $c=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='4'")->fetch(); 
+                                                            <?php
+                                                            $c=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='4'")->fetch();
                                                             echo $c[0];
                                                             ?>
                                                         </td>
                                                         <td align="center">
-                                                            <?php 
+                                                            <?php
                                                             $d=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='5'")->fetch();
                                                             echo $d[0];
                                                             ?>
                                                         </td>
                                                         <td align="center"><?php echo $load_shipment['kota_tujuan'] ?></td>
                                                         <td align="center">
-                                                          <?php 
+                                                          <?php
                                                           if ($load_shipment['fee']=='0') {
                                                             ?>
                                                             <a href="#" data-toggle="modal" data-target="#fee<?php echo $load_shipment['no'] ?>"><font color="red">
@@ -169,7 +169,7 @@ $tahun_bulan = date("Y-m");
                                                             ?>
                                                             <a href="#" data-toggle="modal" data-target="#fee<?php echo $load_shipment['no'] ?>">
                                                             <?php
-                                                          echo $load_shipment['fee']; 
+                                                          echo $load_shipment['fee'];
                                                             ?>
                                                             </a>
                                                             <?php
@@ -177,41 +177,41 @@ $tahun_bulan = date("Y-m");
                                                           ?>
                                                         </td>
                                                         <td align="center">
-                                                            <?php 
+                                                            <?php
                                                             $approve=$conn->query("select acc_paid from t4t_shipment where no_shipment='$no_shipment'")->fetch();
                                                             if ($approve[0]=="1") {
                                                                 ?>
                                                                 <i class="fa fa-check-square-o"></i>
-                                                                <?php 
+                                                                <?php
                                                             }else{
                                                                 ?>
                                                                 <a href="#" data-toggle="modal" data-target="#unpaid<?php echo $load_shipment['no'] ?>"><div class="font-15">&empty;</div></a>
                                                                 <?php
                                                             }
-                                                        
+
                                                             ?>
 
                                                         </td>
                                                     </tr>
 <!-- MODAL -->
-<?php 
-include 'modal/shipment-detail.php'; 
-include 'modal/fee-update.php'; 
-include 'modal/unpaid-to-paid.php'; 
+<?php
+include 'modal/shipment-detail.php';
+include 'modal/fee-update.php';
+include 'modal/unpaid-to-paid.php';
 ?>
 <!-- MODAL -->
 
 
 
- 
-                                        <?php 
+
+                                        <?php
                                         }
                                         ?>
                                                 </tbody>
-                                        
+
                                             </table>
                                         </div>
-                                                                   
+
     <!-- Datatables -->
     <script src="../js/datatables/js/jquery.dataTables.js"></script>
     <script src="../js/datatables/tools/js/dataTables.tableTools.js"></script>
@@ -228,8 +228,8 @@ include 'modal/unpaid-to-paid.php';
       } );
     </script>
     <!-- end datatable -->
-                            
-                         
+
+
                         </div>
 
 
@@ -269,7 +269,7 @@ include 'modal/unpaid-to-paid.php';
     <script type="text/javascript" src="../js/notify/pnotify.core.js"></script>
     <script type="text/javascript" src="../js/notify/pnotify.buttons.js"></script>
     <script type="text/javascript" src="../js/notify/pnotify.nonblock.js"></script>
-    <?php  
+    <?php
       if ($_SESSION['mail']=='1') {
     ?>
     <script type="text/javascript">
@@ -302,8 +302,8 @@ include 'modal/unpaid-to-paid.php';
 
         });
     </script>
-    <?php 
-      
+    <?php
+
       }
       if ($_SESSION['mail']=='0') {
 
@@ -338,7 +338,7 @@ include 'modal/unpaid-to-paid.php';
 
         });
     </script>
-    <?php 
+    <?php
       }
 
       unset($_SESSION['mail']);

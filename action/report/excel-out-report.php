@@ -5,12 +5,12 @@ session_start();
 include '../../koneksi/koneksi.php';
 
 $awal 	=$_POST['awal'];
-$akhir 	=$_POST['akhir']; 
-$status =$_POST['status']; 
+$akhir 	=$_POST['akhir'];
+$status =$_POST['status'];
 if ($_SESSION['level']=='fin') {
-	$kode 	=$_POST['member']; 
+	$kode 	=$_POST['member'];
 }else{
-	$kode 	=$_SESSION['kode']; 
+	$kode 	=$_SESSION['kode'];
 }
 
 /**
@@ -74,17 +74,17 @@ $BStyle = array(
 );
 
 // Add some data
-$objPHPExcel->setActiveSheetIndex(0)	
+$objPHPExcel->setActiveSheetIndex(0)
 
             ->mergeCells('A1:A2', '')
             ->mergeCells('B1:B2', '')
-            ->mergeCells('C1:C2', '')   
+            ->mergeCells('C1:C2', '')
             ->mergeCells('I1:I2', '')
             ->mergeCells('J1:J2', '')
             ->mergeCells('K1:K2', '')
             ->mergeCells('L1:L2', '')
             ->mergeCells('D1:H1', '')
-            
+
             ->setCellValue('A1', 'Shipment Date')
             ->setCellValue('B1', 'Shipment')
             ->setCellValue('C1', 'BL')
@@ -97,35 +97,35 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('E2', "40'")
             ->setCellValue('F2', "40' HC")
             ->setCellValue('G2', "45'")
-            ->setCellValue('H2', "60'")            
+            ->setCellValue('H2', "60'")
 
             ->getStyle('A1:L2')
 		    ->getAlignment()
-		    ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)	
+		    ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
 
             ;
 
 $objPHPExcel->getActiveSheet()->getStyle('A1:K2')->getFont()->setBold(true);
 
 if ($status==2) {
-			  $out_payment=mysql_query("select substr(wkt_shipment,1,4) as th_ship,
+			  $out_payment=$conn->query("SELECT substr(wkt_shipment,1,4) as th_ship,
 			  substr(wkt_shipment,6,2) as bln_ship,
 			  substr(wkt_shipment,9,2) as dt_ship,
 			  bl,fee,diskon,no_shipment,no_order,
 			  wins_used,tgl_paid,acc_paid from t4t_shipment where id_comp='$kode' and
-			  bl_tgl BETWEEN '$awal' and '$akhir' 
-			  order by substr(wkt_shipment,1,4) desc");
+			  bl_tgl BETWEEN '$awal' and '$akhir'
+			  order by no desc");
 			}else{
-			  $out_payment=mysql_query("select substr(wkt_shipment,1,4) as th_ship,
+			  $out_payment=$conn->query("SELECT substr(wkt_shipment,1,4) as th_ship,
 			  substr(wkt_shipment,6,2) as bln_ship,
 			  substr(wkt_shipment,9,2) as dt_ship,
 			  bl,fee,diskon,no_shipment,no_order,
 			  wins_used,tgl_paid,acc_paid from t4t_shipment where id_comp='$kode' and
-			  bl_tgl BETWEEN '$awal' and '$akhir' 
-			  and acc_paid='$status' order by substr(wkt_shipment,1,4) desc");
+			  bl_tgl BETWEEN '$awal' and '$akhir'
+			  and acc_paid='$status' order by no desc");
 			}
 			$i=2;
-			while($data=mysql_fetch_array($out_payment))
+			while($data=$out_payment->fetch())
 			{
 				$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(13);
 				$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(18);
@@ -149,34 +149,42 @@ if ($status==2) {
 							$K='K'.$i;
 							$L='L'.$i;
 
-        date_default_timezone_set('Asia/Jakarta'); 
+        date_default_timezone_set('Asia/Jakarta');
         $th_ship=$data['th_ship'];
         $bln_ship=$data['bln_ship'];
         $dt_ship=$data['dt_ship'];
         $wkt_shipment=$dt_ship."/".$bln_ship."/".$th_ship;
-        
+
         $no_ship=$data['no_shipment'];
-		$cont1=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=1"));
-		$cont2=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=2"));
-		$cont3=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=3"));
-		$cont4=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=4"));
-		$cont5=mysql_fetch_array(mysql_query("select jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=5"));
+		$cont1=$conn->query("SELECT jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=1")->fetch();
+		$cont2=$conn->query("SELECT jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=2")->fetch();
+		$cont3=$conn->query("SELECT jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=3")->fetch();
+		$cont4=$conn->query("SELECT jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=4")->fetch();
+		$cont5=$conn->query("SELECT jml from t4t_ordercontainer where no_order='$no_ship' and no_cont=5")->fetch();
 
 		$no_order=$data['no_order'];
-		$tipe_prod=mysql_fetch_array(mysql_query("select tipe_prod from t4t_order where no_order='$no_order'"));
+		$tipe_prod=$conn->query("SELECT tipe_prod from t4t_order where no_order='$no_order'")->fetch();
 
 		$no_ordr=$data['no_order'];
            $ex_order=explode(",", $no_ordr);
-           $ordr1=$ex_order[0];
+					 for ($j=1; $j <= 20 ; $j++) {
 
-           $tipe=mysql_fetch_row(mysql_query("select tipe_prod from t4t_order where no_order='$ordr1'"));
-       
+						 if (isset($ex_order[0])!="") {
+								 $ordr1=$ex_order[0];
+						 }elseif(isset($ex_order[$j])!=""){
+								 $ordr1=$ex_order[$j];
+						 }
+
+					 }
+
+           $tipe=$conn->query("SELECT tipe_prod from t4t_order where no_order='$ordr1'")->fetch();
+
            //payment date
            if ($data['tgl_paid']=='0000-00-00') {
 	        	$pd="-";
 	       }else{
 	       $ex_wkt_paid=explode("-", $data['tgl_paid']);
-	       		$pd=$ex_wkt_paid[2].'/'.$ex_wkt_paid[1].'/'.$ex_wkt_paid[0]; 
+	       		$pd=$ex_wkt_paid[2].'/'.$ex_wkt_paid[1].'/'.$ex_wkt_paid[0];
 	       }
 
 	       //status
@@ -185,7 +193,7 @@ if ($status==2) {
            }else{
              $st="Paid";
            }
-       //data loop         
+       //data loop
        $objPHPExcel->setActiveSheetIndex(0)
 							->setCellValue($A,$wkt_shipment)
 							->setCellValue($B,$data["no_shipment"])
@@ -202,8 +210,14 @@ if ($status==2) {
 
 
 		}
-		$jml_loop=mysql_fetch_row(mysql_query("select count(*) from t4t_shipment where id_comp='$kode' and
-			  bl_tgl BETWEEN '$awal' and '$akhir'"));
+		if ($status==2) {
+			$jml_loop=$conn->query("SELECT count(*) from t4t_shipment where id_comp='$kode' and
+				  bl_tgl BETWEEN '$awal' and '$akhir'")->fetch();
+		}else{
+			$jml_loop=$conn->query("SELECT count(*) from t4t_shipment where id_comp='$kode' and
+				  bl_tgl BETWEEN '$awal' and '$akhir' and acc_paid='$status'")->fetch();
+		}
+
 		$jml_loop2=$jml_loop[0]+3;
 
 		$objPHPExcel->setActiveSheetIndex(0)

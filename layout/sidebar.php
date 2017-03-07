@@ -122,7 +122,7 @@
                         <a href="?<?php echo paramEncrypt('hal=change-password')?>" data-toggle="tooltip" data-placement="top" title="Change Password">
                             <span class="fa fa-key" aria-hidden="true"></span>
                         </a>
-                        <a data-toggle="tooltip" data-placement="top" title="V 0.2.12">
+                        <a data-toggle="tooltip" data-placement="top" title="Ver. &Alpha;.2.12">
                             <span class="fa fa-question-circle" aria-hidden="true"></span>
                         </a>
                         <a href="../login/logout.php" data-toggle="tooltip" data-placement="top" title="Logout">
@@ -249,10 +249,15 @@
             $mon        =$var['mon'];
             ############# fc ############
 
-            ############# Adm Off #############
+            ############# Adm Off & Finance #############
             #order list
             $id_member  =$var['id_member'];
-            ############# Adm Off #############
+            $pil_th     =$var['pilih_tahun'];
+            ############# Adm Off & Finance #############
+
+            ############# Finance #############
+            $sts_paid   =$var['sts_paid'];
+            ############# Finance #############
 
             //concate dengan nama file
             $halaman="../pages/$page.php";

@@ -10,11 +10,27 @@ date_default_timezone_set('Asia/Jakarta');
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?php
+     $page = $_SERVER['PHP_SELF'];
+     $sec = "3600";
+
+     $actual_link0 = "$_SERVER[REQUEST_URI]";
+     $actual_link1 = explode("?", $actual_link0);
+     $actual_link  = $actual_link1[1];
+
+     if ($actual_link == 'dcb6309a5e101c4834be5bfa0aa100be' or $actual_link == '28f29b60dc8d0763f92a9864de362cf2') {
+       # code...
+
+    ?>
+
+    <meta http-equiv="refresh" content="<?php echo $sec?>;URL='<?php echo $page.'?'.$actual_link; ?>'">
+
+    <?php } ?>
 
     <title>Trees4Trees Information System </title>
 
     <!-- Bootstrap core CSS -->
-    
+
     <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <link href="../fonts/css/font-awesome.min.css" rel="stylesheet">

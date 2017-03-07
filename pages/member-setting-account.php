@@ -144,7 +144,7 @@ Director <span class="required"></span>
                     <div class="ln_solid"></div>
                     <div class="form-group">
                       <div class="col-md-5 col-md-offset-5">
-                        <a href="?<?php echo paramEncrypt('hal=member-setting-account')?>" class="btn btn-primary">Reset</a>
+                        <a href="?<?php echo paramEncrypt('hal=member-setting-account')?>" class="btn btn-primary">Cancel</a>
                         <button type="submit" name="save_setting" class="btn btn-success">Save Changes</button>
                       </div>
                     </div>

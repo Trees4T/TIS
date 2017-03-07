@@ -6,7 +6,7 @@
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
@@ -16,20 +16,20 @@
               <div class="x_panel">
                 <div class="x_title">
                   <h2> WINS Report </h2>
-                  
+
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                   <br />
-                  
-               
+
+
                     <font size="">
-                   
+
 
                     <div class="col-sm-12">
-                
-                   
-                                
+
+
+
                                 <div class="x_content">
 
 
@@ -38,7 +38,7 @@
                                         <form class="form-horizontal" method="post" action="">
                                             <fieldset>
                                                 <div class="control-group">
-                                                <?php 
+                                                <?php
                                                 date_default_timezone_set('Asia/Jakarta');
                                                 $waktu    = date("d/m/Y");
                                                 $tahun    = date("Y");
@@ -47,16 +47,16 @@
                                                         $bln_lalu='12';
                                                         $tahun=$tahun-1;
                                                     }
-                                                
+
                                                  ?>
                                               <label class="control-label">Date Range <span class="required red">*</span>
-                                              </label><br>  
+                                              </label><br>
                                                     <div class="controls">
                                                         <div class="input-prepend input-group">
                                                             <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                                            <input type="text" style="width: 200px" name="range_tanggal" id="reservation" class="form-control" value="<?php 
+                                                            <input type="text" style="width: 200px" name="range_tanggal" id="reservation" class="form-control" value="<?php
                                                             if ($_POST['range_tanggal']=="") {
-                                                               echo "01/".$bln_lalu."/".$tahun." - ";  echo $waktu; 
+                                                               echo "01/".$bln_lalu."/".$tahun." - ";  echo $waktu;
                                                             }else{
                                                                 echo $_POST['range_tanggal'];
                                                             } ?>" />
@@ -64,14 +64,14 @@
                                                     </div>
                                                 </div>
                                             </fieldset>
-                                           
+
                                             <fieldset>
                                             <div class="control-group">
                                               <label class="control-label">Status <span class="required red">*</span>
                                               </label><br>
                                               <div class="controls col-sm-3">
                                                 <select class="form-control" name="status">
-                                                <?php 
+                                                <?php
                                                 $nm_status=$_POST['status'];
                                                 if ($nm_status==0) {
                                                     $nm_status="Unapproved";
@@ -90,13 +90,13 @@
                                                 <option value="1">Approved</option>
                                                 <option value="0">Unapproved</option>
                                                 <option value="2">All</option>
-                                                 
+
                                                 </select>
                                               </div>
                                             </div>
                                             </fieldset>
-                                            
-                                           
+
+
 
                                             <br>
                                             <div class="ln_solid"></div>
@@ -111,7 +111,7 @@
 
 
                                     </div>
-<?php  
+<?php
 if ($_POST['range_tanggal']==true) {
 
 
@@ -121,10 +121,10 @@ if ($_POST['range_tanggal']==true) {
         $exp_tanggal=explode("-", $tanggal);
         $tanggal_awal=$exp_tanggal[0];
         $tanggal_akhir=$exp_tanggal[1];
-            
+
             $exp_t_awal=explode("/", $tanggal_awal);
             $nilai_t_awal=trim($exp_t_awal[2])."-".$exp_t_awal[1]."-".$exp_t_awal[0];
-            
+
             $exp_t_akhir=explode("/", $tanggal_akhir);
             $nilai_t_akhir=trim($exp_t_akhir[2])."-".$exp_t_akhir[1]."-".trim($exp_t_akhir[0]);
     #end
@@ -147,7 +147,7 @@ if ($_POST['range_tanggal']==true) {
                                                 <!-- <th><center>BL No.</center> </th> -->
                                                 <th><center>Order No.</center></th>
                                                 <th><center>Wins Number</center></th>
-                                                <th><center>Status Approve</center></th>                                          
+                                                <th><center>Status Approve</center></th>
                                             </tr>
                                         </thead>
 
@@ -157,24 +157,24 @@ if ($_POST['range_tanggal']==true) {
 
                             $no=1;
                             if ($sts==1 or $sts==0) {
-                                $wins_rep=mysql_query("select id_comp,wkt_shipment,no_shipment,bl,no_order,wins_used,acc,
+                                $wins_rep=$conn->query("select id_comp,wkt_shipment,no_shipment,bl,no_order,wins_used,acc,
                                     no,no,bl_tgl,item_qty,kota_tujuan,note,buyer,foto
                                      from t4t_shipment where wkt_shipment BETWEEN '$nilai_t_awal' and '$nilai_t_akhir' and acc='$sts'");
                             }elseif ($sts==2) {
-                                $wins_rep=mysql_query("select id_comp,wkt_shipment,no_shipment,bl,no_order,wins_used,acc,
+                                $wins_rep=$conn->query("select id_comp,wkt_shipment,no_shipment,bl,no_order,wins_used,acc,
                                 no,no,bl_tgl,item_qty,kota_tujuan,note,buyer,foto
                                  from t4t_shipment where wkt_shipment BETWEEN '$nilai_t_awal' and '$nilai_t_akhir'");
                             }
-                            
-                            while ($load_shipment=mysql_fetch_array($wins_rep)) {
-                            echo mysql_error();
+
+                            while ($load_shipment=$wins_rep->fetch()) {
+                            //echo mysql_error();
                             $id_comp=$load_shipment[0];
                              ?>
 
                                 <tr class="even pointer">
                                     <td align="center" width="12.5%">
-                                        <?php 
-                                        $nama=mysql_fetch_row(mysql_query("select nama from t4t_partisipan where id='$id_comp'"));
+                                        <?php
+                                        $nama=$conn->query("select nama from t4t_partisipan where id='$id_comp'")->fetch();
                                         echo $nama[0];
                                         ?></td>
                                     <td align="center" width="7.5%"><?php echo $load_shipment[1] ?></td>
@@ -182,7 +182,7 @@ if ($_POST['range_tanggal']==true) {
                                     <!-- <td align="center" width="7.5%"><?php echo $data[3] ?></td> -->
                                     <td align="center" width="7.5%"><textarea readonly=""><?php echo $load_shipment[4] ?></textarea></td>
                                     <td align="center" width="15%"><textarea readonly=""><?php echo $load_shipment[5] ?></textarea></td>
-                                    <td align="center" width="5%"><?php 
+                                    <td align="center" width="5%"><?php
                                         if ($load_shipment[6]==1) {
                                             ?>
                                             <i class="fa fa-check-square-o"></i>
@@ -192,44 +192,44 @@ if ($_POST['range_tanggal']==true) {
                                             <i class="fa fa-square-o"></i>
                                             <?php
                                         }
-                                    
+
                                     ?></td>
 
                                 </tr>
     <!-- Modal -->
-  <?php  
+  <?php
   include 'modal/bl-detail.php';
   ?>
-  <!-- end modal -->             
-                            <?php 
-                              $no++;  
+  <!-- end modal -->
+                            <?php
+                              $no++;
 
-                              
+
                             }
-                             ?>      
-                       
+                             ?>
+
                                         </tbody>
-                                   
+
                                     </table>
-<?php 
+<?php
 }
  ?>
                                 </div>
-               
+
 
 
                       </div>
 
-                    
 
 
-  
 
-                    
+
+
+
                     </div>
 
                     </font>
-                 
+
                 </div>
               </div>
             </div>
@@ -525,7 +525,7 @@ if ($_POST['range_tanggal']==true) {
         });
     </script>
     <!-- /ion_range -->
-   
+
       <!-- Datatables -->
 
         <script src="../js/datatables/js/jquery.dataTables.js"></script>

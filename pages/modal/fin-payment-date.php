@@ -1,4 +1,5 @@
-<div class="modal fade" id="paid<?php echo $load_shipment['no'] ?>" role="dialog">
+ <!-- Modal fee -->
+  <div class="modal fade" id="paydate<?php echo $load_shipment['no'] ?>" role="dialog">
     <div class="modal-dialog ">
 
       <!-- Modal content-->
@@ -6,21 +7,8 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">
-          <?php
-          if ($load_shipment['acc']==1) {
-          ?>
-            <div class="font-hijau">
-               <i class="fa fa-check-circle-o "> </i> Paid
-            </div>
-          <?php
-          }else{
-          ?>
-            <div class="red font-bold">
-               &empty; Unpaid
-            </div>
-          <?php
-          } ?>
 
+          <i class="fa fa-dollar"> </i> Payment Date
 
           </h4>
         </div>
@@ -31,7 +19,7 @@
           </label>
           <div class="col-md-8 font-hijau">
             <?php
-
+            $kode=$load_shipment['id_comp'];
             $comp_name=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
             echo $comp_name[0];
             ?>
@@ -69,16 +57,22 @@
         </div>
         <div class="modal-footer">
           <form method="post" action="../action/finance-paid-unpaid.php">
-            <div class="form-group col-lg-12 font-bold red" align="center">
-            <font size="20">&empty;<br></font>
-                Change to <b>UNPAID!</b>
+            <div class="form-group col-lg-12">
+                <label class="control-label col-md-4 ">Payment Date
+                </label>
+                <div class="col-md-4 font-hijau">
+                  <input type="text" class="form-control" name="paydate" value="<?php echo $load_shipment['tgl_paid'] ?>" placeholder="YYYY-mm-dd">
+                </div>
+
             </div>
             <input type="hidden" name="link" value="<?php echo $actual_link ?>">
             <input type="hidden" name="bl" value="<?php echo $load_shipment['bl'] ?>">
             <input type="hidden" name="shipment" value="<?php echo $load_shipment['no_shipment'] ?>">
+            <input type="hidden" name="id_member" value="<?php echo $load_shipment['id_comp'] ?>">
 
-            <button type="submit" name="btn_save_unpaid" class="btn btn-success">Save Changes</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="submit" name="btn_save_paydate" class="btn btn-success">Save Changes</button>
+            <!-- <a href="?<?php echo $actual_link ?>" type="submit" class="btn btn-primary" >OK</a> -->
+            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button> -->
           </form>
         <br>
 
@@ -87,3 +81,4 @@
 
     </div>
   </div>
+  <!-- end modal FEE -->

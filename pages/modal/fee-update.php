@@ -56,7 +56,7 @@
 
         </div>
         <div class="modal-footer">
-          <form method="get" action="../action/finance-paid-unpaid.php">
+          <form method="post" action="../action/finance-paid-unpaid.php">
             <div class="form-group col-lg-12">
                 <label class="control-label col-md-4 ">Fee
                 </label>
@@ -67,6 +67,7 @@
             </div>
             <input type="hidden" name="link" value="<?php echo $actual_link ?>">
             <input type="hidden" name="bl" value="<?php echo $load_shipment['bl'] ?>">
+            <input type="hidden" name="shipment" value="<?php echo $load_shipment['no_shipment'] ?>">
             <input type="hidden" name="id_member" value="<?php echo $load_shipment['id_comp'] ?>">
 
             <button type="submit" name="btn_save_fee" class="btn btn-success">Save Changes</button>

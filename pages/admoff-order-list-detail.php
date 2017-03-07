@@ -1,4 +1,4 @@
-<?php 
+<?php
 $kode=$id_member;
 $nama_member=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
 
@@ -14,18 +14,20 @@ $actual_link  = $actual_link1[1];
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
     <div class="x_panel">
         <div class="x_title">
-            <h2><i class="fa fa-folder-open"></i> Order List <small><?php echo $nama_member[0] ?> </small></h2>
-           
+            <h2><i class="fa fa-folder-open"></i> Order List <small><a href="?<?php echo paramEncrypt('hal=admoff-order-list-2&id_member='.$kode.'') ?>"><?php echo $nama_member[0] ?> </a></small>
+                <span class='badge bg-green'><font color='white'> <?php echo $pil_th ?></font></span>
+            </h2>
+
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-        <?php 
+        <?php
         if ($_SESSION['success']==1) {
         ?>
           <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -66,54 +68,35 @@ $actual_link  = $actual_link1[1];
         unset($_SESSION['success']);
         unset($_SESSION['order']);
         ?>
-          <!-- start accordion -->
-            <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
-                <?php 
-                
-                $tahun=$conn->query("select substr(t4t_order.wkt_order,1,4) AS `th`,no_order,wkt_order from t4t_order where id_comp='$kode' group by th order by th desc");
-                //echo mysql_error();
-                while ($load_tahun=$tahun->fetch()) {
-                   
-                ?>
 
-                <div class="panel">
-                    <a class="panel-heading" role="tab" id="heading<?php echo $load_tahun['th'] ?>" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $load_tahun['th'] ?>" aria-expanded="true" aria-controls="collapse<?php echo $load_tahun['th'] ?>">
-                        <h4 class="panel-title">
-                        <i class="fa fa-caret-square-o-down"></i>
-                        <?php 
-                        echo $load_tahun['th'];
-                        ?>
-                        </h4>
-                    </a>
-                    <div id="collapse<?php echo $load_tahun['th'] ?>" class="panel-collapse collapse " role="tabpanel" aria-labelledby="heading<?php echo $load_tahun['th'] ?>">
                         <div class="panel-body">
                             <table class="table table-striped responsive-utilities jambo_table" border="1" id="order_list<?php echo $load_tahun['th'] ?>">
                                 <thead>
                                     <tr>
                                         <th><center>Order Date<center></th>
-                                        <th><center>No. Order</center></th>                         
+                                        <th><center>No. Order</center></th>
                                         <th><center>Hang Tags Requested</center></th>
                                         <th><center>WINS Number</center></th>
                                         <th><center>Destination City</center></th>
                                         <th><center>Approved</center></th>
                                     </tr>
                                 </thead>
-                        
+
                                 <tbody>
-                        <?php 
+                        <?php
                         $th=$load_tahun['th'];
-                        
+
                         $order=$conn->query("select no, wkt_order, no_order, jml_wins, acc, tipe_prod, wins1, wins2, kota_tujuan from t4t_order where wkt_order like '%$th%' and id_comp='$kode'");
                         while ($load_order=$order->fetch()) {
                             $id_order=$load_order['no'];
-                            
+
                         ?>
                                     <tr>
                                         <td align="center"><?php echo $load_order['wkt_order'] ?></td>
-                           
-                                         <td align="center"><a href="#" data-toggle="modal" data-target="#myModal<?php echo $load_order['no'] ?>"><?php echo $load_order['no_order'] ?></a></td>                                    
+
+                                         <td align="center"><a href="#" data-toggle="modal" data-target="#myModal<?php echo $load_order['no'] ?>"><?php echo $load_order['no_order'] ?></a></td>
                                         <td align="center">
-                                            <?php 
+                                            <?php
                                             $no_order=$load_order['no_order']; //definisi no order
                                             $htag=$conn->query("select jml_wins from t4t_order where no_order='$no_order'")->fetch();
                                             echo $htag[0];
@@ -123,29 +106,29 @@ $actual_link  = $actual_link1[1];
                                             <a href="#" data-toggle="modal" data-target="#win<?php echo $load_order['no'] ?>"><?php echo $load_order['wins1'].' to '.$load_order['wins2'] ?></a>
                                         </td>
                                         <td align="center">
-                                            <?php 
+                                            <?php
                                             echo $load_order['kota_tujuan']
                                             ?>
                                         </td>
-                                   
+
                                         <td align="center">
-                                            <?php 
+                                            <?php
                                             $approve=$conn->query("select acc from t4t_order where no_order='$no_order'")->fetch();
                                             if ($approve[0]=="1") {
                                                 ?>
                                                 <a href="#" data-toggle="modal" data-target="#acc1<?php echo $load_order['no'] ?>"><i class="fa fa-check-square-o"></i></a>
-                                                <?php 
+                                                <?php
                                             }else{
                                                 ?>
                                                 <a href="#" data-toggle="modal" data-target="#acc0<?php echo $load_order['no'] ?>"><i class="fa fa-square-o"></i></a>
                                                 <?php
                                             }
-                                            
+
                                             ?>
                                         </td>
                                     </tr>
 
- <?php  
+ <?php
  include 'modal/admoff-no-order.php';
  include 'modal/admoff-win-range.php';
  include 'modal/admoff-order-acc-0.php';
@@ -153,37 +136,30 @@ $actual_link  = $actual_link1[1];
  ?>
 
 
-                        <?php 
+                        <?php
                         }
                         ?>
                                 </tbody>
-                        
+
                             </table>
+                            <!-- Datatables -->
+                            <script src="../js/datatables/js/jquery.dataTables.js"></script>
+                            <script src="../js/datatables/tools/js/dataTables.tableTools.js"></script>
+
+                             <script>
+                              $(function() {
+                                  $('#order_list<?php echo $load_tahun['th'] ?>').DataTable( {
+                                            // "bJQueryUI":true,
+                                          "bPaginate":true,
+                                          "sPaginationType": "full_numbers",
+                                          "iDisplayLength":10
+                                  } );
+
+                              } );
+                            </script>
+                            <!-- end datatable -->
                         </div>
-                    </div>
-                </div>  
 
-    <!-- Datatables -->
-    <script src="../js/datatables/js/jquery.dataTables.js"></script>
-    <script src="../js/datatables/tools/js/dataTables.tableTools.js"></script>
-
-     <script>
-      $(function() {
-          $('#order_list<?php echo $load_tahun['th'] ?>').DataTable( {
-                    // "bJQueryUI":true,
-                  "bPaginate":true,
-                  "sPaginationType": "full_numbers",
-                  "iDisplayLength":10
-          } );
-
-      } );
-    </script>
-    <!-- end datatable -->
-
-                    <?php } ?>       
-            </div>
-            <!-- end of accordion -->
-       
         </div>
     </div>
 
@@ -412,7 +388,7 @@ $actual_link  = $actual_link1[1];
     <script type="text/javascript" src="../js/notify/pnotify.core.js"></script>
     <script type="text/javascript" src="../js/notify/pnotify.buttons.js"></script>
     <script type="text/javascript" src="../js/notify/pnotify.nonblock.js"></script>
-    <?php  
+    <?php
       if ($_SESSION['mail']=='1') {
     ?>
     <script type="text/javascript">
@@ -445,8 +421,8 @@ $actual_link  = $actual_link1[1];
 
         });
     </script>
-    <?php 
-      
+    <?php
+
       }
       if ($_SESSION['mail']=='0') {
 
@@ -481,7 +457,7 @@ $actual_link  = $actual_link1[1];
 
         });
     </script>
-    <?php 
+    <?php
       }
 
       unset($_SESSION['mail']);

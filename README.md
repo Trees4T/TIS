@@ -1,15 +1,22 @@
 # TIS
+[6 Maret 2017]
++ / Fix paid unpaid Modul Finance
++ Edit tgl paid Modul Finance 
+
+[3 Maret 2017]
++ / Fix payment status report
+
 [22 Februari 2017]
-/ Fix pengaturan account member
++ / Fix pengaturan account member
 
 [14 Februari 2017]
-/ Load Content Ajax Modul FC
++ / Load Content Ajax Modul FC
 
 [13 Februari 2017]
-/ Load Content Ajax Modul Member
++ / Load Content Ajax Modul Member
 
 [9 Februari 2017]
-/ Logo
++ / Logo
 
 [7 Februari 2017]
 + Modul Finance

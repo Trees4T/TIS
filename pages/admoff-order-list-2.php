@@ -1,3 +1,6 @@
+<?php
+$kode=$id_member;
+?>
 <div class="">
 <div class="page-title">
             <div class="title_left">
@@ -20,21 +23,21 @@
           <thead>
             <tr>
               <th width="5%">No.</th>
-              <th>Participant Name</th>
+              <th>Years</th>
             </tr>
           </thead>
 
           <tbody>
           <?php
           $no=1;
-          $member=$conn->query("select no, nama, id from t4t_partisipan order by nama");
+          $member=$conn->query("SELECT substr(wkt_order,1,4) as th, id_comp from t4t_order where id_comp='$kode' group by th order by th desc");
           while ($data_meber=$member->fetch()) {
-            $id_part=$data_meber[2];
-
+            $id_part=$data_meber[1];
+            $pil_th =$data_meber[0];
           ?>
             <tr>
               <td align="center"><?php echo $no ?></td>
-              <td><a href="?<?php echo paramEncrypt('hal=admoff-order-list-2&id_member='.$id_part.'') ?>"><?php echo $data_meber[1] ?></a></td>
+              <td><a href="?<?php echo paramEncrypt('hal=admoff-order-list-detail&id_member='.$id_part.'&pilih_tahun='.$pil_th.'') ?>"><?php echo $data_meber[0] ?></a></td>
             </tr>
           <?php
           $no++;

@@ -14,19 +14,22 @@ $actual_link  = $actual_link1[1];
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
 </div>
 
     <div class="x_panel">
         <div class="x_title">
-            <h2><i class="fa fa-folder-open"></i> Shipment List <small><?php echo $nama_member[0] ?></small></h2>
-            
+            <h2><i class="fa fa-folder-open"></i> Shipment List
+            <small> <a href="?<?php echo paramEncrypt('hal=admoff-shipment-list-2&id_member='.$kode.'') ?>"> <?php echo $nama_member[0] ?></a>
+               <span class='badge bg-green'><font color='white'> <?php echo $pil_th ?></font></span>
+            </small></h2>
+
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-         <?php 
+         <?php
         if ($_SESSION['success']==1) {
         ?>
           <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -68,154 +71,132 @@ $actual_link  = $actual_link1[1];
         unset($_SESSION['bl']);
         ?>
 
-            <!-- start accordion -->
-            <div class="accordion" id="accordion" role="tablist" aria-multiSELECTable="true">
-                <?php 
-                
-                $tahun=$conn->query("SELECT substr(wkt_shipment,1,4) as th,bl_tgl,bl,kota_tujuan,fee,acc from t4t_shipment where id_comp='$kode' group by th order by th desc");
-                //echo mysql_error();
-                while ($load_tahun=$tahun->fetch()) {
-                   
-                ?>
+        <div class="panel-body">
+            <table class="table table-striped responsive-utilities jambo_table" border="1" id="shipment_list<?php echo $load_tahun['th'] ?>">
+                <thead>
+                    <tr>
+                        <th rowspan="2"><center>Shipping Report Date<center></th>
+                        <th rowspan="2"><center>Participant Name<center></th>
+                        <th rowspan="2"><center>Shipping Report No.</center></th>
+                        <th rowspan="2"><center>BL No.</center></th>
+                        <th colspan="5"><center>Container Size</center></th>
+                        <th rowspan="2"><center>WINS Number</center></th>
+                        <th rowspan="2"><center>Approved</center></th>
+                    </tr>
+                    <tr>
+                        <th width="5%"><center>20'</center></th>
+                        <th width="5%"><center>40'</center></th>
+                        <th width="5%"><center>40' HC</center></th>
+                        <th width="5%"><center>45'</center></th>
+                        <th width="5%"><center>60'</center></th>
+                    </tr>
+                </thead>
 
-                <div class="panel">
-                    <a class="panel-heading" role="tab" id="heading<?php echo $load_tahun['th'] ?>" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $load_tahun['th'] ?>" aria-expanded="true" aria-controls="collapse<?php echo $load_tahun['th'] ?>">
-                        <h4 class="panel-title">
-                        <i class="fa fa-caret-square-o-down"></i>
-                        <?php 
-                        echo $load_tahun['th'];
-                        ?>
-                        </h4>
-                    </a>
-                    <div id="collapse<?php echo $load_tahun['th'] ?>" class="panel-collapse collapse " role="tabpanel" aria-labelledby="heading<?php echo $load_tahun['th'] ?>">
-                        <div class="panel-body">
-                            <table class="table table-striped responsive-utilities jambo_table" border="1" id="shipment_list<?php echo $load_tahun['th'] ?>">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2"><center>Shipment Date<center></th>
-                                        <th rowspan="2"><center>No. BL</center></th>
-                                        <th rowspan="2"><center>Dest. City</center></th>
-                                        <th colspan="5"><center>Container Size</center></th>
-                                        <th rowspan="2"><center>WINS Number</center></th>
-                                        <th rowspan="2"><center>Approved</center></th>
-                                    </tr>
-                                    <tr>   
-                                        <th width="5%"><center>20'</center></th>
-                                        <th width="5%"><center>40'</center></th>
-                                        <th width="5%"><center>40' HC</center></th>
-                                        <th width="5%"><center>45'</center></th>
-                                        <th width="5%"><center>60'</center></th>
-                                    </tr>
-                                </thead>
-                        
-                                <tbody>
-                        <?php 
-                        $th=$load_tahun['th'];
-                        
-                        $shipment=$conn->query("SELECT * from t4t_shipment where wkt_shipment like '%$th%' and id_comp='$kode' order by wkt_shipment desc");
-                        while ($load_shipment=$shipment->fetch()) {
-                             
-                         
-                        ?>
-                                    <tr>
-                                        <td align="center"><?php echo $load_shipment['wkt_shipment'] ?></td>
-                                      
-                                        <td align="center"><a href="#" data-toggle="modal" data-target="#myModal<?php echo $load_shipment['no'] ?>"> <?php echo $load_shipment['bl'] ?></a></td>
-                                      
-                                        <td align="center"><?php echo $load_shipment['kota_tujuan'] ?></td>
-                                        <td align="center">
-                                            <?php 
-                                            $no_shipment=$load_shipment['no_shipment']; //definisi no shipment
-                                            $a=$conn->query("SELECT jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='1'")->fetch();
-                                            echo $a[0];
-                                            ?>
-                                        </td>
-                                        <td align="center">
-                                            <?php 
-                                            $b=$conn->query("SELECT jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='2'")->fetch();
-                                            echo $b[0];
-                                            ?>
-                                        </td>
-                                        <td align="center">
-                                            <?php 
-                                            $b=$conn->query("SELECT jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='3'")->fetch();
-                                            echo $b[0];
-                                            ?>
-                                        </td>
-                                        <td align="center">
-                                            <?php 
-                                            $c=$conn->query("SELECT jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='4'")->fetch();
-                                            echo $c[0];
-                                            ?>
-                                        </td>
-                                        <td align="center">
-                                            <?php 
-                                            $d=$conn->query("SELECT jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='5'")->fetch();
-                                            echo $d[0];
-                                            ?>
-                                        </td>
-                                        <td align="center"><a href="#" data-toggle="modal" data-target="#win<?php echo $load_shipment['no'] ?>"><i class="fa fa-search-plus"></i>View and Edit</a> </td>
-                                        <td align="center">
-                                            <?php 
-                                            $approve=$conn->query("SELECT acc from t4t_shipment where no_shipment='$no_shipment'")->fetch();
-                                            if ($approve[0]=="1") {
-                                                ?>
-                                                <a href="#" data-toggle="modal" data-target="#acc1<?php echo $load_shipment['no'] ?>"><i class="fa fa-check-square-o"></i></a>
-                                                <?php 
-                                            }else{
-                                                ?>
-                                                <a href="#"  data-toggle="modal" data-target="#acc0<?php echo $load_shipment['no'] ?>"><i class="fa fa-square-o"></i></a>
-                                                <?php
-                                            }
-                                            
-                                            ?>
-                                        </td>
-                                    </tr>
+                <tbody>
+        <?php
+        $th=$load_tahun['th'];
 
-  <!-- Modal -->
-  <?php  
-  include 'modal/admoff-bl-detail.php';
-  include 'modal/admoff-win-edit.php';
-  include 'modal/admoff-acc-to-unacc.php';
-  include 'modal/admoff-unacc-to-acc.php';
-  ?>
-  <!-- end modal -->
+        $shipment=$conn->query("SELECT * from t4t_shipment where wkt_shipment like '%$th%' and id_comp='$kode' and wkt_shipment like '%$pil_th%' order by wkt_shipment desc");
+        while ($load_shipment=$shipment->fetch()) {
+
+          $participant = $conn->query("SELECT nama from t4t_partisipan where id='$kode'")->fetch();
+        ?>
+                    <tr>
+                      <td align="center"><?php echo $load_shipment['wkt_shipment'] ?></td>
+
+                      <td align="center"><?php echo $participant[0] ?></td>
+
+                      <td align="center"><?php echo $load_shipment['no_shipment'] ?></td>
+
+                      <td align="center"><a href="#" data-toggle="modal" data-target="#myModal<?php echo $load_shipment['no'] ?>"> <?php echo $load_shipment['bl'] ?></a></td>
+
+                      <!-- <td align="center"><?php echo $load_shipment['kota_tujuan'] ?></td> -->
+                        <td align="center">
+                            <?php
+                            $no_shipment=$load_shipment['no_shipment']; //definisi no shipment
+                            $a=$conn->query("SELECT jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='1'")->fetch();
+                            echo $a[0];
+                            ?>
+                        </td>
+                        <td align="center">
+                            <?php
+                            $b=$conn->query("SELECT jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='2'")->fetch();
+                            echo $b[0];
+                            ?>
+                        </td>
+                        <td align="center">
+                            <?php
+                            $b=$conn->query("SELECT jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='3'")->fetch();
+                            echo $b[0];
+                            ?>
+                        </td>
+                        <td align="center">
+                            <?php
+                            $c=$conn->query("SELECT jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='4'")->fetch();
+                            echo $c[0];
+                            ?>
+                        </td>
+                        <td align="center">
+                            <?php
+                            $d=$conn->query("SELECT jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='5'")->fetch();
+                            echo $d[0];
+                            ?>
+                        </td>
+                        <td align="center"><a href="#" data-toggle="modal" data-target="#win<?php echo $load_shipment['no'] ?>"><i class="fa fa-search-plus"></i>View and Edit</a> </td>
+                        <td align="center">
+                            <?php
+                            $approve=$conn->query("SELECT acc from t4t_shipment where no_shipment='$no_shipment'")->fetch();
+                            if ($approve[0]=="1") {
+                                ?>
+                                <a href="#" data-toggle="modal" data-target="#acc1<?php echo $load_shipment['no'] ?>"><i class="fa fa-check-square-o"></i></a>
+                                <?php
+                            }else{
+                                ?>
+                                <a href="#"  data-toggle="modal" data-target="#acc0<?php echo $load_shipment['no'] ?>"><i class="fa fa-square-o"></i></a>
+                                <?php
+                            }
+
+                            ?>
+                        </td>
+                    </tr>
+
+<!-- Modal -->
+<?php
+include 'modal/admoff-bl-detail.php';
+include 'modal/admoff-win-edit.php';
+include 'modal/admoff-acc-to-unacc.php';
+include 'modal/admoff-unacc-to-acc.php';
+?>
+<!-- end modal -->
 
 
 
- 
 
-  
-                        <?php 
-                        }
-                        ?>
-                                </tbody>
-                        
-                            </table>
-                        </div>
-                    </div>
-                </div>  
 
-    <!-- Datatables -->
-    <script src="../js/datatables/js/jquery.dataTables.js"></script>
-    <script src="../js/datatables/tools/js/dataTables.tableTools.js"></script>
 
-     <script>
-      $(function() {
-          $('#shipment_list<?php echo $load_tahun['th'] ?>').DataTable( {
-                    // "bJQueryUI":true,
-                  "bPaginate":true,
-                  "sPaginationType": "full_numbers",
-                  "iDisplayLength":10
+        <?php
+        }
+        ?>
+                </tbody>
+
+            </table>
+        </div>
+        <!-- Datatables -->
+        <script src="../js/datatables/js/jquery.dataTables.js"></script>
+        <script src="../js/datatables/tools/js/dataTables.tableTools.js"></script>
+
+         <script>
+          $(function() {
+              $('#shipment_list<?php echo $load_tahun['th'] ?>').DataTable( {
+                        // "bJQueryUI":true,
+                      "bPaginate":true,
+                      "sPaginationType": "full_numbers",
+                      "iDisplayLength":10
+              } );
+
           } );
-
-      } );
-    </script>
-    <!-- end datatable -->
-
-                    <?php } ?>       
-            </div>
-            <!-- end of accordion -->
+        </script>
+        <!-- end datatable -->
 
 
         </div>
@@ -446,7 +427,7 @@ $actual_link  = $actual_link1[1];
     <script type="text/javascript" src="../js/notify/pnotify.core.js"></script>
     <script type="text/javascript" src="../js/notify/pnotify.buttons.js"></script>
     <script type="text/javascript" src="../js/notify/pnotify.nonblock.js"></script>
-    <?php  
+    <?php
       if ($_SESSION['mail']=='1') {
     ?>
     <script type="text/javascript">
@@ -479,8 +460,8 @@ $actual_link  = $actual_link1[1];
 
         });
     </script>
-    <?php 
-      
+    <?php
+
       }
       if ($_SESSION['mail']=='0') {
 
@@ -515,7 +496,7 @@ $actual_link  = $actual_link1[1];
 
         });
     </script>
-    <?php 
+    <?php
       }
 
       unset($_SESSION['mail']);

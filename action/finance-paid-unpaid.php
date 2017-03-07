@@ -7,6 +7,7 @@ include '../koneksi/koneksi.php';
 
 unset($_SESSION['email_member']);
 
+$btn_save_paydate=$_POST['btn_save_paydate'];
 $btn_save_paid   =$_POST['btn_save_paid'];
 $btn_save_unpaid =$_POST['btn_save_unpaid'];
 $link            =$_POST['link'];
@@ -19,6 +20,7 @@ $item            =$_POST['item'];
 $id_member       =$_POST['id_member'];
 $btn_save_fee    =$_POST['btn_save_fee'];
 $fee             =$_POST['fee'];
+$paydate         =$_POST['paydate'];
 
 $email_member =$conn->query("SELECT email from t4t_partisipan where id='$id_member'")->fetch();
 
@@ -43,11 +45,11 @@ if(isset($btn_save_unpaid)) {
 
   if ($error_acc1==false) {
     $_SESSION['success']=3;  // success
-    $_SESSION['bl']=$bl;
+    $_SESSION['ship']=$shipment;
     header("location:../dashboard/finance-office.php?$link");
   }else{
     $_SESSION['success']=4;  // error
-    $_SESSION['bl']=$bl;
+    $_SESSION['ship']=$shipment;
     header("location:../dashboard/finance-office.php?$link");
   }
 
@@ -64,7 +66,7 @@ if(isset($btn_save_unpaid)) {
 
   if ($error_acc0==false) {
     $_SESSION['success']=5;  // success
-    $_SESSION['bl']=$bl;
+    $_SESSION['ship']=$shipment;
      ################email##############
       require '../assets/PHPMailer/PHPMailerAutoload.php';
 
@@ -163,7 +165,7 @@ if(isset($btn_save_unpaid)) {
     header("location:../dashboard/finance-office.php?$link");
   }else{
     $_SESSION['success']=6;  // error
-    $_SESSION['bl']=$bl;
+    $_SESSION['ship']=$shipment;
     header("location:../dashboard/finance-office.php?$link");
   }
 
@@ -177,7 +179,7 @@ if(isset($btn_save_unpaid)) {
 
   if ($error==false) {
     $_SESSION['success']=7;  // success fee
-    $_SESSION['bl']=$bl;
+    $_SESSION['ship']=$shipment;
     $_SESSION['fee']=$fee;
     $_SESSION['id_member']=$id_member;
     $_SESSION['link']=$link;
@@ -185,7 +187,29 @@ if(isset($btn_save_unpaid)) {
 
   }else{
     $_SESSION['success']=8;  // error fee
-    $_SESSION['bl']=$bl;
+    $_SESSION['ship']=$shipment;
+    header("location:../dashboard/finance-office.php?$link");
+  }
+
+}elseif(isset($btn_save_paydate)) {
+  try {
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $update_fee=$conn->query("UPDATE t4t_shipment set tgl_paid='$paydate',wkt_shipment='$data_wkt_ship' where bl='$bl'");
+  } catch (PDOException $e) {
+    $error= $e->getMessage();
+  }
+
+  if ($error==false) {
+    $_SESSION['success']=9;  // success paydate
+    $_SESSION['ship']=$shipment;
+    $_SESSION['fee']=$paydate;
+    $_SESSION['id_member']=$id_member;
+    $_SESSION['link']=$link;
+    header("location:../dashboard/finance-office.php?$link");
+
+  }else{
+    $_SESSION['success']=10;  // error paydate
+    $_SESSION['ship']=$shipment;
     header("location:../dashboard/finance-office.php?$link");
   }
 

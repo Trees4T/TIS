@@ -5,12 +5,12 @@ session_start();
 include '../../koneksi/koneksi.php';
 
 $awal 	=$_POST['awal'];
-$akhir 	=$_POST['akhir']; 
-$status =$_POST['status']; 
+$akhir 	=$_POST['akhir'];
+$status =$_POST['status'];
 if ($_SESSION['level']=='fin') {
-	$kode 	=$_POST['member']; 
+	$kode 	=$_POST['member'];
 }else{
-	$kode 	=$_SESSION['kode']; 
+	$kode 	=$_SESSION['kode'];
 }
 /**
  * PHPExcel
@@ -73,8 +73,8 @@ $BStyle = array(
 );
 
 // Add some data
-$objPHPExcel->setActiveSheetIndex(0)	
-            
+$objPHPExcel->setActiveSheetIndex(0)
+
             ->setCellValue('A1', 'Ship Report Date')
             ->setCellValue('B1', 'Shipment')
             ->setCellValue('C1', 'BL Date')
@@ -85,11 +85,11 @@ $objPHPExcel->setActiveSheetIndex(0)
             // ->setCellValue('G1', 'M. Unit')
             ->setCellValue('G1', 'Trees QTY')
             ->setCellValue('H1', 'Retailer Code')
-           
+
 
             ->getStyle('A1:H1')
 		    ->getAlignment()
-		    ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)	
+		    ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER)
 
             ;
 
@@ -98,9 +98,10 @@ $objPHPExcel->getActiveSheet()->getStyle('A1:H1')->getFont()->setBold(true);
 
 $no=1;
 $i=1;
-$tree_planted=mysql_query("select s.wkt_shipment,s.no_shipment,s.bl_tgl,s.bl,h.petani,h.desa,h.jml_phn,s.buyer,s.id_comp,s.no,h.bl from t4t_shipment s join t4t_htc h on s.bl=h.bl AND s.id_comp='$kode' and s.wkt_shipment between '$awal' and '$akhir' order by h.no desc");
-while ($data=mysql_fetch_array($tree_planted)) 
-	
+$tree_planted=$conn->query("select s.wkt_shipment,s.no_shipment,s.bl_tgl,s.bl,h.petani,h.desa,h.jml_phn,s.buyer,s.id_comp,s.no,h.bl from t4t_shipment s join t4t_htc h on s.bl=h.bl AND s.id_comp='$kode' and s.wkt_shipment between '$awal' and '$akhir' order by h.no desc");
+
+while ($data=$tree_planted->fetch())
+
 	{
 				$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(18);
 				$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(15);
@@ -123,9 +124,9 @@ while ($data=mysql_fetch_array($tree_planted))
 							$G='G'.$i;
 							$H='H'.$i;
 
-        date_default_timezone_set('Asia/Jakarta'); 
+        date_default_timezone_set('Asia/Jakarta');
 
-       //data loop         
+       //data loop
        $objPHPExcel->setActiveSheetIndex(0)
 							->setCellValue($A,$data[0])
 							->setCellValue($B,$data[1])
@@ -137,7 +138,7 @@ while ($data=mysql_fetch_array($tree_planted))
 							->setCellValue($H,$data[7]);
 
 			$jml_loop[]=$i;
-							
+
 		}
 
 		$loop=count($jml_loop);

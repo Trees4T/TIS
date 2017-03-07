@@ -106,7 +106,7 @@ session_start();
                                                 <?php
                                             }else{
                                                 ?>
-                                                <div class="font-15">&empty;</div>
+                                                <div class="font-15 red">&empty;</div>
                                                 <?php
                                             }
 

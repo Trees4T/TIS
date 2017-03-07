@@ -1,4 +1,4 @@
-<?php 
+<?php
 $actual_link0 = "$_SERVER[REQUEST_URI]";
 $actual_link1 = explode("?", $actual_link0);
 $actual_link  = $actual_link1[1];
@@ -11,7 +11,7 @@ $actual_link  = $actual_link1[1];
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
@@ -21,24 +21,24 @@ $actual_link  = $actual_link1[1];
               <div class="x_panel">
                 <div class="x_title">
                   <h2> Payment Status Report </h2>
-                  
+
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                   <br />
-                  
-               
+
+
                     <font size="">
-                   
+
 
                     <div class="col-sm-12">
-                
-                   
-                                
+
+
+
                                 <div class="x_content">
 
 
- <?php 
+ <?php
 if ($_SESSION['message']==2) {
 ?>
     <div class="alert alert-danger alert-dismissible fade in" role="alert">
@@ -67,7 +67,7 @@ unset($_SESSION['message']);
                                         <form class="form-horizontal" method="post" action="?<?php echo paramEncrypt('hal=member-report-outstanding-payment-data')?>">
                                             <fieldset>
                                                 <div class="control-group">
-                                                <?php 
+                                                <?php
                                                 date_default_timezone_set('Asia/Jakarta');
                                                 $waktu    = date("d/m/Y");
                                                 $tahun    = date("Y");
@@ -76,10 +76,10 @@ unset($_SESSION['message']);
                                                         $bln_lalu='12';
                                                         $tahun=$tahun-1;
                                                     }
-                                                
+
                                                  ?>
                                               <label class="control-label">Date Range BL <span class="required red">*</span>
-                                              </label><br>  
+                                              </label><br>
                                                     <div class="controls">
                                                         <div class="input-prepend input-group">
                                                             <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
@@ -95,7 +95,7 @@ unset($_SESSION['message']);
                                               </label><br>
                                               <div class="controls col-sm-3">
                                                 <select class="form-control" name="status">
-                                                  <option value="null"> - Choose -</option>
+                                                  <!-- <option value="null"> - Choose -</option> -->
                                                   <option value="2">All</option>
                                                   <option value="1">Paid</option>
                                                   <option value="0">Unpaid</option>
@@ -103,7 +103,7 @@ unset($_SESSION['message']);
                                               </div>
                                             </div>
                                             </fieldset>
-                                            <?php 
+                                            <?php
                                             if ($_SESSION['level']=='fin') {
                                             ?>
                                             <fieldset>
@@ -113,19 +113,19 @@ unset($_SESSION['message']);
                                               <div class="controls col-sm-5">
                                                 <select class="form-control" name="member" required>
                                                   <option value="null"> - Choose -</option>
-                                               <?php  
+                                               <?php
                                                $nama = $conn->query("select id,nama from t4t_partisipan order by nama");
-                                               while ($data_nama=$nama->fetch()) {                                               
-                                               ?>   
+                                               while ($data_nama=$nama->fetch()) {
+                                               ?>
                                                   <option value="<?php echo $data_nama[0] ?>"><?php echo $data_nama[1] ?></option>
-                                                <?php 
+                                                <?php
                                                 } ?>
-                                                 
+
                                                 </select>
                                               </div>
                                             </div>
                                             </fieldset>
-                                            <?php 
+                                            <?php
                                             }
                                              ?>
 
@@ -145,24 +145,24 @@ unset($_SESSION['message']);
 
 
                                     </div>
-                   
+
 
                                 </div>
-               
+
 
 
                       </div>
 
-                    
 
 
-  
 
-                    
+
+
+
                     </div>
 
                     </font>
-                 
+
                 </div>
               </div>
             </div>

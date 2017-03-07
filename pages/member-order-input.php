@@ -6,7 +6,7 @@
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="x_content">
                   <br />
-                  <?php 
+                  <?php
                   if ($_SESSION['success']==1) {
                     ?>
                 <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -36,19 +36,19 @@
 
                   unset($_SESSION['success']);
                    ?>
-                  
+
                   <center><h2><strong>ORDER HANG TAGS / WINS </strong></h2></center>
                   <div class="ln_solid"></div>
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="../action/member-order-input.php">
                     <font size="">
-                   
+
 
                     <div class="col-sm-12">
                     <div class="form-group">
                       <label class="control-label col-md-5" for="first-name">Order No.
                       </label>
                       <div class="col-md-4 font-hijau">
-                        <?php 
+                        <?php
                         date_default_timezone_set('Asia/Jakarta');
                         $bln=date("m");
                         $thn=date("Y");
@@ -57,7 +57,7 @@
 
                         $ex_order=explode("/", $order_no[0]);
                         $gen_order=$ex_order[0]+1;
-                       
+
                          ?>
                          <label class="control-label"><?php  echo $gen_order."/T4T-E/".$bln."/".$thn; ?></label>
                          <input type="hidden" name="no_order" value="<?php echo $gen_order."/T4T-E/".$bln."/".$thn; ?>" >
@@ -68,7 +68,7 @@
                       <label class="control-label col-md-5 " for="first-name">Company Name <span class="required"></span>
                       </label>
                       <div class="col-md-4 font-hijau">
-                        <?php 
+                        <?php
                         $kode=$_SESSION['kode'];
                         $comp_name=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
                         ?>
@@ -76,7 +76,7 @@
                         <input type="hidden" name="comp" value="<?php echo $comp_name[0]; ?>" >
                       </div>
                     </div>
-                  
+
                     <div class="col-md-2"></div>
                     <div class="form-group col-md-8" align="center">
                       <table id="table-container">
@@ -110,17 +110,17 @@
                      <!-- ADD -->
                       <!-- <a class="btn btn-success" onclick="addField()"><i class="fa fa-plus"></i> Add</a> -->
                       <input type="hidden" id="forinput" name="forinput" value="1" >
-           
+
                       </div>
                     </div>
                     <div class="col-md-2"></div>
-                 
+
                     <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Type of Product <span class="required"></span>
+                      <label class="control-label col-md-5" for="first-name">Type of Product <span class="required red">*</span>
                       </label>
                       <div class="col-md-4">
-                        <input type="text" class="form-control" name="type_prod" id="">
-                        
+                        <input type="text" class="form-control" name="type_prod" id="" required>
+
                       </div>
                     </div>
 
@@ -129,26 +129,26 @@
                       </label>
                       <div class="col-md-4">
                         <ul class="to_do">
-                        <?php 
+                        <?php
                         $wood=$conn->query("select * from t4t_pohonen");
                         while ($data_pohon=$wood->fetch()) {
-                          
+
                          ?>
                             <li>
                                 <p><input type="checkbox" class="flat" name="item[]" value="<?php echo $data_pohon[0] ?>"> <?php echo $data_pohon[1] ?> </p>
                             </li>
-                        <?php 
+                        <?php
                         }
-                         ?>    
+                         ?>
                         </ul>
                       </div>
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name"> Quantity Hang Tags Requested <span class="required"></span>
+                      <label class="control-label col-md-5" for="first-name"> Quantity Hang Tags Requested <span class="required red">*</span>
                       </label>
                       <div class="col-md-2">
-                        <input type="number" class="form-control" min="1" name="tags" >
+                        <input type="number" class="form-control" min="1" name="tags" required>
                       </div>
                     </div>
 
@@ -163,17 +163,17 @@
                             <th>Qty</th>
                           </thead>
                           <tbody>
-                          <?php 
+                          <?php
                           $other=$conn->query("select * from t4t_req");
                           while ($data_other=$other->fetch()) {
-                            
+
                            ?>
                             <tr>
                               <td><?php echo $data_other[1] ?></td>
                               <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                               <td width="80px"><input type="number" class="form-control" name="req<?php echo $data_other[0] ?>" min="0"></td>
                             </tr>
-                          <?php 
+                          <?php
                            }
                            ?>
                           </tbody>
@@ -189,7 +189,7 @@
                       </div>
                     </div> -->
 
-                    <?php 
+                    <?php
                       $pic_name=$conn->query("select pic from t4t_partisipan where id='$kode'")->fetch();
                        if ($pic_name[0]=="") {
                          #none
@@ -199,18 +199,18 @@
                       <label class="control-label col-md-5" for="first-name">PIC <span class="required"></span>
                       </label>
                       <div class="col-md-4 font-hijau">
-                      
+
                       <label class="control-label">
                         <?php echo $pic_name[0] ?>
                       </label>
-                        
+
                          <input type="hidden" name="pic" value="<?php echo $pic_name[0]; ?>">
                       </div>
                     </div>
-                    <?php 
+                    <?php
                         } ?>
-                    
-  
+
+
 
                     <div class="ln_solid"></div>
                     <div class="form-group">
@@ -224,14 +224,14 @@
                     </font>
                   </form>
 
-       
+
                 </div>
               </div>
             </div>
           </div>
 
           <?php
-          include '../js/riojs.php'; 
+          include '../js/riojs.php';
          // include '../layout/js.php';
 
            ?>
@@ -641,7 +641,41 @@
         });
     </script>
     <!-- /knob -->
-    
+    <!-- PNotify -->
+    <script type="text/javascript" src="../js/notify/pnotify.core.js"></script>
+    <script type="text/javascript" src="../js/notify/pnotify.buttons.js"></script>
+    <script type="text/javascript" src="../js/notify/pnotify.nonblock.js"></script>
+
+    <script type="text/javascript">
+        var permanotice, tooltip, _alert;
+        $(function () {
+            new PNotify({
+                title: "Info",
+                type: "info",
+                text: " <font color='red'>*</font> is required field.",
+                addclass: "stack-bottomright",
+                hide: false,
+                closer: true,
+                sticker: true,
+                nonblock: {
+                    nonblock: false
+                },
+                before_close: function (PNotify) {
+                    // You can access the notice's options with this. It is read only.
+                    //PNotify.options.text;
+
+                    // You can change the notice's options after the timer like this:
+                    PNotify.update({
+                        title: PNotify.options.title + " - Enjoy your Stay",
+                        before_close: null
+                    });
+                    PNotify.queueRemove();
+                    return false;
+                }
+            });
+
+        });
+    </script>
 
 </body>
 

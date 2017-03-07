@@ -5,14 +5,14 @@
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
     <div class="x_panel">
         <div class="x_title">
             <h2><i class="fa fa-folder-open"></i> Member List <small></small></h2>
-           
+
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
@@ -23,26 +23,26 @@
               <th>Participant Name</th>
             </tr>
           </thead>
-          
+
           <tbody>
-          <?php  
+          <?php
           $no=1;
           $member=$conn->query("select no, nama, id from t4t_partisipan order by nama");
           while ($data_meber=$member->fetch()) {
             $id_part=$data_meber[2];
-          
+
           ?>
             <tr>
               <td align="center"><?php echo $no ?></td>
-              <td><a href="?<?php echo paramEncrypt('hal=finance-paid-unpaid-detail&id_member='.$id_part.'') ?>"><?php echo $data_meber[1] ?></a></td>
+              <td><a href="?<?php echo paramEncrypt('hal=finance-paid-unpaid-2&id_member='.$id_part.'') ?>"><?php echo $data_meber[1] ?></a></td>
             </tr>
-          <?php  
+          <?php
           $no++;
           } ?>
           </tbody>
-          
+
         </table>
-       
+
         </div>
     </div>
 
@@ -70,7 +70,7 @@
         <script src="../js/icheck/icheck.min.js"></script>
 
         <script src="../js/custom.js"></script>
-        
+
         <!-- pace -->
         <script src="../js/pace/pace.min.js"></script>
         <!-- Datatables -->
@@ -89,7 +89,7 @@
           } );
         </script>
         <!-- end datatable -->
-       
+
 </body>
 
 </html>
