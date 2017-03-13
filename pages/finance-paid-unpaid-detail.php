@@ -15,7 +15,7 @@ if ($sts_paid==1) {
 <div class="">
 <div class="page-title">
             <div class="title_left">
-              <h3><?php echo $nm_sts_paid ?> <small><br><a href="?<?php echo paramEncrypt('hal=finance-paid-unpaid-2&id_member='.$kode.'') ?>">
+              <h3><?php echo $nm_sts_paid ?> <small><br><a href="?<?php echo paramEncrypt('hal=finance-paid-unpaid-2&id_member='.$kode.'') ?>" data-toggle="tooltip" data-placement="bottom" title="Go to <?php echo $nama_member[0] ?> Paid & Unpaid list">
                 <?php echo $nama_member[0] ?></a> </small>
                 <span class='badge bg-green'><font color='white'> <?php echo $pil_th ?></font></span>
               </h3>

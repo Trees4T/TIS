@@ -5,6 +5,6 @@
 <!-- <li><span class="fa fa-chevron-down"></span><a><i class="fa fa-file-pdf-o"></i> Report</a>
     <ul class="nav child_menu" style="display: none"> -->
       <li><a href="?<?php echo paramEncrypt('hal=admoff-wins-report')?>"><i class="fa fa-file-pdf-o"></i> WINS Report</a></li>
-      <li><a href="?<?php echo paramEncrypt('hal=admoff-wins-search')?>"><i class="fa fa-globe"></i> Search WINS</a></li>
+      <li><a href="?<?php echo paramEncrypt('hal=admoff-wins-search')?>"><i class="fa fa-globe"></i> WINS INFO</a></li>
     <!-- </ul>
 </li> -->

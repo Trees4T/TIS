@@ -1,7 +1,13 @@
 # TIS
+[10 Maret 2017]
++ / Pencarian or Wins Information 
+
+[7 Maret 2017]
++ / Grafik Contribution Fee Modul Finance
+
 [6 Maret 2017]
 + / Fix paid unpaid Modul Finance
-+ Edit tgl paid Modul Finance 
++ Edit tgl paid Modul Finance
 
 [3 Maret 2017]
 + / Fix payment status report
