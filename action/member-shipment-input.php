@@ -1,4 +1,4 @@
-<?php 
+<?php
 error_reporting(0);
 session_start();
 
@@ -59,11 +59,11 @@ if ($_POST['no_ship']) {
   		if ($ukuran<=$maxsize && $error_unique_bl==false && $required_cont==true) {
 
   			copy($tmp_name,$tujuan);
-  			$conn->query("INSERT into t4t_shipment 
+  			$conn->query("INSERT into t4t_shipment
   	(no, no_shipment, id_comp, bl, bl_tgl, wins_used, wkt_shipment, foto, kota_tujuan, fee, diskon, note, buyer, item_qty) values
     ('','$no_shipment','$id_comp','$bl','$tgl','$wins_used','$tanggal','$namafile2','$destination','','','$note','$c_code','$item_qty')")->fetch();
-  			
-  			
+
+
   		}else{
   			echo $error_max_file="max file is 200kb";
   		}
@@ -71,11 +71,11 @@ if ($_POST['no_ship']) {
   if ($error_unique_bl==true) {
       $_SESSION['success']=3; //bl error
       header("location:../dashboard/member.php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
-  }    
+  }
   elseif ($error_unique_bl==false && $required_cont==true) {
 
   	$jml_order=count($_POST['order']);
-  	for ($i=0; $i < $jml_order ; $i++) { 
+  	for ($i=0; $i < $jml_order ; $i++) {
 
   		$old_order=$conn->query("SELECT no_order from t4t_shipment where no_shipment='$no_shipment'")->fetch();
   		$old_order2=$old_order[0];
@@ -89,7 +89,7 @@ if ($_POST['no_ship']) {
   		}else{
   			$data_order=$old_order2.", ".$no_order;
   		}
-  		
+
 
   		 $conn->query("update t4t_shipment set no_order='$data_order' where no_shipment='$no_shipment'")->fetch();
   		 //order container
@@ -100,7 +100,7 @@ if ($_POST['no_ship']) {
   	//order container
   	$jml_cont=$conn->query("SELECT count(no) from t4t_container")->fetch();
   	$jml_cont[0];
-  	for ($i=1; $i <= $jml_cont[0] ; $i++) { 
+  	for ($i=1; $i <= $jml_cont[0] ; $i++) {
   		$cont=$_POST['cont'.$i];
   		$conn->query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_shipment','$i','$cont','$tanggal')")->fetch();
 
@@ -114,23 +114,23 @@ if ($_POST['no_ship']) {
   include 'mail/system-mail.php';
 
 
-  $mail->Subject = 'New Shipment';
+  $mail->Subject = 'New Shipment ['.$no_shipment.']';
   $mail->Body    = '
   <table align="center" width="600">
 
    <tr>
      <td bgcolor="#0b6454" align="center">
-       <br><br><h2><font color="white">New Shipment! </font></h2> 
+       <br><br><h2><font color="white">New Shipment! </font></h2>
      </td>
    </tr>
-   <tr align="center">         
+   <tr align="center">
     <td bgcolor="#fff">
-     <table align="center" class="table">                        
+     <table align="center" class="table">
                     <tr>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
                       <td>&nbsp;</td>
-                    </tr> 
+                    </tr>
                     <tr>
                       <td><b>Shipment No.</td>
                       <td>:</td>
@@ -140,7 +140,7 @@ if ($_POST['no_ship']) {
                       <td><b>Member</td>
                       <td>:</td>
                       <td>'.$company[0].'</td>
-                    </tr>                                                                              
+                    </tr>
                     <tr class="active" >
                       <td><b>BL No.</td>
                       <td>:</td>
@@ -150,7 +150,7 @@ if ($_POST['no_ship']) {
                       <td><b>WINS Used</td>
                       <td>:</td>
                       <td>'. $wins_used.'</td>
-                    </tr>  
+                    </tr>
                     <tr class="active" >
                       <td><b>Shipment Time</td>
                       <td>:</td>
@@ -160,14 +160,14 @@ if ($_POST['no_ship']) {
                       <td><b>Order No.</td>
                       <td>:</td>
                       <td>'. $no_order_get[0].'</td>
-                    </tr>	
+                    </tr>
                     <tr>
                       <td><b>Item Qty</td>
                       <td>:</td>
                       <td>'. $item_qty.'</td>
-                    </tr>  
-                   
-                    <br>               
+                    </tr>
+
+                    <br>
                 </table>
                 <br><br>
     </td>
@@ -194,7 +194,7 @@ if ($_POST['no_ship']) {
   	$_SESSION['success']=1; //sukses
   	header("location:../dashboard/member.php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
   }else{
-  	$_SESSION['success']=2; //eror maks file 200 kb atau bl no 
+  	$_SESSION['success']=2; //eror maks file 200 kb atau bl no
   	header("location:../dashboard/member.php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
   }
 
@@ -208,4 +208,3 @@ header("location:../error/403.php");
 
 
  ?>
-

@@ -189,6 +189,11 @@ unset($_SESSION['win']);
                                                           <td><?php echo $shipment['no_order'] ?></td>
                                                         </tr>
                                                         <tr>
+                                                          <td><b>BL No.</td>
+                                                          <td>:</td>
+                                                          <td><?php echo $shipment['bl'] ?></td>
+                                                        </tr>
+                                                        <tr>
                                                           <td><b>Shipment Report Date</td>
                                                           <td>:</td>
                                                           <td><?php echo $shipment['wkt_shipment'] ?></td>

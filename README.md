@@ -1,6 +1,6 @@
 # TIS
 [10 Maret 2017]
-+ / Pencarian or Wins Information 
++ Pencarian or Wins Information 
 
 [7 Maret 2017]
 + / Grafik Contribution Fee Modul Finance

@@ -1,4 +1,4 @@
-<?php 
+<?php
 error_reporting(0);
 session_start();
 
@@ -7,7 +7,7 @@ include '../koneksi/koneksi.php';
 
 date_default_timezone_set('Asia/Jakarta');
 if ($_POST['no_order']) {
-	
+
 
 
 $kode         =$_SESSION['kode'];
@@ -39,7 +39,7 @@ $jumlah = count($_POST['item']);
 for($i=0; $i < $jumlah; $i++)
 {
    echo $pohon=$_POST['item'][$i];
-   $conn->query("INSERT into t4t_orderphn (no,no_order,no_phnen2) values ('','$no_order','$pohon')");  
+   $conn->query("INSERT into t4t_orderphn (no,no_order,no_phnen2) values ('','$no_order','$pohon')");
 }
 
 
@@ -50,7 +50,7 @@ for($i=0; $i < $jumlah; $i++)
 //no - no order - no req - jml
 $jml_req=$conn->query("SELECT count(no) from t4t_req")->fetch();
 $jml_req[0];
-for ($i=1; $i <= $jml_req[0] ; $i++) { 
+for ($i=1; $i <= $jml_req[0] ; $i++) {
 	$req=$_POST['req'.$i];
 	$conn->query("INSERT into t4t_orderrequest (no,no_order,no_req,jml) values ('','$no_order','$i','$req')");
 
@@ -75,7 +75,7 @@ $tgl2=explode("-", $tgl);
 $get_tgl=$tgl2[2]."-".$tgl2[1]."-".$tgl2[0];
 
 	if ($tgl=="") {
-		# 
+		#
 	}elseif ($cont20!="") {
 		$conn->query("INSERT into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','1','$cont20','$get_tgl')");
 	}else{
@@ -83,7 +83,7 @@ $get_tgl=$tgl2[2]."-".$tgl2[1]."-".$tgl2[0];
 	}
 
 	if ($tgl=="") {
-		# 
+		#
 	}elseif ($cont40!="") {
 		$conn->query("INSERT into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','2','$cont40','$get_tgl')");
 	}else{
@@ -91,7 +91,7 @@ $get_tgl=$tgl2[2]."-".$tgl2[1]."-".$tgl2[0];
 	}
 
 	if ($tgl=="") {
-		# 
+		#
 	}elseif ($cont40hc!="") {
 		$conn->query("INSERT into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','3','$cont40hc','$get_tgl')");
 	}else{
@@ -99,7 +99,7 @@ $get_tgl=$tgl2[2]."-".$tgl2[1]."-".$tgl2[0];
 	}
 
 	if ($tgl=="") {
-		# 
+		#
 	}elseif ($cont45!="") {
 		$conn->query("INSERT into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','4','$cont45','$get_tgl')");
 	}else{
@@ -107,13 +107,13 @@ $get_tgl=$tgl2[2]."-".$tgl2[1]."-".$tgl2[0];
 	}
 
 	if ($tgl=="") {
-		# 
+		#
 	}elseif ($cont60!="") {
 		$conn->query("INSERT into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','5','$cont60','$get_tgl')");
 	}else{
 		$conn->query("INSERT into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_order','5','0','$get_tgl')");
 	}
-	
+
 	//INSERT t4t_orderwkt
 	if ($tgl=="") {
 		#
@@ -130,23 +130,23 @@ require '../assets/PHPMailer/PHPMailerAutoload.php';
 $mail = new PHPMailer;
 include 'mail/system-mail.php';
 
-$mail->Subject = 'Order Update';
+$mail->Subject = 'Order Update ['.$no_order.']';
 $mail->Body    = '
 <table align="center" width="600">
 
  <tr>
    <td bgcolor="#0b6454" align="center">
-     <br><br><h2><font color="white">Order Update! </font></h2> 
+     <br><br><h2><font color="white">Order Update! </font></h2>
    </td>
  </tr>
- <tr align="center">         
+ <tr align="center">
   <td bgcolor="#fff">
-   <table align="center" class="table">                        
+   <table align="center" class="table">
                   <tr>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
-                  </tr> 
+                  </tr>
                   <tr>
                     <td><b>Order No.</td>
                     <td>:</td>
@@ -156,7 +156,7 @@ $mail->Body    = '
                     <td><b>Member</td>
                     <td>:</td>
                     <td>'.$company.'</td>
-                  </tr>                                                                              
+                  </tr>
                   <tr class="active" >
                     <td><b>Porduct Type</td>
                     <td>:</td>
@@ -166,7 +166,7 @@ $mail->Body    = '
                     <td><b>WINS Qty</td>
                     <td>:</td>
                     <td>'. $tags.'</td>
-                  </tr>  
+                  </tr>
                   <tr class="active" >
                     <td><b>Update Time</td>
                     <td>:</td>
@@ -176,9 +176,9 @@ $mail->Body    = '
                     <td><b>Quantity</td>
                     <td>:</td>
                     <td>'. $tags.'</td>
-                  </tr>  
-                 
-                  <br>               
+                  </tr>
+
+                  <br>
               </table>
               <br><br>
   </td>

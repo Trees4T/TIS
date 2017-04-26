@@ -120,7 +120,7 @@ $cek_status_bl=$conn->query("select bl from t4t_shipment where bl='$bl'")->fetch
 			  include 'mail/system-mail.php';
 
 
-			  $mail->Subject = 'Shipment Update';
+			  $mail->Subject = 'Shipment Update ['.$no_shipment.']';
 			  $mail->Body    = '
 			  <table align="center" width="600">
 
