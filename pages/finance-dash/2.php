@@ -1,14 +1,14 @@
-<?php 
+<?php
 session_start();
 include '../../koneksi/koneksi.php';
 $kode=$_SESSION['kode'];
 $waktu=date("Y-m");
-$jumlah=$conn->query("select count(*) from t4t_shipment where acc_paid=0 and acc=1 ")->fetch();
+$jumlah=$conn->query("select count(*) from t4t_shipment where acc_paid=0 ")->fetch();
 
  ?>
  <div class="left"></div>
                         <div class="right">
-                            
+
                        <span class="count_top"><i class="fa fa-info-circle"></i> Unpaid Shipment (All)</span>
 <div class="count <?php if ($jumlah[0]>=1) {
     echo "red";

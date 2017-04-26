@@ -10,24 +10,24 @@
                 </h3>
                         </div>
 
-                       
+
                     </div>
                     <div class="clearfix"></div>
                     <!-- statistic -->
                      <!-- top tiles -->
                 <div class="row tile_count">
-                    <div class="animated flipInY col-md-3 col-sm-4 col-xs-4 tile_stats_count" id="dashboard1">
-                        
+                    <!-- <div class="animated flipInY col-md-3 col-sm-4 col-xs-4 tile_stats_count" id="dashboard1">
+
                     </div>
 
                     <div class="animated flipInY col-md-3 col-sm-4 col-xs-4 tile_stats_count" id="dashboard3">
-                       
-                    </div>
+
+                    </div> -->
                     <div class="animated flipInY col-md-3 col-sm-4 col-xs-4 tile_stats_count" id="dashboard2">
-                        
-                    </div> 
-                    <div class="animated flipInY col-md-3 col-sm-4 col-xs-4 tile_stats_count" id="dashboard4"> 
-                        
+
+                    </div>
+                    <div class="animated flipInY col-md-3 col-sm-4 col-xs-4 tile_stats_count" id="dashboard4">
+
                     </div>
 
                 </div>
@@ -35,16 +35,16 @@
 
                     <div class="row">
 
-                        
 
-                        
+
+
 
                     </div>
-                 
-            
+
+
                 </div>
 
-    
+
 
             </div>
             <!-- /page content -->
@@ -71,7 +71,7 @@
     <script src="../js/moris/raphael-min.js"></script>
     <script src="../js/moris/morris.min.js"></script>
     <script type="text/javascript">
-    <?php for ($i=1; $i <= 4 ; $i++) { 
+    <?php for ($i=1; $i <= 4 ; $i++) {
     ?>
         $(function dashboard() {
             var dataid = [<?php echo $i ?>];
@@ -80,10 +80,10 @@
                 $.get("../pages/admoff-dash/"+id+".php",function(html_widget) {
                     $("#dashboard_"+id).replaceWith(html_widget);
                 })
-            }) 
+            })
           })
-    <?php     
-    } ?>  
+    <?php
+    } ?>
     </script>
 
 </body>

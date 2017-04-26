@@ -64,36 +64,65 @@ session_start();
                                         <td align="center"><?php echo $load_shipment['bl_tgl'] ?></td>
                                         <td align="center"><?php echo $load_shipment['bl'] ?></td>
                                         <td align="center"><?php echo $load_shipment['no_shipment'] ?></td>
-                                        <td align=""><?php echo $load_shipment['no_order'] ?></td>
+                                        <td align="">
+                                          <?php
+                                          if ($load_shipment['no_order']) {
+                                            echo $load_shipment['no_order'];
+                                          }else{
+                                            echo "-";
+                                          }
+
+                                          ?>
+                                        </td>
                                         <td align="center">
                                             <?php
                                             $no_shipment=$load_shipment['no_shipment']; //definisi no shipment
                                             $a=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='1'")->fetch();
-                                            echo $a[0];
+                                            if ($a[0]==true) {
+                                              echo $a[0];
+                                            }else{
+                                              echo "0";
+                                            }
                                             ?>
                                         </td>
                                         <td align="center">
                                             <?php
                                             $b=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='2'")->fetch();
-                                            echo $b[0];
+                                            if ($b[0]==true) {
+                                              echo $b[0];
+                                            }else{
+                                              echo "0";
+                                            }
                                             ?>
                                         </td>
                                         <td align="center">
                                             <?php
-                                            $b=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='3'")->fetch();
-                                            echo $b[0];
+                                            $c=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='3'")->fetch();
+                                            if ($c[0]==true) {
+                                              echo $c[0];
+                                            }else{
+                                              echo "0";
+                                            }
                                             ?>
                                         </td>
                                         <td align="center">
                                             <?php
-                                            $c=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='4'")->fetch();
-                                            echo $c[0];
+                                            $d=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='4'")->fetch();
+                                            if ($d[0]==true) {
+                                              echo $d[0];
+                                            }else{
+                                              echo "0";
+                                            }
                                             ?>
                                         </td>
                                         <td align="center">
                                             <?php
-                                            $d=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='5'")->fetch();
-                                            echo $d[0];
+                                            $e=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='5'")->fetch();
+                                            if ($e[0]==true) {
+                                              echo $e[0];
+                                            }else{
+                                              echo "0";
+                                            }
                                             ?>
                                         </td>
                                         <td align="center"><?php echo $load_shipment['kota_tujuan'] ?></td>
@@ -209,36 +238,65 @@ $('#unpaid_list<?php echo $load_tahun['th'] ?>').DataTable( {
                                         <td align="center"><?php echo $load_shipment['bl_tgl'] ?></td>
                                         <td align="center"><?php echo $load_shipment['bl'] ?></td>
                                         <td align="center"><?php echo $load_shipment['no_shipment'] ?></td>
-                                        <td align=""><?php echo $load_shipment['no_order'] ?></td>
+                                        <td align="">
+                                          <?php
+                                          if ($load_shipment['no_order']) {
+                                            echo $load_shipment['no_order'];
+                                          }else{
+                                            echo "-";
+                                          }
+
+                                          ?>
+                                        </td>
                                         <td align="center">
                                             <?php
                                             $no_shipment=$load_shipment['no_shipment']; //definisi no shipment
                                             $a=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='1'")->fetch();
-                                            echo $a[0];
+                                            if ($a[0]==true) {
+                                              echo $a[0];
+                                            }else{
+                                              echo "0";
+                                            }
                                             ?>
                                         </td>
                                         <td align="center">
                                             <?php
                                             $b=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='2'")->fetch();
-                                            echo $b[0];
+                                            if ($b[0]==true) {
+                                              echo $b[0];
+                                            }else{
+                                              echo "0";
+                                            }
                                             ?>
                                         </td>
                                         <td align="center">
                                             <?php
-                                            $b=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='3'")->fetch();
-                                            echo $b[0];
+                                            $c=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='3'")->fetch();
+                                            if ($c[0]==true) {
+                                              echo $c[0];
+                                            }else{
+                                              echo "0";
+                                            }
                                             ?>
                                         </td>
                                         <td align="center">
                                             <?php
-                                            $c=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='4'")->fetch();
-                                            echo $c[0];
+                                            $d=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='4'")->fetch();
+                                            if ($d[0]==true) {
+                                              echo $d[0];
+                                            }else{
+                                              echo "0";
+                                            }
                                             ?>
                                         </td>
                                         <td align="center">
                                             <?php
-                                            $d=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='5'")->fetch();
-                                            echo $d[0];
+                                            $e=$conn->query("select jml from t4t_ordercontainer where no_order='$no_shipment' and no_cont='5'")->fetch();
+                                            if ($e[0]==true) {
+                                              echo $e[0];
+                                            }else{
+                                              echo "0";
+                                            }
                                             ?>
                                         </td>
                                         <td align="center"><?php echo $load_shipment['kota_tujuan'] ?></td>

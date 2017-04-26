@@ -95,13 +95,13 @@ $actual_link  = $actual_link1[1];
                             <!-- start accordion -->
                             <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
                                 <?php
-                                $tahun_cek=$conn->query("select substr(wkt_shipment,1,4) as th,bl_tgl,bl,kota_tujuan,fee,acc from t4t_shipment where id_comp='$kode' and acc_paid=0 and acc=1  group by th order by th desc");
+                                $tahun_cek=$conn->query("select substr(wkt_shipment,1,4) as th,bl_tgl,bl,kota_tujuan,fee,acc from t4t_shipment where id_comp='$kode' and acc_paid=0  group by th order by th desc");
                                 //echo mysql_error();
 
                                 if ($cek=$tahun_cek->fetch()=="") {
                                     echo "No result found.";
                                 }else{
-                                    $tahun=$conn->query("select substr(wkt_shipment,1,4) as th,bl_tgl,bl,kota_tujuan,fee,acc from t4t_shipment where id_comp='$kode' and acc_paid=0 and acc=1 group by th order by th desc");
+                                    $tahun=$conn->query("select substr(wkt_shipment,1,4) as th,bl_tgl,bl,kota_tujuan,fee,acc from t4t_shipment where id_comp='$kode' and acc_paid=0 group by th order by th desc");
                                 while ($load_tahun=$tahun->fetch()) {
 
                                 ?>
