@@ -122,7 +122,7 @@
                         <a href="?<?php echo paramEncrypt('hal=change-password')?>" data-toggle="tooltip" data-placement="top" title="Change Password">
                             <span class="fa fa-key" aria-hidden="true"></span>
                         </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Ver. &Alpha;.2.12">
+                        <a data-toggle="tooltip" data-placement="top" title="Ver. &Alpha;.2.17">
                             <span class="fa fa-question-circle" aria-hidden="true"></span>
                         </a>
                         <a href="../login/logout.php" data-toggle="tooltip" data-placement="top" title="Logout">

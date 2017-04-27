@@ -1,4 +1,4 @@
-<?php  
+<?php
 
 $actual_link0 = "$_SERVER[REQUEST_URI]";
 $actual_link1 = explode("?", $actual_link0);
@@ -11,18 +11,18 @@ $actual_link  = $actual_link1[1];
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
     <div class="x_panel">
         <div class="x_title">
             <h2><i class="fa fa-folder-open"></i> Unapproved Order <i>(this month)</i> <small></small></h2>
-           
+
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-        <?php 
+        <?php
         if ($_SESSION['success']==1) {
         ?>
           <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -67,30 +67,30 @@ $actual_link  = $actual_link1[1];
                                 <thead>
                                     <tr>
                                         <th><center>Order Date<center></th>
-                                        <th><center>No. Order</center></th>                         
+                                        <th><center>No. Order</center></th>
                                         <th><center>Hang Tags Requested</center></th>
                                         <th><center>WINS Number</center></th>
                                         <th><center>Destination City</center></th>
                                         <th><center>Approved</center></th>
                                     </tr>
                                 </thead>
-                        
+
                                 <tbody>
-                        <?php 
+                        <?php
                         $bulan = date("Y-m");
-                        
+
                         $order=$conn->query("select no, wkt_order, no_order, jml_wins, acc, tipe_prod, wins1, wins2, kota_tujuan,id_comp from t4t_order where acc=0 and wkt_order like '%$bulan-%'");
                         while ($load_order=$order->fetch()) {
                             $id_order=$load_order['no'];
                             $kode    =$load_order['id_comp'];
-                            
+
                         ?>
                                     <tr>
                                         <td align="center"><?php echo $load_order['wkt_order'] ?></td>
-                           
-                                         <td align="center"><a href="#" data-toggle="modal" data-target="#myModal<?php echo $load_order['no'] ?>"><?php echo $load_order['no_order'] ?></a></td>                                    
+
+                                         <td align="center"><a href="#" data-toggle="modal" data-target="#myModal<?php echo $load_order['no'] ?>"><?php echo $load_order['no_order'] ?></a></td>
                                         <td align="center">
-                                            <?php 
+                                            <?php
                                             $no_order=$load_order['no_order']; //definisi no order
                                             $htag=$conn->query("select jml_wins from t4t_order where no_order='$no_order'")->fetch();
                                             echo $htag[0];
@@ -100,49 +100,52 @@ $actual_link  = $actual_link1[1];
                                             <a href="#" data-toggle="modal" data-target="#win<?php echo $load_order['no'] ?>"><?php echo $load_order['wins1'].' to '.$load_order['wins2'] ?></a>
                                         </td>
                                         <td align="center">
-                                            <?php 
+                                            <?php
                                             echo $load_order['kota_tujuan']
                                             ?>
                                         </td>
-                                   
+
                                         <td align="center">
-                                            <?php 
+                                            <?php
                                             $approve=$conn->query("select acc from t4t_order where no_order='$no_order'")->fetch();
                                             if ($approve[0]=="1") {
                                                 ?>
                                                 <a href="#" data-toggle="modal" data-target="#acc1<?php echo $load_order['no'] ?>"><i class="fa fa-check-square-o"></i></a>
-                                                <?php 
+                                                <?php
                                             }else{
                                                 ?>
                                                 <a href="#" data-toggle="modal" data-target="#acc0<?php echo $load_order['no'] ?>"><i class="fa fa-square-o"></i></a>
                                                 <?php
                                             }
-                                            
+
                                             ?>
                                         </td>
                                     </tr>
 
- <?php  
+ <?php
  include 'modal/admoff-no-order.php';
  include 'modal/admoff-win-range.php';
  include 'modal/admoff-order-acc-0.php';
  include 'modal/admoff-order-acc-1.php';
  ?>
 
-  
+ <script>
+ function wins_range<?php echo $id_order ?>(){
+   var x = $(".x<?php echo $id_order ?>").val();
+   var y = $(".y<?php echo $id_order ?>").val();
+   z= parseInt(x)+parseInt(y)-1;
+   $(".z<?php echo $id_order ?>").val(z);
+ }
+ </script>
 
-  
 
-  
-
-
-                        <?php 
+                        <?php
                         }
                         ?>
                                 </tbody>
-                        
+
                             </table>
-       
+
         </div>
     </div>
 
@@ -170,7 +173,7 @@ $actual_link  = $actual_link1[1];
         <script src="../js/icheck/icheck.min.js"></script>
 
         <script src="../js/custom.js"></script>
-        
+
         <!-- pace -->
         <script src="../js/pace/pace.min.js"></script>
         <!-- Datatables -->
@@ -193,7 +196,7 @@ $actual_link  = $actual_link1[1];
     <script type="text/javascript" src="../js/notify/pnotify.core.js"></script>
     <script type="text/javascript" src="../js/notify/pnotify.buttons.js"></script>
     <script type="text/javascript" src="../js/notify/pnotify.nonblock.js"></script>
-    <?php  
+    <?php
       if ($_SESSION['mail']=='1') {
     ?>
     <script type="text/javascript">
@@ -226,8 +229,8 @@ $actual_link  = $actual_link1[1];
 
         });
     </script>
-    <?php 
-      
+    <?php
+
       }
       if ($_SESSION['mail']=='0') {
 
@@ -262,13 +265,13 @@ $actual_link  = $actual_link1[1];
 
         });
     </script>
-    <?php 
+    <?php
       }
 
       unset($_SESSION['mail']);
       unset($_SESSION['company_name']);
     ?>
-       
+
 </body>
 
 </html>

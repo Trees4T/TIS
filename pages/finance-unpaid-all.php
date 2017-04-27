@@ -87,13 +87,13 @@ $tahun_bulan = date("Y-m");
                             <!-- start accordion -->
                             <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
                                 <?php
-                                $tahun_cek=$conn->query("select substr(wkt_shipment,1,4) as th,bl_tgl,bl,kota_tujuan,fee,acc,wkt_shipment from t4t_shipment where acc_paid=0 and acc=1  group by th order by th desc");
+                                $tahun_cek=$conn->query("select substr(wkt_shipment,1,4) as th,bl_tgl,bl,kota_tujuan,fee,acc,wkt_shipment from t4t_shipment where acc_paid=0 group by th order by th desc");
                                 //echo mysql_error();
                                 $cek=$tahun_cek->fetch();
                                 if ($cek=="") {
                                     echo "No result found.";
                                 }else{
-                                    $tahun=$conn->query("select substr(wkt_shipment,1,4) as th,bl_tgl,bl,kota_tujuan,fee,acc,wkt_shipment from t4t_shipment where acc_paid=0 and acc=1  group by th order by th desc");
+                                    $tahun=$conn->query("select substr(wkt_shipment,1,4) as th,bl_tgl,bl,kota_tujuan,fee,acc,wkt_shipment from t4t_shipment where acc_paid=0 group by th order by th desc");
                                 while ($load_tahun=$tahun->fetch()) {
 
                                 ?>
@@ -134,7 +134,7 @@ $tahun_bulan = date("Y-m");
                                         <?php
                                         $th=$load_tahun['th'];
 
-                                        $shipment=$conn->query("select * from t4t_shipment where wkt_shipment like '%$th%' and acc_paid=0 and acc=1 ");
+                                        $shipment=$conn->query("select * from t4t_shipment where wkt_shipment like '%$th%' and acc_paid=0  ");
                                         while ($load_shipment=$shipment->fetch()) {
 
 

@@ -149,7 +149,7 @@ if ($sts_paid==1) {
                             echo $a[0];
                           }else{
                             echo "0";
-                          }echo $a[0];
+                          }
                           ?>
                       </td>
                       <td align="center">

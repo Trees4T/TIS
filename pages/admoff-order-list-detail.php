@@ -135,6 +135,14 @@ $actual_link  = $actual_link1[1];
  include 'modal/admoff-order-acc-1.php';
  ?>
 
+ <script>
+ function wins_range<?php echo $id_order ?>(){
+   var x = $(".x<?php echo $id_order ?>").val();
+   var y = $(".y<?php echo $id_order ?>").val();
+   z= parseInt(x)+parseInt(y)-1;
+   $(".z<?php echo $id_order ?>").val(z);
+ }
+ </script>
 
                         <?php
                         }
@@ -463,6 +471,7 @@ $actual_link  = $actual_link1[1];
       unset($_SESSION['mail']);
       unset($_SESSION['company_name']);
     ?>
+
 </body>
 
 </html>

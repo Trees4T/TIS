@@ -111,7 +111,7 @@ $tahun_bulan = date("Y-m");
                                         <?php
                                         $th=$load_tahun['th'];
 
-                                        $shipment=$conn->query("select * from t4t_shipment where wkt_shipment like '%$th%' and acc_paid=0 and acc=1 and wkt_shipment like '%$tahun_bulan-%' order by wkt_shipment ");
+                                        $shipment=$conn->query("select * from t4t_shipment where wkt_shipment like '%$th%' and acc_paid=0 and wkt_shipment like '%$tahun_bulan-%' order by wkt_shipment ");
                                         while ($load_shipment=$shipment->fetch()) {
 
 
