@@ -1,4 +1,4 @@
-<?php 
+<?php
 error_reporting(0);
 session_start();
 
@@ -26,15 +26,15 @@ if (isset($btn_save_win)) {
 
   $wins1 = $_POST['wins1'];
   $wins2 = $_POST['wins2'];
-  
+
   try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $update_win=$conn->query("update t4t_order set wins1='$wins1', wins2='$wins2' where no_order='$order' ");
   } catch (PDOException $e) {
     $error_win = $e->getMessage();
   }
-  
-  
+
+
 
   if ($error_win==false) {
     $_SESSION['success']=1;  //wins success
@@ -53,7 +53,7 @@ if (isset($btn_save_win)) {
   } catch (PDOException $e) {
     $error_acc1 = $e->getMessage();
   }
- 
+
 
   if ($error_acc1==false) {
     $_SESSION['success']=3;  //acc1 success
@@ -72,15 +72,15 @@ if (isset($btn_save_win)) {
   } catch (PDOException $e) {
     $error_acc0= $e->getMessage();
   }
-  
-  
+
+
   $_SESSION['email_member']=$email_member[0];
   $_SESSION['company_name']=$comp;
 
   if ($error_acc0==false) {
     $_SESSION['success']=5;  //acc0 success
     $_SESSION['order']=$order;
-    
+
 
     ################email##############
     require '../assets/PHPMailer/PHPMailerAutoload.php';
@@ -94,17 +94,17 @@ if (isset($btn_save_win)) {
 
      <tr>
        <td bgcolor="#0b6454" align="center">
-         <br><br><h2><font color="white">Order Confirmation! </font></h2> 
+         <br><br><h2><font color="white">Order Confirmation! </font></h2>
        </td>
      </tr>
-     <tr align="center">         
+     <tr align="center">
       <td bgcolor="#fff">
-       <table align="center" class="table">                        
+       <table align="center" class="table">
                       <tr>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
-                      </tr> 
+                      </tr>
                       <tr>
                         <td><b>Order No.</td>
                         <td>:</td>
@@ -114,7 +114,7 @@ if (isset($btn_save_win)) {
                         <td><b>Company Name</td>
                         <td>:</td>
                         <td>'.$comp.'</td>
-                      </tr>                                                                              
+                      </tr>
                       <tr class="active" >
                         <td><b>Porduct Type</td>
                         <td>:</td>
@@ -124,9 +124,9 @@ if (isset($btn_save_win)) {
                         <td><b>WINS Qty</td>
                         <td>:</td>
                         <td>'. $tags.'</td>
-                      </tr>  
+                      </tr>
                       <tr class="active" >
-                        <td><b>Processed Time</td>
+                        <td><b>Time</td>
                         <td>:</td>
                         <td>'. $tanggal_indo.'</td>
                       </tr>
@@ -134,9 +134,9 @@ if (isset($btn_save_win)) {
                         <td><b>Quantity</td>
                         <td>:</td>
                         <td>'. $tags.'</td>
-                      </tr>  
-                     
-                      <br>               
+                      </tr>
+
+                      <br>
                   </table>
                   <br><br>
       </td>

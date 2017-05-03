@@ -29,8 +29,6 @@ if ($sts_paid==1) {
 
 
     <div class="x_panel">
-    <div class="col-md-12">
-        <div class="x_panel">
             <!-- <div class="x_title">
 
                 <ul class="nav navbar-right panel_toolbox">
@@ -421,8 +419,6 @@ include 'modal/fin-payment-date.php';
 
 
             </div>
-        </div>
-       </div>
 
     </div>
 </div>

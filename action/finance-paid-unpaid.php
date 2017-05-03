@@ -56,7 +56,7 @@ if(isset($btn_save_unpaid)) {
 }elseif(isset($btn_save_paid)) {
   try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $update_acc0=$conn->query("UPDATE t4t_shipment set acc_paid='1',tgl_paid='$tanggal',wkt_shipment='$data_wkt_ship' where bl='$bl'");
+    $update_acc0=$conn->query("UPDATE t4t_shipment set acc_paid='1',acc='1',tgl_paid='$tanggal',wkt_shipment='$data_wkt_ship' where bl='$bl'");
   } catch (PDOException $e) {
     $error_acc0= $e->getMessage();
   }
@@ -119,7 +119,7 @@ if(isset($btn_save_unpaid)) {
                           <td>'. $wins_used.'</td>
                         </tr>
                         <tr class="active" >
-                          <td ><b>Processed Time</td>
+                          <td ><b>Time</td>
                           <td>:</td>
                           <td>'. $tanggal_indo.'</td>
                         </tr>
@@ -181,6 +181,7 @@ if(isset($btn_save_unpaid)) {
     $_SESSION['success']=7;  // success fee
     $_SESSION['ship']=$shipment;
     $_SESSION['fee']=$fee;
+    $_SESSION['bl']=$bl;
     $_SESSION['id_member']=$id_member;
     $_SESSION['link']=$link;
     include 'report/excel-invoice.php';

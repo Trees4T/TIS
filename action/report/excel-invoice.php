@@ -5,10 +5,10 @@ session_start();
 include '../../koneksi/koneksi.php';
 
 $bl 				=$_SESSION['bl'];
-$fee 				=$_SESSION['fee'];
+//$fee 				=$_SESSION['fee'];
 $id_member 	=$_SESSION['id_member'];
 $link 	 		=$_SESSION['link'];
-
+$fee = $conn->query("select sum(fee) from t4t_shipment where bl='$bl'")->fetch();
 /**
  * PHPExcel
  *
@@ -122,10 +122,10 @@ $objPHPExcel->setActiveSheetIndex(0)
 		    ->mergeCells('B7:C7')
 		    ->setCellValue('B7', ': '.$address.'')
 		    ->setCellValue('B8', ': BL No. : '.$bl.'' )
-		    ->setCellValue('C8', ''.$fee.'')
+		    ->setCellValue('C8', 'USD '.$fee[0].'')
 
 		    ->setCellValue('B9', 'TOTAL')
-		    ->setCellValue('C9', ''.$fee.'')
+		    ->setCellValue('C9', 'USD '.$fee[0].'')
 
 		    // A
 		    ->setCellValue('A11', 'Term of Payment')
@@ -179,6 +179,7 @@ $objPHPExcel->getActiveSheet()->getStyle('B9:C9')->applyFromArray($BStyle);
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(18);
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(44);
 $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(18);
+// $objPHPExcel->getActiveSheet()->getRowDimension('7')->setRowHeight(30);
 
 
 

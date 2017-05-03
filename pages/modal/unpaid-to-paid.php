@@ -32,6 +32,9 @@
           </label>
           <div class="col-md-8 font-hijau">
             <?php
+            if ($load_shipment['id_comp']==true) {
+              $kode=$load_shipment['id_comp'];
+            }
 
             $comp_name=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
             echo $comp_name[0];

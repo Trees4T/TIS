@@ -20,8 +20,6 @@ $actual_link  = $actual_link1[1];
 
 
     <div class="x_panel">
-    <div class="col-md-12">
-        <div class="x_panel">
             <!-- <div class="x_title">
 
                 <ul class="nav navbar-right panel_toolbox">
@@ -79,7 +77,7 @@ $actual_link  = $actual_link1[1];
 
 
         unset($_SESSION['success']);
-        unset($_SESSION['bl']);
+        unset($_SESSION['ship']);
         ?>
 
                 <div class="" role="tabpanel" data-example-id="togglable-tabs">
@@ -121,22 +119,7 @@ $actual_link  = $actual_link1[1];
                                 </div>
 
 
-    <!-- Datatables -->
-    <script src="../js/datatables/js/jquery.dataTables.js"></script>
-    <script src="../js/datatables/tools/js/dataTables.tableTools.js"></script>
 
-     <script>
-      $(function() {
-          $('#unpaid_list<?php echo $load_tahun['th'] ?>').DataTable( {
-                    // "bJQueryUI":true,
-                  "bPaginate":true,
-                  "sPaginationType": "full_numbers",
-                  "iDisplayLength":10
-          } );
-
-      } );
-    </script>
-    <!-- end datatable -->
 
                                     <?php }
 
@@ -176,22 +159,7 @@ $actual_link  = $actual_link1[1];
 
                                 </div>
 
-    <!-- Datatables -->
-    <script src="../js/datatables/js/jquery.dataTables.js"></script>
-    <script src="../js/datatables/tools/js/dataTables.tableTools.js"></script>
 
-     <script>
-      $(function() {
-          $('#paid_list<?php echo $load_tahun2['th'] ?>').DataTable( {
-                    // "bJQueryUI":true,
-                  "bPaginate":true,
-                  "sPaginationType": "full_numbers",
-                  "iDisplayLength":10
-          } );
-
-      } );
-    </script>
-    <!-- end datatable -->
                                     <?php }
                                 }
                                      ?>
@@ -203,9 +171,7 @@ $actual_link  = $actual_link1[1];
                 </div>
 
             </div>
-        </div>
-       </div>
-
+  
     </div>
 </div>
 
