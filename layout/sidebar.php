@@ -1,6 +1,17 @@
     <?php
+    include '../koneksi/koneksi.php';
+    
+
+    session_start();
         error_reporting(0);
         include '../assets/lib-encript/function.php';
+        //LOAD CLASS
+        function __autoload($class){
+         include_once('../action/function/class.'.$class.".php");
+        }
+        $fc = new Fc();
+
+
         //untuk mendecode url yang di encrypt
         $var     =decode($_SERVER['REQUEST_URI']);
         $var2    =decode($_SERVER['REQUEST_URI']);
@@ -122,7 +133,7 @@
                         <a href="?<?php echo paramEncrypt('hal=change-password')?>" data-toggle="tooltip" data-placement="top" title="Change Password">
                             <span class="fa fa-key" aria-hidden="true"></span>
                         </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Ver. &Alpha;.2.17">
+                        <a data-toggle="tooltip" data-placement="top" title="<?php echo $version ?>">
                             <span class="fa fa-question-circle" aria-hidden="true"></span>
                         </a>
                         <a href="../login/logout.php" data-toggle="tooltip" data-placement="top" title="Logout">
@@ -243,6 +254,7 @@
             $nama_desa  =$var['nama_desa'];
             $nama_kec   =$var['nama_kec'];
             $nama_kab   =$var['nama_kab'];
+            $thn_tanam  =$var['thn_tanam'];
 
             #monitoring detail
             $id_lahan   =$var['id_lahan'];

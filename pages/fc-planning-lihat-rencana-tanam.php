@@ -28,7 +28,7 @@
             $jml_tanaman_ta=$conn->query("SELECT sum(jml_usulan) from t4t_lahan where kd_ta=$kode_ta")->fetch();
             ?>
     <div class="font-hijau">
-    *) <small>Jumlah keseluruhan tanaman pada</small> Target Area <?php echo $nama_ta[0] ?> : <b> <?php echo number_format($jml_tanaman_ta[0]) ?> <small>tanaman</small> </b>
+    *) <small>Jumlah keseluruhan usulan tanaman pada</small> Target Area <?php echo $nama_ta[0] ?> : <b> <?php echo number_format($jml_tanaman_ta[0]) ?> <small>tanaman</small> </b>
     </div>
         </div>
     </div>

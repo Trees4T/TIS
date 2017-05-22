@@ -1,24 +1,28 @@
 <?php
-$ta=$_SESSION['ta'];
-  $_ta=$conn->query("SELECT kab_code,prov_code,nama from t4t_tamaster where kd_ta='$ta'")->fetch();
-$nama_mu=$conn->query("SELECT kd_mu,nama from t4t_mu where kab_kode='$_ta[0]' and prov_code='$_ta[1]'")->fetch();
 
-$data=$conn->query("SELECT * from t4t_lahan where no='$id_lahan'")->fetch();
-  $id_desa=$data['id_desa'];
-  $kd_petani=$data['kd_petani'];
-  $jenis_pohon=$data['id_pohon2'];
-  $no_lahan=$data['no_lahan'];
+$ta = $fc->ta_master($kode_ta);
+  $kode_kabupaten = $ta->kab_code;
+  $kode_provinsi  = $ta->prov_code;
+
+$mu = $fc->nama_mu($kode_kabupaten,$kode_provinsi);
+  $nama_mu = $mu->nama;
+
+$lahan = $fc->lahan($id_lahan);
+  $id_desa    = $lahan['id_desa'];
+  $kd_petani  = $lahan['kd_petani'];
+  $jenis_pohon= $lahan['id_pohon2'];
+  $no_lahan   = $lahan['no_lahan'];
+  $no_t4tlahan = $lahan['no'];
 
   //data pohon
-  $rekapmon=$conn->query("SELECT jml,sht1 from t4t_rekapmon where id_desa='$id_desa' and no_lahan='$no_lahan' and kd_petani='$kd_petani'")->fetch();
+$rekapmon = $fc->rekapmon($id_desa,$no_lahan,$kd_petani);
  ?>
-
 
 <div class="">
 
           <div class="page-title">
             <div class="title_left">
-              <h3>Monitoring <small></small></h3>
+              <h3>Monitoring </h3>
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
@@ -31,52 +35,49 @@ $data=$conn->query("SELECT * from t4t_lahan where no='$id_lahan'")->fetch();
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2><i class="fa fa fa-circle-o"></i> No. Lahan <?php echo $data['no_lahan'] ?> </h2>
-                  <!-- <ul class="nav navbar-right panel_toolbox">
-                    <a href="?<?php echo paramEncrypt('hal=fc-planning-lihat-rencana-tanam')?>" data-toggle="tooltip" data-placement="left" title="Lihat data rencana tanam"><i class="fa fa-eye"></i> Lihat Data Rencana Tanam</a>
-                  </ul> -->
+                  <h2><a href="<?php echo $fc->back() ?>"><i class="fa fa-reply"></i></a> - <i class="fa fa fa-tag"></i> No. Lahan <?php echo $no_lahan ?> / Monitoring <?php echo $mon ?></h2>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                   <br />
                   <form class="form-horizontal form-label-left" action="" method="post">
 
-                    <table class="col-md-6">
+                    <table class="col-md-6" id="">
                       <tr>
                         <td class="col-md-5">Nama Petani</td>
                         <td> : </td>
                         <td><?php
-                        $petani=$conn->query("SELECT nm_petani,alamat from t4t_petani where id_desa='$id_desa' and kd_petani='$kd_petani'")->fetch();
-                        echo $petani[0]; ?></td>
+                        $petani = $fc->t4t_petani($id_desa,$kd_petani);
+                        echo $petani->nm_petani; ?></td>
                       </tr>
                       <tr>
                         <td class="col-md-5">Alamat Petani</td>
                         <td> : </td>
-                        <td><?php echo $petani[1] ?></td>
+                        <td><?php echo $petani->alamat; ?></td>
                       </tr>
                       <tr>
                         <td class="col-md-5">No. Lahan</td>
                         <td> : </td>
-                        <td><?php echo $data['no_lahan'] ?></td>
+                        <td><?php echo $no_lahan ?></td>
                       </tr>
                       <tr>
                         <td class="col-md-5">Jenis Tanaman</td>
                         <td> : </td>
                         <td><?php
-                        $jenis=$conn->query("SELECT nama_pohon from t4t_pohon where id_pohon='$jenis_pohon'")->fetch();
-                        echo $jenis[0];
+                         $jenis =  $fc->t4t_pohon($jenis_pohon);
+                        echo $jenis->nama_pohon;
                         ?></td>
                       </tr>
                       <tr>
                         <td class="col-md-5">Tahun Tanam</td>
                         <td> : </td>
-                        <td><?php echo $data['thn_tanam'] ?></td>
+                        <td><?php echo $lahan['thn_tanam'] ?></td>
                       </tr>
                       <tr>
                         <td class="col-md-5">Tanggal Tanam</td>
                         <td> : </td>
                         <td><?php
-                          $w=$data['wkt_tanam'];
+                          $w=$lahan['wkt_tanam'];
                           $ex_wtanam=explode("-", $w);
                           echo $ex_wtanam[2].'/'.$ex_wtanam[1].'/'.$ex_wtanam[0];
                            ?></td>
@@ -85,7 +86,8 @@ $data=$conn->query("SELECT * from t4t_lahan where no='$id_lahan'")->fetch();
                         <td class="col-md-5">Batas akhir monitoring <?php echo $mon ?></td>
                         <td> : </td>
                         <td><?php
-                          $b=$data['endmon'.$mon];
+
+                          $b=$lahan['endmon'.$mon];
                           $ex_btsmon=explode("-", $b);
                           echo $ex_btsmon[2].'/'.$ex_btsmon[1].'/'.$ex_btsmon[0];
                          ?></td>
@@ -96,17 +98,17 @@ $data=$conn->query("SELECT * from t4t_lahan where no='$id_lahan'")->fetch();
                       <tr>
                         <td class="col-md-4">Jumlah Total Pohon</td>
                         <td> : </td>
-                        <td colspan="2"> <?php echo $rekapmon[0] ?></td>
+                        <td colspan="2"> <?php echo $rekapmon->jml ?></td>
                       </tr>
                       <tr>
                         <td class="col-md-4">Jumlah Pohon Hidup</td>
                         <td> : </td>
-                        <td colspan="2"> <?php echo $rekapmon[1] ?></td>
+                        <td colspan="2"> <?php echo $rekapmon->sht1 ?></td>
                       </tr>
                       <tr>
                         <td class="col-md-4">Presentase Hidup</td>
                         <td> : </td>
-                        <td colspan="2"> <?php $presentase=($rekapmon[1]/$rekapmon[0])*100;
+                        <td colspan="2"> <?php $presentase=($rekapmon->sht1/$rekapmon->jml)*100;
                               echo number_format($presentase,2) ?> %</td>
                       </tr>
                       <tr>
@@ -127,18 +129,10 @@ $data=$conn->query("SELECT * from t4t_lahan where no='$id_lahan'")->fetch();
 
                   </form>
                   <br><br><br>
-                  <table class="table table-striped responsive-utilities jambo_table" border="1" id="">
-                    <thead>
-                        <tr>
-                            <th width="5%"><center>No.<center></th>
-                            <th width="10%"><center>No. Pohon<center></th>
-                            <th width="10%"><center>Sehat<center></th>
-                            <th width="10%"><center>Mati<center></th>
-                            <th width="10%"><center>Hilang<center></th>
-                            <th width="45%"><center>Keterangan<center></th>
-                        </tr>
-                    </thead>
-                  </table>
+
+                  <div id="fc1">
+
+                  </div>
 
                 </div>
               </div>
@@ -158,22 +152,10 @@ $data=$conn->query("SELECT * from t4t_lahan where no='$id_lahan'")->fetch();
     <!-- icheck -->
     <script src="../js/icheck/icheck.min.js"></script>
     <script src="../js/custom.js"></script>
-    <!-- daterangepicker -->
-    <script type="text/javascript" src="../js/moment/moment.min.js"></script>
-    <script type="text/javascript" src="../js/datepicker/daterangepicker.js"></script>
     <!-- input mask -->
     <script src="../js/input_mask/jquery.inputmask.js"></script>
     <!-- knob -->
     <script src="../js/knob/jquery.knob.min.js"></script>
-    <!-- range slider -->
-    <script src="../js/ion_range/ion.rangeSlider.min.js"></script>
-    <!-- color picker -->
-    <script src="../js/colorpicker/bootstrap-colorpicker.min.js"></script>
-    <script src="../js/colorpicker/docs.js"></script>
-
-    <!-- image cropping -->
-    <script src="../js/cropping/cropper.min.js"></script>
-    <script src="../js/cropping/main2.js"></script>
     <!-- pace -->
     <script src="../js/pace/pace.min.js"></script>
 
@@ -186,6 +168,21 @@ $data=$conn->query("SELECT * from t4t_lahan where no='$id_lahan'")->fetch();
     <!-- /input mask -->
 
 
+    <script type="text/javascript">
+    <?php for ($i=1; $i <= 1; $i++) {
+    ?>
+        $(function fc() {
+            var dataid = [<?php echo $i ?>];
+            $.each(dataid,function(i,id) {
+                $("#fc<?php echo $i ?>").append("<div id='fc"+id+"' <div class='inner'><i class='fa fa-spinner fa-spin'></i> Loading...</div>");
+                $.get("?<?php echo paramEncrypt('content=fc-content-datamonitoring&lahan='.$no_t4tlahan.'&mon='.$mon.'')?>",function(html_widget) {
+                    $("#fc"+id).replaceWith(html_widget);
+                })
+            })
+          })
+    <?php
+    } ?>
+    </script>
 </body>
 
 </html>

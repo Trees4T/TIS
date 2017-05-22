@@ -1,7 +1,10 @@
 <?php
-$ta=$_SESSION['ta'];
-$ta_master=$conn->query("select kab_code,prov_code from t4t_tamaster where kd_ta='$ta'")->fetch();
-$mu=$conn->query("select kd_mu, nama from t4t_mu where kab_kode='$ta_master[0]' and prov_code='$ta_master[1]'")->fetch();
+$ta_master      = $fc->ta_master($kode_ta);
+$kode_kabupaten = $ta_master->kab_code;
+$kode_provinsi  = $ta_master->prov_code;
+$mu             = $fc->nama_mu($kode_kabupaten,$kode_provinsi);
+$kd_mu          = $mu->kd_mu;
+$kode_ta;
  ?>
 <div class="">
 
@@ -38,9 +41,9 @@ $mu=$conn->query("select kd_mu, nama from t4t_mu where kab_kode='$ta_master[0]' 
                     <!-- desa -->
                     <?php
                     $_desa=$_REQUEST['desa'];
-                      $desa2=$conn->query("select desa,id_kec,kab_code from t4t_desa where id_desa='$_desa'")->fetch();
-                      $nama_kec2=$conn->query("select kecamatan from t4t_kec where id_kec='$desa2[1]' and id_kab='$desa2[2]'")->fetch();
-                      $nama_kab2=$conn->query("select nama from t4t_kab where kab_code='$desa2[2]'")->fetch();
+                      $desa2     = $fc->nama_desa($_desa);
+                      $nama_kec2 = $fc->nama_kec($desa2->id_kec);
+                      $nama_kab2 = $fc->nama_kab($desa2->kab_code);
 
                      ?>
                           <div class="form-group">
@@ -52,24 +55,25 @@ $mu=$conn->query("select kd_mu, nama from t4t_mu where kab_kode='$ta_master[0]' 
                               if ($_desa=="") {
                                 echo "- Pilih Desa -";
                               }else{
-                              echo $desa2[0].' Kec.'.$nama_kec2[0].' Kab.'.$nama_kab2[0];
+                              echo $desa2->desa.' Kec.'.$nama_kec2->kecamatan.' Kab.'.$nama_kab2->nama;
                               }
                               ?></option>
                     <?php
 
-                    $sel_desa=$conn->query("select det.id_desa,ta.kab_code,ta.prov_code,det.id_kec from t4t_tamaster ta
-                                            join t4t_tadetail det where ta.kd_ta=det.kd_ta and ta.kd_ta='$ta'");
-                    while ($data_desa=$sel_desa->fetch()) {
-                        $id_desa=$data_desa[0];
-                      $desa=$conn->query("select desa,id_kec,kab_code from t4t_desa where id_desa='$data_desa[0]'")->fetch();
-                        $id_kec=$desa[1];
-                        $id_kab=$desa[2];
+                    $sel_desa= $fc->list_desa($kode_fc);
 
-                      $nama_kec=$conn->query("select kecamatan from t4t_kec where id_kec='$id_kec' and id_kab='$id_kab'")->fetch();
-                      $nama_kab=$conn->query("select nama from t4t_kab where kab_code='$id_kab'")->fetch();
+                      foreach ($sel_desa as $data_desa) {
+                        $id_desa   = $data_desa->id_desa;
+                        $nama_desa = $fc->nama_desa($id_desa);
+
+                        $id_kec    = $nama_desa->id_kec;
+                        $nama_kec  = $fc->nama_kec($id_kec);
+
+                        $id_kab    = $nama_desa->kab_code;
+                        $nama_kab  = $fc->nama_kab($id_kab);
 
                     ?>
-                          <option value="<?php echo $id_desa ?>"><?php echo $desa[0].' Kec.'.$nama_kec[0].' Kab.'.$nama_kab[0] ?></option>
+                          <option value="<?php echo $id_desa ?>"><?php echo $nama_desa->desa.' Kec.'.$nama_kec->kecamatan.' Kab.'.$nama_kab->nama ?></option>
                     <?php
                     }
                     ?>
@@ -84,8 +88,8 @@ $mu=$conn->query("select kd_mu, nama from t4t_mu where kab_kode='$ta_master[0]' 
                       <div class="col-md-6 col-sm-6 col-xs-12 font-hijau">
                        <label class="control-label">
                         <?php
-                          $no_part=$conn->query("select kd_petani from t4t_petani where id_desa='$_desa' order by kd_petani desc limit 1")->fetch();
-                          echo $no_part[0]+1;
+                          $no_part = $fc->no_part($_desa);
+                          echo $no_part->no+1;
                         ?>
                         </label>
                       </div>
@@ -134,11 +138,11 @@ $mu=$conn->query("select kd_mu, nama from t4t_mu where kab_kode='$ta_master[0]' 
                           </option>
 
                           <?php
-                          $nama_kel_tani=$conn->query("select nama_kel_tani from kel_tani where kd_mu='$mu[0]' and aktif=1");
-                          while ($data_keltani=$nama_kel_tani->fetch()) {
+                            $nm_kel_tani = $fc->kel_tani($kd_mu);
+                            foreach ($nm_kel_tani as $data_keltani) {
 
                            ?>
-                          <option><?php echo $data_keltani[0] ?></option>
+                          <option><?php echo $data_keltani->nama_kel_tani ?></option>
                           <?php
                           }
                            ?>
@@ -257,7 +261,7 @@ $mu=$conn->query("select kd_mu, nama from t4t_mu where kab_kode='$ta_master[0]' 
                     <div class="ln_solid"></div>
                     <form class="" action="../action/fc-part-input.php" method="post">
                       <input type="" name="" value="<?php echo $id_desa ?>"><br>
-                      <input type="" name="" value="<?php echo $no_part[0]+1; ?>"><br>
+                      <input type="" name="" value="<?php echo $no_part->no+1; ?>"><br>
                       <input type="" name="" value="<?php echo $nama ?>"><br>
                       <input type="" name="" value="<?php echo $ktp ?>"><br>
                       <input type="" name="" value="<?php echo $alamat ?>"><br>
@@ -274,7 +278,7 @@ $mu=$conn->query("select kd_mu, nama from t4t_mu where kab_kode='$ta_master[0]' 
 
                     <div class="form-group">
                       <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                        <a href="?12c4cfd9d51129e9cc9099e59f693a7315f7c3c298c33f2b257ee9859a39508dc374c0fa2a63203c5dc5d8966a0789be" class="btn btn-primary">Cancel</a>
+                        <a href="" class="btn btn-primary">Cancel</a>
                         <button type="submit" class="btn btn-success">Submit</button>
                       </div>
                     </div>

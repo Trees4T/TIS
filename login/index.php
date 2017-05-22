@@ -1,6 +1,7 @@
 <?php
-session_start(); 
+session_start();
 error_reporting(0);
+include '../koneksi/koneksi.php';
 if ($_SESSION['kode']!="") {
     header("location:../login/back_home.php");
 }
@@ -44,7 +45,7 @@ if ($_SESSION['kode']!="") {
 </head>
 
 <body style="background:#F7F7F7;">
-    
+
     <div class="">
         <a class="hiddenanchor" id="toregister"></a>
         <a class="hiddenanchor" id="tologin"></a>
@@ -83,8 +84,8 @@ if ($_SESSION['kode']!="") {
                             <br />
                             <div>
                                 <h1><img src="../images/logo-theme.png" width="185"></h1>
-
                                 <p>©<?php echo date("Y") ?> Trees4Trees&trade; All Rights Reserved.  </p>
+                                <?php echo $version; ?>
                             </div>
                         </div>
                     </form>

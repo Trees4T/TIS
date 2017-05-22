@@ -1,7 +1,8 @@
-<?php 
-$ta=$_SESSION['ta'];
-  $_ta    =$conn->query("select kab_code,prov_code,nama from t4t_tamaster where kd_ta='$ta'")->fetch();
-  $nama_mu=$conn->query("select kd_mu,nama from t4t_mu where kab_kode='$_ta[0]' and prov_code='$_ta[1]'")->fetch(PDO::FETCH_OBJ);
+<?php
+  $_ta = $fc->ta_master($kode_ta);
+  $kode_kabupaten = $_ta->kab_code;
+  $kode_provinsi = $_ta->prov_code;
+  $nama_mu = $fc->nama_mu($kode_kabupaten,$kode_provinsi);
  ?>
 <div class="">
 
@@ -11,7 +12,7 @@ $ta=$_SESSION['ta'];
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
@@ -31,7 +32,7 @@ $ta=$_SESSION['ta'];
                   <form class="form-horizontal form-label-left" action="" method="post">
                     <font size="">
                     <div class="col-sm-2">
-                                
+
                     </div>
 
                     <div class="col-sm-10">
@@ -41,7 +42,7 @@ $ta=$_SESSION['ta'];
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12 font-hijau">
                       <label class="control-label">
-                        <?php  
+                        <?php
                           echo $nama_mu->kd_mu.' - '.$nama_mu->nama;
                         ?>
                       </label>
@@ -53,19 +54,19 @@ $ta=$_SESSION['ta'];
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12 font-hijau">
                       <label class="control-label">
-                        <?php  
-                          echo $ta.' - '.$_ta[2];
+                        <?php
+                          echo $kode_ta.' - '.$_ta->nama;
                         ?>
                       <label class="control-label">
                       </div>
                     </div>
 
-                     <?php 
+                     <?php
 
-              $_desa=$_REQUEST['desa'];
-                $desa2=$conn->query("SELECT desa,id_kec,kab_code from t4t_desa where id_desa='$_desa'")->fetch(PDO::FETCH_OBJ);
-                $nama_kec2=$conn->query("SELECT kecamatan from t4t_kec where id_kec='$desa2->id_kec' and id_kab='$desa2->kab_code'")->fetch(PDO::FETCH_OBJ);
-                $nama_kab2=$conn->query("SELECT nama from t4t_kab where kab_code='$desa2->kab_code'")->fetch(PDO::FETCH_OBJ);
+                     $_desa=$_REQUEST['desa'];
+                       $desa2     = $fc->nama_desa($_desa);
+                       $nama_kec2 = $fc->nama_kec($desa2->id_kec);
+                       $nama_kab2 = $fc->nama_kab($desa2->kab_code);
 
                ?>
                     <div class="form-group">
@@ -73,28 +74,30 @@ $ta=$_SESSION['ta'];
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control" name="desa" onchange="this.form.submit()">
-                        <option value="<?php echo $_desa ?>"><?php 
+                        <option value="<?php echo $_desa ?>"><?php
                         if ($_desa=="") {
                           echo "- Pilih Desa -";
                         }else{
-                        echo $desa2->desa.' Kec.'.$nama_kec2->kecamatan.' Kab.'.$nama_kab2->nama;
+                          echo $desa2->desa.' Kec.'.$nama_kec2->kecamatan.' Kab.'.$nama_kab2->nama;
                         }
                         ?></option>
-              <?php  
-              $sel_desa=$conn->query("SELECT det.id_desa, ta.kab_code, ta.prov_code, det.id_kec 
-                from t4t_tamaster ta join t4t_tadetail det where ta.kd_ta=det.kd_ta and ta.kd_ta='$ta'");
-              while ($data_desa=$sel_desa->fetch()) {
-                  $id_desa=$data_desa[0];
-                $desa=$conn->query("SELECT desa,id_kec,kab_code from t4t_desa where id_desa='$data_desa[0]'")->fetch();
-                  $id_kec=$desa[1];
-                  $id_kab=$desa[2];
+              <?php
+              $sel_desa= $fc->list_desa($kode_fc);
 
-                $nama_kec=$conn->query("SELECT kecamatan from t4t_kec where id_kec='$id_kec' and id_kab='$id_kab'")->fetch();
-                $nama_kab=$conn->query("SELECT nama from t4t_kab where kab_code='$id_kab'")->fetch();
+                foreach ($sel_desa as $data_desa) {
+                  $id_desa   = $data_desa->id_desa;
+                  $nama_desa = $fc->nama_desa($id_desa);
+
+                  $id_kec    = $nama_desa->id_kec;
+                  $nama_kec  = $fc->nama_kec($id_kec);
+
+                  $id_kab    = $nama_desa->kab_code;
+                  $nama_kab  = $fc->nama_kab($id_kab);
+
 
               ?>
-                    <option value="<?php echo $id_desa ?>"><?php echo $desa[0].' Kec.'.$nama_kec[0].' Kab.'.$nama_kab[0] ?></option>
-              <?php 
+                    <option value="<?php echo $id_desa ?>"><?php echo $nama_desa->desa.' Kec.'.$nama_kec->kecamatan.' Kab.'.$nama_kab->nama ?></option>
+              <?php
               }
               ?>
                         </select>
@@ -115,14 +118,15 @@ $ta=$_SESSION['ta'];
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12 font-hijau">
                       <label class="control-label">
-                        <?php  
-                        $no_lahan=$conn->query("select no_lahan from t4t_lahan where id_desa='$_desa' order by no_lahan desc limit 1")->fetch();
-                        echo $no_lahan[0]+1;
+                        <?php
+                        $no_lahan = $fc->no_lahan($_desa);
+                        echo $no_lahan->no+1;
+
                         ?>
                       </label>
                       </div>
                     </div>
-                    
+
                     <?php $_nama=$_REQUEST['nama'] ?>
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama Partisipan / Institusi<span class="required"></span>
@@ -130,12 +134,12 @@ $ta=$_SESSION['ta'];
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control" name="nama">
                           <option value="">- Pilih Partisipan / Institusi -</option>
-                          <?php 
-                          $nama=$conn->query("SELECT kd_petani,nm_petani from t4t_petani where id_desa='$_desa' order by nm_petani");
-                          while ($data_nama=$nama->fetch()) {
+                          <?php
+                          $nama= $fc->list_nama_part($_desa);
+                          foreach ($nama as $data_nama) {
                           ?>
-                          <option value="<?php echo $data_nama[0] ?>"><?php echo $data_nama[1] ?></option>
-                          <?php 
+                          <option value="<?php echo $data_nama->kd_petani ?>"><?php echo $data_nama->nm_petani ?></option>
+                          <?php
                           } ?>
                         </select>
                       </div>
@@ -167,12 +171,12 @@ $ta=$_SESSION['ta'];
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control">
                           <option>- Pilih Tipe Silvikultur -</option>
-                          <?php  
-                          $silvi=$conn->query("SELECT * from t4t_typelahan");
-                          while ($data_silvi=$silvi->fetch()) {
+                          <?php
+                          $silvi=$fc->list_silvil();
+                          foreach ($silvi as $data_silvi) {
                           ?>
-                          <option value="<?php echo $data_silvi[0] ?>"><?php echo $data_silvi[1] ?></option>
-                          <?php 
+                          <option value="<?php echo $data_silvi->id_lahan ?>"><?php echo $data_silvi->jenis_lahan ?></option>
+                          <?php
                           } ?>
                         </select>
                       </div>
@@ -217,11 +221,11 @@ $ta=$_SESSION['ta'];
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control">
                           <option>- Pilih Jenis Tanam -</option>
-                          <?php  
-                          $tanaman=$conn->query("SELECT id_pohon,nama_pohon from t4t_pohon order by nama_pohon");
-                          while ( $data_tanaman=$tanaman->fetch()) {
+                          <?php
+                          $tanaman=$fc->list_pohon();
+                          foreach ($tanaman as $data_tanaman) {
                           ?>
-                          <option value="<?php echo $data_tanaman[0] ?>"><?php echo $data_tanaman[1] ?></option>
+                          <option value="<?php echo $data_tanaman->id_pohon ?>"><?php echo $data_tanaman->nama_pohon.' <i>('.$data_tanaman->nama_latin.')</i>' ?></option>
                           <?php } ?>
                         </select>
                       </div>
@@ -234,7 +238,7 @@ $ta=$_SESSION['ta'];
                         <input type="number" name="usulan" class="form-control" min="0">
                       </div>
                     </div>
-                     
+
 
                     <div class="ln_solid"></div>
                     <div class="form-group">
@@ -292,7 +296,7 @@ $ta=$_SESSION['ta'];
     </script>
     <!-- /input mask -->
 
-   
+
 </body>
 
 </html>

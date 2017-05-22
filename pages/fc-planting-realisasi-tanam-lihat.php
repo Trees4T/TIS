@@ -29,7 +29,7 @@
             $percent=($jml_tanaman_ta[0]/$jml_tanaman_ta[1])*100;
             ?>
     <div class="font-hijau">
-    *) <small>Jumlah keseluruhan tanaman pada</small> Target Area <?php echo $nama_ta[0] ?> : <b> <?php echo number_format($jml_tanaman_ta[1]) ?> <small>tanaman, realisasi :</small> <?php echo number_format($jml_tanaman_ta[0]) ?> <small> tanaman</small> <span class='badge bg-blue'><?php echo number_format($percent,2) ?> %</span></b>
+    *) <small>Jumlah keseluruhan usulan tanaman pada</small> Target Area <?php echo $nama_ta[0] ?> : <b> <?php echo number_format($jml_tanaman_ta[1]) ?> <small>tanaman, realisasi :</small> <?php echo number_format($jml_tanaman_ta[0]) ?> <small> tanaman</small> <span class='badge bg-blue'><?php echo number_format($percent,2) ?> %</span></b>
     </div>
         </div>
     </div>

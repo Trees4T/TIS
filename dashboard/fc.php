@@ -1,4 +1,4 @@
-<?php  
+<?php
 // memulai session
 session_start();
 error_reporting(0);
@@ -7,11 +7,13 @@ if (isset($_SESSION['level']))
 {
 	// jika level admin
 	if ($_SESSION['level'] == "fc")
-   {   
+   {
+		 $kode_fc=$_SESSION['kode'];
+     $kode_ta=$_SESSION['ta'];
    }
-   //elseif ($_SESSION['level'] == "mkt" ) 
+   //elseif ($_SESSION['level'] == "mkt" )
    // {
-   	
+
    // }
    // jika kondisi level user maka akan diarahkan ke halaman lain
    else

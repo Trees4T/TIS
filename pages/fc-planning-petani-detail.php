@@ -1,10 +1,10 @@
-<?php 
+<?php
 
-$data     = $conn->query("SELECT * from t4t_petani where id_desa='$id_desa' and kd_petani='$kd_petani'")->fetch(PDO::FETCH_OBJ);
-$kode_kab = $conn->query("SELECT kab_code,prov_code FROM t4t_kab where nama='$nama_kab'")->fetch(PDO::FETCH_OBJ);
-  $kode_kabupaten=$kode_kab->kab_code;
-  $kode_provinsi=$kode_kab->prov_code;
-$nama_mu  =$conn->query("SELECT kd_mu,nama from t4t_mu where kab_kode='$kode_kabupaten' and prov_code='$kode_provinsi'")->fetch(PDO::FETCH_OBJ);
+$data           = $fc->t4t_petani($id_desa,$kd_petani);
+$kode_kab       = $fc->kode_kab_prov($nama_kab);
+$kode_kabupaten = $kode_kab->kab_code;
+$kode_provinsi  = $kode_kab->prov_code;
+$nama_mu        = $fc->nama_mu($kode_kabupaten,$kode_provinsi);
 
  ?>
 <div class="">
@@ -15,7 +15,7 @@ $nama_mu  =$conn->query("SELECT kd_mu,nama from t4t_mu where kab_kode='$kode_kab
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
@@ -24,7 +24,8 @@ $nama_mu  =$conn->query("SELECT kd_mu,nama from t4t_mu where kab_kode='$kode_kab
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2><i class="fa fa-asterisk"></i> Detail Data Partisipan  </h2>
+
+                  <h2><a href="<?php $fc->back(); ?>"><i class="fa fa-reply"></i></a> - </button> <i class="fa fa-user"></i> Detail Data Partisipan  </h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <a href="?<?php echo paramEncrypt('hal=fc-planning-lihat-data-partisipan')?>" data-toggle="tooltip" data-placement="left" title="Lihat data partisipan"><i class="fa fa-eye"></i> Lihat Data Partisipan</a>
                   </ul>
@@ -37,8 +38,8 @@ $nama_mu  =$conn->query("SELECT kd_mu,nama from t4t_mu where kab_kode='$kode_kab
                     <div class="col-sm-2">
                     <div class="avatar-view-input-petani" title="">
                       <img src="../images/default.png" alt="Avatar" width="100%">
-                    </div>      
-                    <input type="file">              
+                    </div>
+                    <input type="file">
                     </div>
 
                     <div class="col-sm-10">
@@ -47,7 +48,7 @@ $nama_mu  =$conn->query("SELECT kd_mu,nama from t4t_mu where kab_kode='$kode_kab
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12 font-hijau">
                       <label class="control-label">
-                        <?php echo $nama_desa.' - Kec.'.$nama_kec.' - Kab.'.$nama_kab.'' ?> 
+                        <?php echo $nama_desa.' - Kec.'.$nama_kec.' - Kab.'.$nama_kab.'' ?>
                       </label>
                       </div>
                     </div>
@@ -61,7 +62,7 @@ $nama_mu  =$conn->query("SELECT kd_mu,nama from t4t_mu where kab_kode='$kode_kab
                       </label>
                       </div>
                     </div>
-                    
+
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama Partisipan <span class="required red">*</span>
                       </label>
@@ -75,7 +76,7 @@ $nama_mu  =$conn->query("SELECT kd_mu,nama from t4t_mu where kab_kode='$kode_kab
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <input type="text" class="form-control" data-inputmask="'mask' : '9999-9999-9999-9999'" value="<?php echo $data->no_ktp ?>">
-                        
+
                       </div>
                     </div>
 
@@ -86,7 +87,7 @@ $nama_mu  =$conn->query("SELECT kd_mu,nama from t4t_mu where kab_kode='$kode_kab
                         <textarea type="text" required="required" class="form-control col-md-7 col-xs-12"><?php echo $data->alamat ?></textarea>
                       </div>
                     </div>
-<?php 
+<?php
 $kel_tani=$conn->query("SELECT * from anggota_kel_tani where kd_petani='$kd_petani' and id_desa='$id_desa' ")->fetch(PDO::FETCH_OBJ);
 
  ?>
@@ -95,20 +96,20 @@ $kel_tani=$conn->query("SELECT * from anggota_kel_tani where kd_petani='$kd_peta
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control">
-                          <option><?php 
+                          <option><?php
                           if ($kel_tani->nama_kel_tani=="") {
                             echo "Tidak memiliki";
-                          }else{ 
-                            echo $kel_tani->nama_kel_tani; 
+                          }else{
+                            echo $kel_tani->nama_kel_tani;
                           } ?></option>
 
-                          <?php 
+                          <?php
                           $nama_kel_tani=$conn->query("SELECT nama_kel_tani from kel_tani where kd_mu='$nama_mu->kd_mu' and aktif=1");
                           while ($data_keltani=$nama_kel_tani->fetch(PDO::FETCH_OBJ)) {
-                            
+
                            ?>
                           <option><?php echo $data_keltani->nama_kel_tani ?></option>
-                          <?php 
+                          <?php
                           }
                            ?>
                         </select>
@@ -161,7 +162,7 @@ $kel_tani=$conn->query("SELECT * from anggota_kel_tani where kd_petani='$kd_peta
                         </select>
                       </div>
                     </div>
-                    
+
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tujuan Menanam Pohon <span class="required red">*</span>
                       </label>
