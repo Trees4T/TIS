@@ -38,9 +38,7 @@
           <?php
           $lahan=$conn->query("select * from t4t_lahan where id_desa='$id_desa' and kd_ta='$kode_ta' and thn_tanam='$thn_tanam'");
           while ($load_lahan=$lahan->fetch()) {
-            if ($load_lahan['jml_realisasi'] == '0') {
-              # code...
-            }else{
+
           ?>
               <tr>
                   <td align="center"><?php echo $load_lahan['no_lahan'] ?></td>
@@ -50,7 +48,11 @@
                   for ($i=1; $i <= $jml_mon ; $i++) {
                     $link=paramEncrypt('hal=fc-monitoring-detail&id_lahan='.$load_lahan['no'].'&mon='.$i.'');
 
-
+                    if ($load_lahan['jml_realisasi'] == '0') {
+                      ?>
+                      <td></td>
+                      <?php
+                    }else{
                   ?>
 
                   <td align="center">
@@ -69,7 +71,7 @@
                   ?></td>
 
                   <?php
-
+                      }//endif
                   } // end for
                   ?>
 
@@ -77,7 +79,7 @@
 
 
           <?php
-        }//end if
+
           }
           ?>
           </tbody>

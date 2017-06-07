@@ -190,18 +190,6 @@
           echo $e->getMessage();
         }
     }
-    // public function tabel_data_rentanam($id_desa,){
-    //     try {
-    //       $stmt = $this->conn->prepare("SELECT * from t4t_lahan where id_desa=?");
-    //       $stmt->execute(array($id_desa));
-    //       while ($data= $stmt->fetch(PDO::FETCH_OBJ)) {
-    //         $res[] =$data;
-    //       }
-    //       return $res;
-    //     } catch (PDOException $e) {
-    //       echo $e->getMessage();
-    //     }
-    // }
     public function list_tahun_lahan($id_desa,$kode_ta){
         try {
           $stmt = $this->conn->prepare("SELECT * from t4t_lahan where id_desa=? and kd_ta=? group by thn_tanam order by thn_tanam desc");
@@ -304,6 +292,19 @@
     }
     public function back(){
       echo "javascript:history.back()";
+    }
+
+
+    ##### ACTION #####
+    public function insert_partisipan($kd_petani,$nm_petani,$alamat,$profesi,$pdp_tani,$pdp_dagang,$pdp_pegawai,$pdp_kebun,$pdp_lain,$persepsi,$ktp,$id_desa){
+        try {
+          $wkt_buat = date("Ymd H:i:s");
+          $stmt = $this->conn->prepare("INSERT into t4t_petani (kd_petani,nm_petani,alamat,profesi,pdpTani,pdpDagang,pdpPegawai,pdpKebun,pdpLain,persepsi,id_desa,digawe,no_ktp)
+          values ('$kd_petani','$nm_petani','$alamat','$profesi','$pdp_tani','$pdp_dagang','$pdp_pegawai','$pdp_kebun','$pdp_lain','$persepsi','$id_desa','$wkt_buat','$ktp') ");
+          return $res;
+        } catch (PDOException $e) {
+          echo $e->getMessage();
+        }
     }
 
   }//END CLASS

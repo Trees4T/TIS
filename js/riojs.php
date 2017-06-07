@@ -17,7 +17,7 @@ function addField (argument) {
         //untuk looping berapa kali sesuai panjang table
         var forinput = document.getElementById("forinput");
         forinput.setAttribute("value", currentIndex);
-      
+
         var qty = document.createElement("input");
         qty.setAttribute("value", "QTY");
         qty.setAttribute("readonly", "");
@@ -53,7 +53,7 @@ function addField (argument) {
         n60.setAttribute("min", "0");
         n60.setAttribute("class", "form-control");
         n60.setAttribute("name", "n60" + currentIndex);
-        
+
         var tgl = document.createElement("input");
         tgl.setAttribute("type", "text");
         tgl.setAttribute("required", "");
@@ -89,7 +89,7 @@ function addField (argument) {
 
         var currentCell = currentRow.insertCell(-1);
         currentCell.appendChild(n60);
-        
+
         var currentCell = currentRow.insertCell(-1);
         currentCell.appendChild(tgl);
 
@@ -110,7 +110,7 @@ function addField (argument) {
       var i = r.parentNode.parentNode.rowIndex;
       document.getElementById("table-container").deleteRow(i);
   }
-<?php  
+<?php
 }
 ?>
 

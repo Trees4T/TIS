@@ -16,6 +16,7 @@ $lahan = $fc->lahan($id_lahan);
 
   //data pohon
 $rekapmon = $fc->rekapmon($id_desa,$no_lahan,$kd_petani);
+
  ?>
 
 <div class="">
@@ -98,17 +99,36 @@ $rekapmon = $fc->rekapmon($id_desa,$no_lahan,$kd_petani);
                       <tr>
                         <td class="col-md-4">Jumlah Total Pohon</td>
                         <td> : </td>
-                        <td colspan="2"> <?php echo $rekapmon->jml ?></td>
+                        <td colspan="2">
+                          <?php
+                          if ($rekapmon == false) {
+                            $jml = $fc->lahan($id_lahan);
+                            echo $jml['jml_realisasi'];
+                          }else{
+                            echo $rekapmon->jml;
+                          }
+                        ?></td>
                       </tr>
                       <tr>
                         <td class="col-md-4">Jumlah Pohon Hidup</td>
                         <td> : </td>
-                        <td colspan="2"> <?php echo $rekapmon->sht1 ?></td>
+                        <td colspan="2">
+                          <?php
+                          if ($rekapmon == false) {
+                            echo $jml['jml_realisasi'];
+                          }else{
+                            echo $rekapmon->sht1;
+                          } ?></td>
                       </tr>
                       <tr>
                         <td class="col-md-4">Presentase Hidup</td>
                         <td> : </td>
-                        <td colspan="2"> <?php $presentase=($rekapmon->sht1/$rekapmon->jml)*100;
+                        <td colspan="2"> <?php
+                        if ($rekapmon == false) {
+                          $presentase=100;
+                        }else{
+                          $presentase=($rekapmon->sht1/$rekapmon->jml)*100;
+                        }
                               echo number_format($presentase,2) ?> %</td>
                       </tr>
                       <tr>

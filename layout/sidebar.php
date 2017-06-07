@@ -1,6 +1,6 @@
     <?php
     include '../koneksi/koneksi.php';
-    
+
 
     session_start();
         error_reporting(0);
@@ -9,7 +9,7 @@
         function __autoload($class){
          include_once('../action/function/class.'.$class.".php");
         }
-        $fc = new Fc();
+        $fc = new fc();
 
 
         //untuk mendecode url yang di encrypt
