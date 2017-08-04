@@ -1,3 +1,6 @@
+<?php
+
+?>
 <div class="">
 
           <div class="page-title">
@@ -6,7 +9,7 @@
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
@@ -23,7 +26,7 @@
                 </div>
                 <div class="x_content">
                   <br />
-                    <?php 
+                    <?php
                   if ($_SESSION['success']==1) {
                     ?>
                 <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -54,6 +57,15 @@
                   <?php
                   }
 
+                  if($_SESSION['success']==4){
+                  ?>
+                <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong><i class="fa fa-warning"></i> Warning!</strong> Hang tags numbers is not valid, please check again. <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>
+                </div>
+                  <?php
+                  }
 
                   unset($_SESSION['success']);
                    ?>
@@ -61,14 +73,14 @@
                   <div class="ln_solid"></div>
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="../action/member-shipment-input.php" enctype="multipart/form-data">
                     <font size="">
-                   
+
 
                     <div class="col-sm-12">
                     <div class="form-group">
                       <label class="control-label col-md-5" for="first-name">Shipment Report No.
                       </label>
                       <div class="col-md-4 font-hijau">
-<?php 
+<?php
 $kode=$_SESSION['kode'];
 
 $tgl=date("dmy");
@@ -85,7 +97,7 @@ $no_sh=$cek_nosh[0]+1;
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="bl" required>
-                        
+
                       </div>
                     </div>
 
@@ -99,22 +111,35 @@ $no_sh=$cek_nosh[0]+1;
                     </div>
 
                     <div class="form-group">
+                      <label class="control-label col-md-5" for="first-name">Company Name <span class="required"></span>
+                      </label>
+                      <div class="col-md-4 font-hijau">
+                        <?php
+
+                        $company=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
+                         ?>
+                      <label class="control-label"><?php echo $company[0]; ?></label>
+                          <input type="hidden" name="id_comp" value="<?php echo $kode; ?>" id="comp">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
                       <label class="control-label col-md-5" for="first-name">Order No. <span class="required red">*</span>
                       </label>
                       <div class="col-md-4">
-                        <select multiple="" class="form-control" name="order[]" required>
-<?php  
+                        <select multiple="" class="form-control" name="order[]" id="order" required>
+<?php
 
 $no_order=$conn->query("select no_order from t4t_order where id_comp='$kode' and acc=1 order by no desc");
 while ($data_order=$no_order->fetch()) {
-  
+
 ?>
                           <option><?php echo $data_order[0] ?></option>
-<?php 
+<?php
 }
  ?>
                         </select>
-                        
+
                       </div>
                       <p>To select multiple options, press Ctrl (windows) / Command (Mac) button while selecting the Order.</p>
                     </div>
@@ -123,25 +148,13 @@ while ($data_order=$no_order->fetch()) {
                       <label class="control-label col-md-5" for="first-name">Hang Tag Numbers Used <span class="required red">*</span>
                       <br>
                       </label>ex : 2,100,5-10,11-30
+                      <!-- <i id="loaderIcon" class="fa fa-spinner fa-spin"></i> -->
                       <div class="col-md-4">
-                        <textarea type="text" class="form-control" name="wins_used" required></textarea>
-                                                
+                        <textarea type="text" class="form-control" name="wins_used" id="wins_used" onBlur="cekValidasi()" required></textarea>
+                      <span id="status"></span>
                       </div>
                     </div>
 
-                    <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Company Name <span class="required"></span>
-                      </label>
-                      <div class="col-md-4 font-hijau">
-                        <?php 
-                  
-                        $company=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
-                         ?>
-                      <label class="control-label"><?php echo $company[0]; ?></label>
-                          <input type="hidden" name="id_comp" value="<?php echo $kode; ?>" >
-                      </div>
-                    </div>
-                    
                     <div class="form-group">
                       <label class="control-label col-md-5">Required <span class="required red">*</span>
                       </label>
@@ -153,7 +166,9 @@ while ($data_order=$no_order->fetch()) {
                             <th><center>Qty</center></th>
                           </thead>
                           <tbody>
-<?php 
+
+
+<?php
 $container=$conn->query("select * from t4t_container");
 while ($data_container=$container->fetch()) {
  ?>
@@ -162,7 +177,7 @@ while ($data_container=$container->fetch()) {
                               <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                               <td width="90px"><input type="number" class="form-control" name="cont<?php echo $data_container[0] ?>" min="0"></td>
                             </tr>
-<?php 
+<?php
 }
  ?>
                           </tbody>
@@ -178,7 +193,7 @@ while ($data_container=$container->fetch()) {
                       </div>
                     </div>
 
-                    <?php 
+                    <?php
                         $pic_name=$conn->query("select pic from t4t_partisipan where id='$kode'")->fetch();
                          if ($pic_name[0]=="") {
                            #
@@ -189,7 +204,7 @@ while ($data_container=$container->fetch()) {
                       </label>
                       <div class="col-md-4 font-hijau">
                       <label class="control-label">
-                        <?php echo $pic_name[0]; ?>                         
+                        <?php echo $pic_name[0]; ?>
                       </label>
                          <input type="hidden" name="pic" value="<?php echo $pic_name[0]; ?>">
                       </div>
@@ -211,15 +226,15 @@ while ($data_container=$container->fetch()) {
                       </label>
                       <div class="col-md-4">
                         <textarea type="text" class="form-control" name="note"></textarea>
-                        
+
                       </div>
                     </div>
-<?php 
+<?php
 $no_id=$conn->query("select no from t4t_partisipan where id='$kode'")->fetch();
 $cek_customer=$conn->query("select kode_retailer from t4t_retailer where id_partisipan='$no_id[0]'");
 
 if ($cek=$cek_customer->fetch()==true) {
-  
+
 
  ?>
                     <div class="form-group">
@@ -228,21 +243,21 @@ if ($cek=$cek_customer->fetch()==true) {
                       <div class="col-md-4">
                         <select class="form-control" name="c_code">
                           <option value="">- Choose -</option>
-      <?php 
-      $customer=$conn->query("select kode_retailer,retailer_name from t4t_retailer where id_partisipan='$no_id[0]'"); 
+      <?php
+      $customer=$conn->query("select kode_retailer,retailer_name from t4t_retailer where id_partisipan='$no_id[0]'");
       while ( $data_customer=$customer->fetch()) {
       ?>
                           <option value="<?php echo $data_customer[0] ?>"><?php echo $data_customer[0]; echo " (".$data_customer[1].")"; ?></option>
-    <?php 
+    <?php
     } ?>
                         </select>
-                        
+
                       </div>
                     </div>
 
-<?php 
-} 
-?>             
+<?php
+}
+?>
 
                     <div class="form-group">
                       <label class="control-label col-md-5" for="first-name">Bill of Lading copy attached <span class="required red">*</span>
@@ -253,9 +268,9 @@ if ($cek=$cek_customer->fetch()==true) {
                       </div>
                     </div>
 
-                    
-                    
-  
+
+
+
 
                     <div class="ln_solid"></div>
                     <div class="form-group">
@@ -302,7 +317,6 @@ if ($cek=$cek_customer->fetch()==true) {
     <script type="text/javascript" src="../js/datepicker/daterangepicker.js"></script>
     <!-- pace -->
     <script src="../js/pace/pace.min.js"></script>
-
     <!-- datepicker -->
     <script type="text/javascript">
         $(document).ready(function () {
@@ -528,6 +542,23 @@ if ($cek=$cek_customer->fetch()==true) {
 
         });
     </script>
+    <script>
+    function cekValidasi() {
+    	$("#loaderIcon").show();
+    	jQuery.ajax({
+    	url: "../action/check_validity.php",
+    	data:'wins_used='+$("#wins_used").val()+'&order='+$("#order").val()+'&comp='+$("#comp").val(),
+    	type: "POST",
+    	success:function(data){
+    		$("#status").html(data);
+    		$("#loaderIcon").hide();
+    	},
+    	error:function (){}
+    	});
+    }
+    </script>
+
+
 </body>
 
 </html>

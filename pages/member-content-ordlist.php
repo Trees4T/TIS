@@ -26,16 +26,13 @@ session_start();
                             <table class="table table-striped responsive-utilities jambo_table" border="1" id="order_list<?php echo $load_tahun['th'] ?>">
                                 <thead>
                                     <tr>
-                                        <th rowspan="2"><center>Order Date<center></th>
-                                        <th rowspan="2"><center>No. Order</center></th>
-                                        <th colspan="4"><center>Qty</center></th>
-                                        <th rowspan="2"><center>Approved</center></th>
-                                    </tr>
-                                    <tr>
-                                        <th><center>Hang Tag</center></th>
-                                        <th><center>Table Tent</center></th>
-                                        <th><center>Poster A1</center></th>
-                                        <th><center>Poster A4</center></th>
+                                        <th><center>Order Date<center></th>
+                                        <th><center>No. Order</center></th>
+                                        <th><center>Type Product</center></th>
+                                        <th><center>Qty Wins</center></th>
+                                        <th><center>Start Wins</center></th>
+                                        <th><center>End Wins</center></th>
+                                        <th><center>Approved</center></th>
                                     </tr>
                                 </thead>
 
@@ -43,7 +40,7 @@ session_start();
                         <?php
                         $th=$load_tahun['th'];
 
-                        $order=$conn->query("select no,wkt_order,no_order,jml_wins,acc,tipe_prod from t4t_order where wkt_order like '%$th%' and id_comp='$kode'");
+                        $order=$conn->query("select no,wkt_order,no_order,jml_wins,acc,tipe_prod,wins1,wins2 from t4t_order where wkt_order like '%$th%' and id_comp='$kode'");
                         while ($load_order=$order->fetch()) {
                             $id_order=$load_order['no'];
 
@@ -63,31 +60,26 @@ session_start();
                                         }
                                          ?>
 
+                                         <td align="center">
+                                             <?php
+                                             echo $load_order['tipe_prod'];
+                                             ?>
+                                         </td>
 
+                                        <td align="center">
+                                            <?php
+                                            echo $load_order['jml_wins'];
+                                            ?>
+                                        </td>
 
                                         <td align="center">
                                             <?php
-                                            $no_order=$load_order['no_order']; //definisi no order
-                                            $htag=$conn->query("select jml_wins from t4t_order where no_order='$no_order'")->fetch();
-                                            echo $htag[0];
+                                            echo $load_order['wins1'];
                                             ?>
                                         </td>
                                         <td align="center">
                                             <?php
-                                            $ttent=$conn->query("select jml from t4t_orderrequest where no_order='$no_order' and no_req='1'")->fetch();
-                                            echo $ttent[0];
-                                            ?>
-                                        </td>
-                                        <td align="center">
-                                            <?php
-                                            $ttent=$conn->query("select jml from t4t_orderrequest where no_order='$no_order' and no_req='2'")->fetch();
-                                            echo $ttent[0];
-                                            ?>
-                                        </td>
-                                        <td align="center">
-                                            <?php
-                                            $ttent=$conn->query("select jml from t4t_orderrequest where no_order='$no_order' and no_req='3'")->fetch();
-                                            echo $ttent[0];
+                                            echo $load_order['wins2'];
                                             ?>
                                         </td>
                                         <td align="center">
