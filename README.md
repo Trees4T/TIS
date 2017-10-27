@@ -1,4 +1,9 @@
 # TIS
+[27 Oktober 2017]
++ / Table t4t_shipment
++ Table t4t_idrelation, t4t_participant
+- Table t4t_partisipan, t4t_retailer
+
 [22 Mei 2017]
 + / Modul FC OOP
 
