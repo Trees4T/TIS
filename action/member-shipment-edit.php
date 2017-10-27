@@ -4,9 +4,9 @@ session_start();
 
 ob_start();
 include '../koneksi/koneksi.php';
-
+require_once 'function/class.office.php';
+$office = new office();
 date_default_timezone_set('Asia/Jakarta');
-
 if ($_POST['no_ship']) {
 
 
@@ -26,10 +26,12 @@ $pic			=$_POST['pic'];
 $destination	=$_POST['destination'];
 $note 			=$_POST['note'];
 $c_code 		=$_POST['c_code'];
+$relation = $_POST['relation'];
+$kode=$_SESSION['kode'];
 
 $waktu=date("His");
 
-$company=$conn->query("select nama from t4t_partisipan where id='$id_comp'")->fetch();
+$company=$conn->query("select name from t4t_participant where id='$id_comp'")->fetch();
 
 $cek_no_bl=$conn->query("select bl from t4t_shipment where no_shipment='$no_shipment' ")->fetch();
 
@@ -77,6 +79,13 @@ $cek_status_bl=$conn->query("select bl from t4t_shipment where bl='$bl'")->fetch
 
 
 		if ($error_max_file==false) {
+
+			$id_retailer = $office->nama_relation_buyer($kode,$c_code);
+			$res_id_ret  = $id_retailer->related_part;
+
+			$conn->query("UPDATE t4t_shipment set buyer='$c_code',relation='$relation' where bl='$bl' ");
+			$conn->query("UPDATE t4t_wins set id_retailer='$res_id_ret',relation='$relation' where bl='$bl' ");
+
 
 			if ($_POST['order']=="") {
 				#

@@ -61,9 +61,9 @@
                                     <h2>Shipments Activities
 <?php
     $kode=$_SESSION['kode'];
-    $wkt_shipment=$conn->query("select wkt_shipment from t4t_shipment where id_comp='$kode' and acc=1 order by wkt_shipment limit 1")->fetch();
+    $wkt_shipment=$office->wkt_shipment_pertama($kode);
 
-    $ex_wkt_ship=explode("-", $wkt_shipment[0]);
+    $ex_wkt_ship=explode("-", $wkt_shipment->wkt_shipment);
     $th=date("Y");
 
     $jarak_th=$th-$ex_wkt_ship[0];
@@ -106,11 +106,11 @@
                             <div class="x_panel">
                                 <div class="x_title">
                                 <?php
-                                $cek_order_pertama=$conn->query("select substr(wkt_order,1,4) as th from t4t_order where id_comp='$kode' order by th limit 1")->fetch();
-                                $jarak=$th-$cek_order_pertama[0]+1;
+                                $cek_order_pertama=$office->wkt_order_pertama($kode);
+                                $jarak=$th-$cek_order_pertama->th+1;
                                 ?>
                                     <h2>Orders Activities<small><?php if ($jarak>0) {
-                                        echo $cek_order_pertama[0]."-".$th;
+                                        echo $cek_order_pertama->th."-".$th;
                                     }else{
                                         echo $jarak;
                                         } ?></small></h2>

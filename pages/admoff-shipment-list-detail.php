@@ -1,6 +1,6 @@
 <?php
-$kode=$id_member;
-$nama_member=$conn->query("SELECT nama from t4t_partisipan where id='$kode'")->fetch();
+$kode="MF004";
+$nama_member=$conn->query("SELECT name from t4t_participant where id='$kode'")->fetch();
 
 $actual_link0 = "$_SERVER[REQUEST_URI]";
 $actual_link1 = explode("?", $actual_link0);
@@ -21,7 +21,7 @@ $actual_link  = $actual_link1[1];
 
     <div class="x_panel">
         <div class="x_title">
-            <h2><i class="fa fa-folder-open"></i> Shipment List
+            <h2><i class="fa fa-folder-open"></i> Shipment List <?php echo $kode ?>
             <small> <a href="?<?php echo paramEncrypt('hal=admoff-shipment-list-2&id_member='.$kode.'') ?>"> <?php echo $nama_member[0] ?></a>
                <span class='badge bg-green'><font color='white'> <?php echo $pil_th ?></font></span>
             </small></h2>
@@ -99,7 +99,7 @@ $actual_link  = $actual_link1[1];
         $shipment=$conn->query("SELECT * from t4t_shipment where wkt_shipment like '%$th%' and id_comp='$kode' and wkt_shipment like '%$pil_th%' order by wkt_shipment desc");
         while ($load_shipment=$shipment->fetch()) {
 
-          $participant = $conn->query("SELECT nama from t4t_partisipan where id='$kode'")->fetch();
+          $participant = $conn->query("SELECT name from t4t_participant where id='$kode'")->fetch();
         ?>
                     <tr>
                       <td align="center"><?php echo $load_shipment['wkt_shipment'] ?></td>
@@ -163,9 +163,15 @@ $actual_link  = $actual_link1[1];
 <!-- Modal -->
 <?php
 include 'modal/admoff-bl-detail.php';
-include 'modal/admoff-win-edit.php';
-include 'modal/admoff-acc-to-unacc.php';
-include 'modal/admoff-unacc-to-acc.php';
+
+if ($_SESSION['level']=='admoff') {
+  include 'modal/admoff-win-edit.php';
+  include 'modal/admoff-acc-to-unacc.php';
+  include 'modal/admoff-unacc-to-acc.php';
+}elseif ($_SESSION['level']=='mkt') {
+  # code...
+}
+
 ?>
 <!-- end modal -->
 

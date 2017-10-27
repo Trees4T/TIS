@@ -1,6 +1,6 @@
 <?php
 $kode=$id_member;
-$nama_member=$conn->query("SELECT nama from t4t_partisipan where id='$kode'")->fetch();
+$nama_member=$conn->query("SELECT name from t4t_participant where id='$kode'")->fetch();
 ?>
 
 <div class="">

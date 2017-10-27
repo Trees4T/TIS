@@ -18,6 +18,28 @@
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
+          <br>
+
+      <?php
+      if ($_SESSION['success']==1) {
+        $text = "Your shipment with BL No. ".$_SESSION['bl']." successfully updated.";
+      }
+      ?>
+
+      <?php if ($_SESSION['success']==true): ?>
+      <!-- notif  -->
+      <div class="alert alert-success alert-dismissible fade in" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+          </button>
+          <strong><i class="fa fa-check-circle"></i> Success!</strong> <?php echo $text ?>
+      </div>
+      <!-- end notif  -->
+    <?php endif; ?>
+
+      <?php
+      unset($_SESSION['success']);
+      unset($_SESSION['bl']);
+      ?>
 
             <div id="member1"></div>
 

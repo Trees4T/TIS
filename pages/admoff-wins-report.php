@@ -174,7 +174,7 @@ if ($_POST['range_tanggal']==true) {
                                 <tr class="even pointer">
                                     <td align="center" width="12.5%">
                                         <?php
-                                        $nama=$conn->query("select nama from t4t_partisipan where id='$id_comp'")->fetch();
+                                        $nama=$conn->query("select name from t4t_participant where id='$id_comp'")->fetch();
                                         echo $nama[0];
                                         ?></td>
                                     <td align="center" width="7.5%"><?php echo $load_shipment[1] ?></td>

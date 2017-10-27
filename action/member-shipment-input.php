@@ -9,9 +9,16 @@ date_default_timezone_set('Asia/Jakarta');
 
 $cek_eror_wins = $_SESSION['eror'];
 
+if ($_SESSION['level']=="part") {
+  $link_user = "member";
+}elseif($_SESSION['level']=="mkt"){
+  $link_user = "marketing";
+}
+
+
 if ($cek_eror_wins==1) {
   $_SESSION['success']=4;
-  header("location:../dashboard/member.php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
+  header("location:../dashboard/".$link_user.".php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
 }else{
 
   if ($_POST['no_ship']) {
@@ -33,9 +40,10 @@ if ($cek_eror_wins==1) {
     $destination =$_POST['destination'];
     $note 			 =$_POST['note'];
     $c_code 		 =$_POST['c_code'];
+    echo $relation 	 =$_POST['relation'];
     $waktu       =date("His");
 
-    $company=$conn->query("SELECT nama from t4t_partisipan where id='$id_comp'")->fetch();
+    $company=$conn->query("SELECT name from t4t_participant where id='$id_comp'")->fetch();
     //insert shipment
     # no - no ship - id_comp - bl - bl tgl - win used - win unused - wkt ship - foto - acc - no order - kota - tujuan - fee - diskon - tgl paid - acc paid - note buyer - item qty
 
@@ -58,7 +66,7 @@ if ($cek_eror_wins==1) {
 
         //cek kontainer
          if ($_POST['cont1']>=1 or $_POST['cont2']>=1 or $_POST['cont3']>=1 or $_POST['cont4']>=1 or $_POST['cont5']>=1) {
-           echo $required_cont="required";
+            $required_cont="required";
          }
 
 
@@ -67,8 +75,8 @@ if ($cek_eror_wins==1) {
 
     			copy($tmp_name,$tujuan);
     			$conn->query("INSERT into t4t_shipment
-    	(no, no_shipment, id_comp, bl, bl_tgl, wins_used, wkt_shipment, foto, kota_tujuan, fee, diskon, note, buyer, item_qty) values
-      ('','$no_shipment','$id_comp','$bl','$tgl','$wins_used','$tanggal','$namafile2','$destination','','','$note','$c_code','$item_qty')")->fetch();
+    	(no, no_shipment, id_comp, bl, bl_tgl, wins_used, wkt_shipment, foto, kota_tujuan, fee, diskon, note, buyer, item_qty, relation) values
+      ('','$no_shipment','$id_comp','$bl','$tgl','$wins_used','$tanggal','$namafile2','$destination','','','$note','$c_code','$item_qty','$relation')");
 
 
     		}else{
@@ -77,19 +85,19 @@ if ($cek_eror_wins==1) {
 
     if ($error_unique_bl==true) {
         $_SESSION['success']=3; //bl error
-        header("location:../dashboard/member.php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
+        header("location:../dashboard/".$link_user.".php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
     }
     elseif ($error_unique_bl==false && $required_cont==true) {
 
-    	$jml_order=count($_POST['order']);
+    	echo $jml_order=count($_POST['order']);
     	for ($i=0; $i < $jml_order ; $i++) {
 
     		$old_order=$conn->query("SELECT no_order from t4t_shipment where no_shipment='$no_shipment'")->fetch();
     		$old_order2=$old_order[0];
-    		//echo $old_order2."<br>";
+    		echo $old_order2."<br>";
 
     		$no_order=$_POST['order'][$i];
-    		//echo $no_order;
+    		echo $no_order;
 
     		if ($old_order2=="") {
     			$data_order=$no_order;
@@ -98,9 +106,8 @@ if ($cek_eror_wins==1) {
     		}
 
 
-    		 $conn->query("update t4t_shipment set no_order='$data_order' where no_shipment='$no_shipment'")->fetch();
-    		 //order container
-    		 //mysql_query("update t4t_ordercontainer set no_order='$no_shipment' where no_order='$no_order'");
+    		 $conn->query("update t4t_shipment set no_order='$data_order' where no_shipment='$no_shipment'");
+
 
     	}
 
@@ -109,7 +116,7 @@ if ($cek_eror_wins==1) {
     	$jml_cont[0];
     	for ($i=1; $i <= $jml_cont[0] ; $i++) {
     		$cont=$_POST['cont'.$i];
-    		$conn->query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_shipment','$i','$cont','$tanggal')")->fetch();
+    		$conn->query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_shipment','$i','$cont','$tanggal')");
     	}
 
     	$no_order_get=$conn->query("SELECT no_order from t4t_shipment where no_shipment='$no_shipment'")->fetch();
@@ -234,10 +241,10 @@ if ($cek_eror_wins==1) {
     ###############end mail############
 
     	$_SESSION['success']=1; //sukses
-    	header("location:../dashboard/member.php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
+    	header("location:../dashboard/".$link_user.".php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
     }else{
     	$_SESSION['success']=2; //eror maks file 200 kb atau bl no
-    	header("location:../dashboard/member.php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
+    	header("location:../dashboard/".$link_user.".php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
     }
 
 

@@ -24,6 +24,40 @@
           echo $e->getMessage();
         }
     }
+    public function list_keltani_perdesa($id_desa){
+        try {
+          $stmt = $this->conn->prepare("SELECT * from anggota_kel_tani where id_desa=? group by id_kel_tani");
+          $stmt->execute(array($id_desa));
+          while ($data = $stmt->fetch(PDO::FETCH_OBJ)) {
+            $res[] = $data;
+          }
+          return $res;
+        } catch (PDOException $e) {
+          echo $e->getMessage();
+        }
+    }
+    public function list_keltani_anggota($id_desa,$id_kel_tani){
+        try {
+          $stmt = $this->conn->prepare("SELECT * from anggota_kel_tani where id_desa=? and id_kel_tani=?");
+          $stmt->execute(array($id_desa,$id_kel_tani));
+          while ($data = $stmt->fetch(PDO::FETCH_OBJ)) {
+            $res[] = $data;
+          }
+          return $res;
+        } catch (PDOException $e) {
+          echo $e->getMessage();
+        }
+    }
+    public function data_kel_tani($id_kel_tani){
+        try {
+          $stmt = $this->conn->prepare("SELECT * from kel_tani where id_kel_tani=?");
+          $stmt->execute(array($id_kel_tani));
+          $res = $stmt->fetch(PDO::FETCH_OBJ);
+          return $res;
+        } catch (PDOException $e) {
+          echo $e->getMessage();
+        }
+    }
     public function nama_desa($id_desa){
         try {
           $stmt = $this->conn->prepare("SELECT * from t4t_desa where id_desa=?");
@@ -98,6 +132,36 @@
         try {
           $stmt = $this->conn->prepare("SELECT count(*) as count from t4t_lahan where id_desa=?");
           $stmt->execute(array($id_desa));
+          $res = $stmt->fetch(PDO::FETCH_OBJ);
+          return $res;
+        } catch (PDOException $e) {
+          echo $e->getMessage();
+        }
+    }
+    public function jml_kel_tani($id_desa){
+        try {
+          $stmt = $this->conn->prepare("SELECT count(distinct(id_kel_tani)) as count from anggota_kel_tani where id_desa=?");
+          $stmt->execute(array($id_desa));
+          $res = $stmt->fetch(PDO::FETCH_OBJ);
+          return $res;
+        } catch (PDOException $e) {
+          echo $e->getMessage();
+        }
+    }
+    public function jml_agg_kel_tani($id_desa,$id_kel_tani){
+        try {
+          $stmt = $this->conn->prepare("SELECT count(*) as count from anggota_kel_tani where id_desa=? and id_kel_tani=? group by id_kel_tani");
+          $stmt->execute(array($id_desa,$id_kel_tani));
+          $res = $stmt->fetch(PDO::FETCH_OBJ);
+          return $res;
+        } catch (PDOException $e) {
+          echo $e->getMessage();
+        }
+    }
+    public function jml_agg_lahan($id_desa,$id_kel_tani){
+        try {
+          $stmt = $this->conn->prepare("SELECT count(*) as count from t4t_lahan where id_desa=? and kd_petani=?");
+          $stmt->execute(array($id_desa,$id_kel_tani));
           $res = $stmt->fetch(PDO::FETCH_OBJ);
           return $res;
         } catch (PDOException $e) {
@@ -258,9 +322,55 @@
           echo $e->getMessage();
         }
     }
+    public function nama_silvi($id_lahan){
+        try {
+          $stmt = $this->conn->prepare("SELECT * from t4t_typelahan where id_lahan=? ");
+          $stmt->execute(array($id_lahan));
+          $res = $stmt->fetch(PDO::FETCH_OBJ);
+          return $res;
+        } catch (PDOException $e) {
+          echo $e->getMessage();
+        }
+    }
+    public function list_lahan_anggota($id_desa,$kd_petani){
+        try {
+          $stmt = $this->conn->prepare("SELECT * from t4t_lahan where id_desa=? and kd_petani=?");
+          $stmt->execute(array($id_desa,$kd_petani));
+          while ($data= $stmt->fetch(PDO::FETCH_OBJ)) {
+            $res[] =$data;
+          }
+          return $res;
+        } catch (PDOException $e) {
+          echo $e->getMessage();
+        }
+    }
+    // public function list_lahan_anggota_tegakan($id_desa,$kd_petani){
+    //     try {
+    //       $stmt = $this->conn->prepare("SELECT * from t4t_lahan where id_desa=? and kd_petani=?");
+    //       $stmt->execute(array($id_desa,$kd_petani));
+    //       while ($data= $stmt->fetch(PDO::FETCH_OBJ)) {
+    //         $res[] =$data;
+    //       }
+    //       return $res;
+    //     } catch (PDOException $e) {
+    //       echo $e->getMessage();
+    //     }
+    // }
     public function t4t_petani($id_desa,$kd_petani){
         try {
-          $stmt = $this->conn->prepare("SELECT * from t4t_petani where id_desa=? and kd_petani=? ");
+          $stmt = $this->conn->prepare("SELECT a.no,a.kd_petani,a.nm_petani,a.alamat,a.profesi,a.pdpTani,a.pdpDagang,a.pdpPegawai,a.pdpKebun,a.pdpLain,a.motif,a.persepsi,
+a.budaya,a.id_desa,a.digawe,a.no_ktp,b.j_kel,b.tgl_lahir,b.foto from t4t_petani a left join t4t_petani_detail b on a.id_desa=b.id_desa
+where a.id_desa=? and a.kd_petani=?");
+          $stmt->execute(array($id_desa,$kd_petani));
+          $res = $stmt->fetch(PDO::FETCH_OBJ);
+          return $res;
+        } catch (PDOException $e) {
+          echo $e->getMessage();
+        }
+    }
+    public function t4t_petani_detail($id_desa,$kd_petani){
+        try {
+          $stmt = $this->conn->prepare("SELECT * from t4t_petani_detail where id_desa=? and kd_petani=? ");
           $stmt->execute(array($id_desa,$kd_petani));
           $res = $stmt->fetch(PDO::FETCH_OBJ);
           return $res;
@@ -296,16 +406,41 @@
 
 
     ##### ACTION #####
-    public function insert_partisipan($kd_petani,$nm_petani,$alamat,$profesi,$pdp_tani,$pdp_dagang,$pdp_pegawai,$pdp_kebun,$pdp_lain,$persepsi,$ktp,$id_desa){
+    public function insert_partisipan($kd_petani,$nm_petani,$alamat,$profesi,$pdp_tani,$pdp_dagang,$pdp_pegawai,$pdp_kebun,$pdp_lain,$persepsi,$ktp,$id_desa,$tujuan){
         try {
-          $wkt_buat = date("Ymd H:i:s");
-          $stmt = $this->conn->prepare("INSERT into t4t_petani (kd_petani,nm_petani,alamat,profesi,pdpTani,pdpDagang,pdpPegawai,pdpKebun,pdpLain,persepsi,id_desa,digawe,no_ktp)
-          values ('$kd_petani','$nm_petani','$alamat','$profesi','$pdp_tani','$pdp_dagang','$pdp_pegawai','$pdp_kebun','$pdp_lain','$persepsi','$id_desa','$wkt_buat','$ktp') ");
+          echo $wkt_buat = date("Y-m-d H:i:s");
+          $stmt = $this->conn->prepare("INSERT into t4t_petani (kd_petani,nm_petani,alamat,profesi,pdpTani,pdpDagang,pdpPegawai,pdpKebun,pdpLain,persepsi,id_desa,digawe,no_ktp,motif)
+          values (?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
+          $stmt->execute(array($kd_petani,$nm_petani,$alamat,$profesi,$pdp_tani,$pdp_dagang,$pdp_pegawai,$pdp_kebun,$pdp_lain,$persepsi,$id_desa,$wkt_buat,$ktp,$tujuan));
           return $res;
         } catch (PDOException $e) {
           echo $e->getMessage();
         }
     }
+
+    public function insert_data_rencana_tanam($kd_fc,$kd_mu,$kd_ta,$id_desa,$no_lahan,$kd_petani,$no_gps,$no_doc,$status_lahan,$id_lahan,$luas_lahan,$id_pohon,$tutup_lahan,$jml_usulan,$kd_lahan){
+        try {
+          echo $tahun_tanam = date("Y");
+          $stmt = $this->conn->prepare("INSERT into t4t_lahan (kd_fc,kd_mu,kd_ta,id_desa,no_lahan,kd_petani,noGPS,no_dok,status_lahan,id_lahan,luas_lahan,id_pohon,tutup_lahan,jml_usulan,thn_tanam,kd_lahan)
+          values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
+          $stmt->execute(array($kd_fc,$kd_mu,$kd_ta,$id_desa,$no_lahan,$kd_petani,$no_gps,$no_doc,$status_lahan,$id_lahan,$luas_lahan,$id_pohon,$tutup_lahan,$jml_usulan,$tahun_tanam,$kd_lahan));
+          return $res;
+        } catch (PDOException $e) {
+          echo $e->getMessage();
+        }
+    }
+
+    public function insert_petani_detail($id_desa,$kd_petani,$foto,$j_kel,$tgl_lahir){
+      try {
+        $stmt = $this->conn->prepare("INSERT into t4t_petani_detail (id_desa,kd_petani,foto,j_kel,tgl_lahir)
+        values (?,?,?,?,?) ");
+        $stmt->execute(array($id_desa,$kd_petani,$foto,$j_kel,$tgl_lahir));
+        return $res;
+      } catch (PDOException $e) {
+        echo $e->getMessage();
+      }
+    }
+
 
   }//END CLASS
 

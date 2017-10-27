@@ -114,7 +114,7 @@ unset($_SESSION['message']);
                                                 <select class="form-control" name="member" required>
                                                   <option value="null"> - Choose -</option>
                                                <?php
-                                               $nama = $conn->query("select id,nama from t4t_partisipan order by nama");
+                                               $nama = $conn->query("select id,name from t4t_participant order by name");
                                                while ($data_nama=$nama->fetch()) {
                                                ?>
                                                   <option value="<?php echo $data_nama[0] ?>"><?php echo $data_nama[1] ?></option>

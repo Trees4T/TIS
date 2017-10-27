@@ -90,7 +90,7 @@ $actual_link  = $actual_link1[1];
                         $shipment=$conn->query("select * from t4t_shipment where acc=0");
                         while ($load_shipment=$shipment->fetch()) {
                               $kode        = $load_shipment['id_comp'];
-                              $participant = $conn->query("SELECT nama from t4t_partisipan where id='$kode'")->fetch();
+                              $participant = $conn->query("SELECT name from t4t_participant where id='$kode'")->fetch();
                         ?>
                                     <tr>
                                         <td align="center"><?php echo $load_shipment['wkt_shipment'] ?></td>

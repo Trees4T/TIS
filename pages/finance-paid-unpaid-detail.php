@@ -1,6 +1,6 @@
 <?php
 $kode=$id_member;
-$nama_member=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
+$nama_member=$conn->query("select name from t4t_participant where id='$kode'")->fetch();
 
 $actual_link0 = "$_SERVER[REQUEST_URI]";
 $actual_link1 = explode("?", $actual_link0);

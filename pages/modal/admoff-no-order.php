@@ -45,7 +45,7 @@
             <div class="col-md-8 font-hijau">
               <?php
 
-              $comp_name=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
+              $comp_name=$conn->query("select name from t4t_participant where id='$kode'")->fetch();
               echo $comp_name[0];
               ?>
               <input type="hidden" name="comp" value="<?php echo $comp_name[0]; ?>" >
@@ -191,7 +191,7 @@
             </div>
 
             <?php
-               $pic_name=$conn->query("select pic from t4t_partisipan where id='$kode'")->fetch();
+               $pic_name=$conn->query("select pic from t4t_participant where id='$kode'")->fetch();
                if ($pic_name[0]=="") {
 
                }else{

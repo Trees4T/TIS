@@ -1,6 +1,6 @@
 <?php
 $kode=$id_member;
-$nama_member=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
+$nama_member=$office->data_member($kode);
 
 $actual_link0 = "$_SERVER[REQUEST_URI]";
 $actual_link1 = explode("?", $actual_link0);
@@ -20,7 +20,7 @@ $actual_link  = $actual_link1[1];
           </div>
     <div class="x_panel">
         <div class="x_title">
-            <h2><i class="fa fa-folder-open"></i> Order List <small><a href="?<?php echo paramEncrypt('hal=admoff-order-list-2&id_member='.$kode.'') ?>"><?php echo $nama_member[0] ?> </a></small>
+            <h2><i class="fa fa-folder-open"></i> Order List <small><a href="?<?php echo paramEncrypt('hal=admoff-order-list-2&id_member='.$kode.'') ?>"><?php echo $nama_member->nama ?> </a></small>
                 <span class='badge bg-green'><font color='white'> <?php echo $pil_th ?></font></span>
             </h2>
 
@@ -70,7 +70,7 @@ $actual_link  = $actual_link1[1];
         ?>
 
                         <div class="panel-body">
-                            <table class="table table-striped responsive-utilities jambo_table" border="1" id="order_list<?php echo $load_tahun['th'] ?>">
+                            <table class="table table-striped responsive-utilities jambo_table" border="1" id="order_list<?php echo $pil_th ?>">
                                 <thead>
                                     <tr>
                                         <th><center>Order Date<center></th>
@@ -84,7 +84,7 @@ $actual_link  = $actual_link1[1];
 
                                 <tbody>
                         <?php
-                        $th=$load_tahun['th'];
+                        $th=$pil_th;
 
                         $order=$conn->query("select no, wkt_order, no_order, jml_wins, acc, tipe_prod, wins1, wins2, kota_tujuan from t4t_order where wkt_order like '%$th%' and id_comp='$kode'");
                         while ($load_order=$order->fetch()) {
@@ -129,10 +129,15 @@ $actual_link  = $actual_link1[1];
                                     </tr>
 
  <?php
+ if ($_SESSION['level']=='admoff') {
+   include 'modal/admoff-win-range.php';
+   include 'modal/admoff-order-acc-0.php';
+   include 'modal/admoff-order-acc-1.php';
+ }elseif ($_SESSION['level']=='mkt') {
+   # code...
+ }
  include 'modal/admoff-no-order.php';
- include 'modal/admoff-win-range.php';
- include 'modal/admoff-order-acc-0.php';
- include 'modal/admoff-order-acc-1.php';
+
  ?>
 
  <script>
@@ -156,7 +161,7 @@ $actual_link  = $actual_link1[1];
 
                              <script>
                               $(function() {
-                                  $('#order_list<?php echo $load_tahun['th'] ?>').DataTable( {
+                                  $('#order_list<?php echo $pil_th ?>').DataTable( {
                                             // "bJQueryUI":true,
                                           "bPaginate":true,
                                           "sPaginationType": "full_numbers",

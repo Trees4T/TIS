@@ -1,13 +1,14 @@
-<?php  
+<?php
 // memulai session
 session_start();
 error_reporting(0);
 include '../koneksi/koneksi.php';
+
 if (isset($_SESSION['level']))
 {
-	// 
+	//
 	if ($_SESSION['level'] == "admoff")
-   {   
+   {
    }
 
    // jika kondisi level user maka akan diarahkan ke halaman lain

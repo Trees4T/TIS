@@ -5,9 +5,9 @@ error_reporting(0);
 include '../koneksi/koneksi.php';
 if (isset($_SESSION['level']))
 {
-	// 
+	//
 	if ($_SESSION['level'] == "fin")
-   {   
+   {
    }
 
    // jika kondisi level user maka akan diarahkan ke halaman lain

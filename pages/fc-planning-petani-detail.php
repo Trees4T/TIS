@@ -37,7 +37,18 @@ $nama_mu        = $fc->nama_mu($kode_kabupaten,$kode_provinsi);
                     <font size="">
                     <div class="col-sm-2">
                     <div class="avatar-view-input-petani" title="">
+                      <?php
+                      if ($data->foto!="") {
+                      ?>
+                      <img src="../../management_t4t/gbr/poto/<?php echo $data->foto ?>" alt="Avatar" width="100%">
+                      <?php
+                      }else{
+                      ?>
                       <img src="../images/default.png" alt="Avatar" width="100%">
+                      <?php
+                      }
+                      ?>
+
                     </div>
                     <input type="file">
                     </div>
@@ -91,6 +102,9 @@ $nama_mu        = $fc->nama_mu($kode_kabupaten,$kode_provinsi);
                     <!-- kelompok tani -->
                     <?php
                     $kel_tani=$conn->query("SELECT * from anggota_kel_tani where kd_petani='$kd_petani' and id_desa='$id_desa' ")->fetch(PDO::FETCH_OBJ);
+
+                    $id_kel_tani = $kel_tani->id_kel_tani;
+                    $nama_kel_tani=$conn->query("SELECT * from kel_tani where id_kel_tani='$id_kel_tani' ")->fetch(PDO::FETCH_OBJ);
                      ?>
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kelompok Tani <span class="required red">*</span>
@@ -98,10 +112,10 @@ $nama_mu        = $fc->nama_mu($kode_kabupaten,$kode_provinsi);
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control" name="kelompok_tani">
                           <option><?php
-                                  if ($kel_tani->nama_kel_tani=='') {
+                                  if ($nama_kel_tani->nama_kel_tani=='') {
                                     echo "- Kelompok Tani -";
                                   }else{
-                                  echo $kel_tani->nama_kel_tani; }
+                                  echo $nama_kel_tani->nama_kel_tani; }
                                   ?>
                           </option>
 

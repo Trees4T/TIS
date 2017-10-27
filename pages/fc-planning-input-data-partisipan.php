@@ -32,7 +32,7 @@ $kode_ta;
           </div>
           <div class="x_content">
             <br />
-            <form class="form-horizontal form-label-left" action="" method="post" id="autoForm">
+            <form class="form-horizontal form-label-left" action="" method="post" id="autoForm" enctype='multipart/form-data'>
               <font size="">
               <div class="col-sm-2">
 
@@ -90,7 +90,7 @@ $kode_ta;
                  <label class="control-label">
                   <?php
                     $no_part = $fc->no_part($_desa);
-                    echo $no_part->no+1;
+                    echo $_nopart = $no_part->no+1;
                   ?>
                   </label>
                 </div>
@@ -103,8 +103,12 @@ $kode_ta;
               <?php
               if ($_desa) {
               ?>
-              <form action="../action/fc.php" method="post">
+              <form action="../action/fc.php" method="post" enctype="multipart/form-data">
                 <!-- nama partisipan -->
+
+                <input type="hidden" name="id_desa" value="<?php echo $_desa ?>">
+                <input type="hidden" name="no_part" value="<?php echo $_nopart ?>">
+
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama Partisipan <span class="required red">*</span>
                   </label>
@@ -171,7 +175,7 @@ $kode_ta;
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Jenis Kelamin <span class="required red">*</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <select class="form-control" name="jenis_kel" readonly="">
+                    <select class="form-control" name="jenis_kel">
                       <option><?php
                               if ($jenis_kel=='') {
                                 echo "- Pilih Jenis Kelamin -";
@@ -179,8 +183,8 @@ $kode_ta;
                               echo $jenis_kel; }
                               ?>
                       </option>
-                      <option>Laki-laki</option>
-                      <option>Perempuan</option>
+                      <option value="L">Laki-laki</option>
+                      <option value="P">Perempuan</option>
                     </select>
 
                   </div>
@@ -190,7 +194,7 @@ $kode_ta;
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Umur <span class="required red">*</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" name="umur" required="required" class="form-control col-md-7 col-xs-12" readonly="">
+                    <input type="text" name="tgl_lahir" required="required" class="form-control col-md-7 col-xs-12" readonly="">
                   </div>
                 </div>
                 <!-- profesi -->
@@ -220,8 +224,12 @@ $kode_ta;
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tujuan Menanam Pohon <span class="required red">*</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <select class="form-control" name="tujuan" readonly="">
-                      <option></option>
+                    <select class="form-control" name="tujuan">
+                      <option>- Pilih Tujuan -</option>
+                      <option value="Ekonomi">Ekonomi</option>
+                      <option value="Lingkungan">Lingkungan</option>
+                      <option value="Pendukung">Pendukung</option>
+                      <option value="Lainnya">Lainnya</option>
                     </select>
                   </div>
                 </div>
@@ -244,7 +252,7 @@ $kode_ta;
                     <label class="control-label">1. Petanian</label>
                     </div>
                     <div class="col-md-8">
-                    <input type="text" name="pdp_tani" id="angka11" data-affixes-stay="true" data-prefix="Rp. " data-thousands="." data-decimal="," required="required" class="form-control col-md-3" value="<?php echo $pendapatan1 ?>"/>
+                    <input type="text" name="pdp_tani" id="angka11" data-affixes-stay="true" data-prefix="Rp. " data-thousands="." data-decimal="," class="form-control col-md-3" value="<?php echo $pendapatan1 ?>"/>
                     </div>
                     <br>
 
@@ -252,7 +260,7 @@ $kode_ta;
                     <label class="control-label">2. Perdagangan</label>
                     </div>
                     <div class="col-md-8">
-                    <input type="text" name="pdp_dagang" id="angka12" data-affixes-stay="true" data-prefix="Rp. " data-thousands="." data-decimal="," required="required" class="form-control col-md-3" value="<?php echo $pendapatan2 ?>"/>
+                    <input type="text" name="pdp_dagang" id="angka12" data-affixes-stay="true" data-prefix="Rp. " data-thousands="." data-decimal="," class="form-control col-md-3" value="<?php echo $pendapatan2 ?>"/>
                     </div>
                     <br>
 
@@ -260,7 +268,7 @@ $kode_ta;
                     <label class="control-label">3. Pegawai</label>
                     </div>
                     <div class="col-md-8">
-                    <input type="text" name="pdp_pegawai" id="angka13" data-affixes-stay="true" data-prefix="Rp. " data-thousands="." data-decimal="," required="required" class="form-control col-md-3" value="<?php echo $pendapatan3 ?>"/>
+                    <input type="text" name="pdp_pegawai" id="angka13" data-affixes-stay="true" data-prefix="Rp. " data-thousands="." data-decimal="," class="form-control col-md-3" value="<?php echo $pendapatan3 ?>"/>
                     </div>
                     <br>
 
@@ -268,7 +276,7 @@ $kode_ta;
                     <label class="control-label"> 4. Perkebunan</label>
                     </div>
                     <div class="col-md-8">
-                  <input type="text" name="pdp_kebun" id="angka14" data-affixes-stay="true" data-prefix="Rp. " data-thousands="." data-decimal="," required="required" class="form-control col-md-3" value="<?php echo $pendapatan4 ?>"/>
+                  <input type="text" name="pdp_kebun" id="angka14" data-affixes-stay="true" data-prefix="Rp. " data-thousands="." data-decimal="," class="form-control col-md-3" value="<?php echo $pendapatan4 ?>"/>
                     </div>
                     <br>
 
@@ -276,7 +284,7 @@ $kode_ta;
                     <label class="control-label">5. Lainnya</label>
                     </div>
                     <div class="col-md-8">
-                    <input type="text" name="pdp_lain" id="angka15" data-affixes-stay="true" data-prefix="Rp. " data-thousands="." data-decimal="," required="required" class="form-control col-md-3" value="<?php echo $pendapatan5 ?>"/>
+                    <input type="text" name="pdp_lain" id="angka15" data-affixes-stay="true" data-prefix="Rp. " data-thousands="." data-decimal="," class="form-control col-md-3" value="<?php echo $pendapatan5 ?>"/>
                     </div>
 
                   </div>
@@ -294,7 +302,7 @@ $kode_ta;
                   <label class="control-label col-md-3 col-sm-3 col-xs-12">Foto <span class="required"></span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="file" class="form-control" readonly="">
+                    <input type="file" class="form-control" name="files">
                   </div>
                 </div>
 

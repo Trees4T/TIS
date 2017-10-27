@@ -4,7 +4,7 @@
         <li><a href="?<?php echo paramEncrypt('hal=fc-planning-lihat-data-partisipan')?>">Data Partisipan</a></li>
         <li><a href="?<?php echo paramEncrypt('hal=fc-planning-lihat-rencana-tanam')?>">Data Rencana Tanam</a></li>
         <li><a href="?<?php echo paramEncrypt('hal=fc-planning-data-lahan-input') ?>">Data Lahan</a>
-        <li><a href="?<?php echo paramEncrypt('hal=')?>">Data Anggota</a></li>
+        <li><a href="?<?php echo paramEncrypt('hal=fc-planning-lihat-data-anggota')?>">Data Anggota</a></li>
         </li>
     </ul>
 </li>

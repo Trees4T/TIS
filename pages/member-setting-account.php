@@ -1,7 +1,10 @@
 <?php
 $kode=$_SESSION['kode'];
 
-$data=$conn->query("select id, nama, alamat, tlp, fax, email, direktur, pic, prod_utama, bhn_utama,email2, email3, website from t4t_partisipan where id='$kode'")->fetch();
+$data=$conn->query("SELECT no,id,type as tipe,name as nama,address as alamat,phone as tlp,fax,director as direktur,pic,
+                                      product as prod_utama,outlet_qty as jml_outlet,material as bhn_utama, janjian,date_join as wkt_isi,email,
+                                      email1 as email2,email2 as email3,website,introduction,header
+                                      FROM t4t_participant where id='$kode'")->fetch();
 
 ?>
 <div class="">

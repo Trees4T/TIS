@@ -1,13 +1,13 @@
 <!-- Modal acc0 -->
   <div class="modal fade" id="acc0<?php echo $load_order['no'] ?>" role="dialog">
     <div class="modal-dialog ">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">
-          <?php  
+          <?php
           if ($load_order['acc']==1) {
           ?>
             <div class="font-hijau">
@@ -19,9 +19,9 @@
             <div class="font-kuning">
                <i class="fa fa-circle-o "> </i> Pending
             </div>
-          <?php 
+          <?php
           } ?>
-            
+
 
           </h4>
         </div>
@@ -31,7 +31,7 @@
           <label class="control-label col-md-4">Order No.
           </label>
           <div class="col-md-8 font-hijau">
-            <?php 
+            <?php
             echo $load_order['no_order'];
              ?>
              <input type="hidden" name="no_order" value="<?php echo $load_order['no_order']; ?>" >
@@ -43,9 +43,9 @@
           <label class="control-label col-md-4 ">Company Name
           </label>
           <div class="col-md-8 font-hijau">
-            <?php 
-           
-            $comp_name=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
+            <?php
+
+            $comp_name=$conn->query("select name from t4t_participant where id='$kode'")->fetch();
             echo $comp_name[0];
             ?>
           </div>
@@ -53,8 +53,8 @@
         <br><br>
 
 
-          
-          
+
+
         </div>
         <div class="modal-footer">
           <form method="post" action="../action/admoff-order.php">
@@ -72,10 +72,10 @@
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
           </form>
         <br>
-          
+
         </div>
       </div>
-      
+
     </div>
   </div>
   <!-- end modal acc0 -->

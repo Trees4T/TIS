@@ -16,9 +16,23 @@
               <div class="x_panel">
                 <div class="x_title">
                   <h2><i class="fa fa-plus-circle"></i> New Order </h2>
-                  <ul class="nav navbar-right panel_toolbox"><b>
-                    <a href="?<?php echo paramEncrypt('hal=member-order-list')?>" data-toggle="tooltip" data-placement="left" title="Go to order lists"><i class="fa fa-eye"></i> Go to Order Lists</a></b>
-                  </ul>
+
+          <!-- ##### CONDITION #####   -->
+           <?php if ($_SESSION['level'] == "mkt"): ?>
+
+            <ul class="nav navbar-right panel_toolbox"><b>
+              <a href="?<?php echo paramEncrypt('hal=admoff-order-list')?>" data-toggle="tooltip" data-placement="left" title="Go to order lists"><i class="fa fa-eye"></i> Go to Order Lists</a></b>
+            </ul>
+
+          <?php else: ?>
+
+            <ul class="nav navbar-right panel_toolbox"><b>
+              <a href="?<?php echo paramEncrypt('hal=member-order-list')?>" data-toggle="tooltip" data-placement="left" title="Go to order lists"><i class="fa fa-eye"></i> Go to Order Lists</a></b>
+            </ul>
+
+          <?php endif; ?>
+          <!-- ##### CONDITION #####   -->
+
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -53,9 +67,9 @@
                         $bln=date("m");
                         $thn=date("Y");
 
-                        $order_no=$conn->query("select no_order from t4t_order where no_order like '%T4T-E/$bln/$thn%' ORDER BY no desc limit 1")->fetch();
+                        $order_no=$office->cek_no_order($bln,$thn);
 
-                        $ex_order=explode("/", $order_no[0]);
+                        $ex_order=explode("/", $order_no->no_order);
                         $gen_order=$ex_order[0]+1;
 
                          ?>
@@ -67,14 +81,44 @@
                     <div class="form-group">
                       <label class="control-label col-md-5 " for="first-name">Company Name <span class="required"></span>
                       </label>
-                      <div class="col-md-4 font-hijau">
-                        <?php
-                        $kode=$_SESSION['kode'];
-                        $comp_name=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
-                        ?>
-                        <label class="control-label"><?php echo $comp_name[0]; ?></label>
-                        <input type="hidden" name="comp" value="<?php echo $comp_name[0]; ?>" >
-                      </div>
+
+                      <!-- ##### CONDITION #####   -->
+                      <?php if ($_SESSION['level']=="part"): ?>
+
+                        <div class="col-md-4 font-hijau">
+                          <?php
+                          $kode=$_SESSION['kode'];
+                          $comp_name=$office->data_member($kode); //t4t_partisipan
+                          ?>
+                          <label class="control-label"><?php echo $comp_name->name; ?></label>
+                          <input type="hidden" name="comp" value="<?php echo $comp_name->name; ?>" >
+                        </div>
+
+                      <?php elseif($_SESSION['level']=="mkt"): ?>
+
+                        <div class="col-md-4">
+                          <select class="form-control" name="comp">
+                            <option value="">- Choose -</option>
+                            <?php
+                            $list_comp = $office->data_member_list();//t4t_partisipan
+                            ?>
+
+                            <?php
+                            foreach ($list_comp as $nama_comp) {
+                            ?>
+                            <option value="<?php echo $nama_comp->id?>"><?php echo $nama_comp->name ?></option>
+                            <?php
+                            }
+                            ?>
+
+                          </select>
+                        </div>
+
+                      <?php endif; ?>
+                      <!-- ##### CONDITION #####   -->
+
+
+
                     </div>
 
                     <div class="col-md-2"></div>
@@ -130,12 +174,12 @@
                       <div class="col-md-4">
                         <ul class="to_do">
                         <?php
-                        $wood=$conn->query("select * from t4t_pohonen");
-                        while ($data_pohon=$wood->fetch()) {
+                        $wood=$office->pohon_list();
+                        foreach ($wood as $data_pohon) {
 
                          ?>
                             <li>
-                                <p><input type="checkbox" class="flat" name="item[]" value="<?php echo $data_pohon[0] ?>"> <?php echo $data_pohon[1] ?> </p>
+                                <p><input type="checkbox" class="flat" name="item[]" value="<?php echo $data_pohon->id_pohon ?>"> <?php echo $data_pohon->nama_pohon ?> </p>
                             </li>
                         <?php
                         }
@@ -164,14 +208,14 @@
                           </thead>
                           <tbody>
                           <?php
-                          $other=$conn->query("select * from t4t_req");
-                          while ($data_other=$other->fetch()) {
+                          $other=$office->req_list();
 
+                          foreach ($other as $data_other) {
                            ?>
                             <tr>
-                              <td><?php echo $data_other[1] ?></td>
+                              <td><?php echo $data_other->item ?></td>
                               <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                              <td width="80px"><input type="number" class="form-control" name="req<?php echo $data_other[0] ?>" min="0"></td>
+                              <td width="80px"><input type="number" class="form-control" name="req<?php echo $data_other->no ?>" min="0"></td>
                             </tr>
                           <?php
                            }
@@ -181,17 +225,17 @@
                       </div>
                     </div>
 
-                    <!-- <div class="form-group">
+                    <div class="form-group">
                       <label class="control-label col-md-5" for="first-name">Destination City <span class="required"></span>
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control col-md-7 col-xs-12" name="destination" >
                       </div>
-                    </div> -->
+                    </div>
 
                     <?php
-                      $pic_name=$conn->query("select pic from t4t_partisipan where id='$kode'")->fetch();
-                       if ($pic_name[0]=="") {
+                      $pic_name=$office->data_member($kode);  //t4t_partisipan
+                       if ($pic_name->pic=="") {
                          #none
                        }else{
                        ?>
@@ -201,10 +245,10 @@
                       <div class="col-md-4 font-hijau">
 
                       <label class="control-label">
-                        <?php echo $pic_name[0] ?>
+                        <?php echo $pic_name->pic ?>
                       </label>
 
-                         <input type="hidden" name="pic" value="<?php echo $pic_name[0]; ?>">
+                         <input type="hidden" name="pic" value="<?php echo $pic_name->pic; ?>">
                       </div>
                     </div>
                     <?php

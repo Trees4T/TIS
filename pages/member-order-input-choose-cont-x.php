@@ -6,7 +6,7 @@
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="x_content">
                   <br />
-                  <?php 
+                  <?php
                   if ($_SESSION['success']==1) {
                     ?>
                 <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -36,19 +36,19 @@
 
                   unset($_SESSION['success']);
                    ?>
-                  
+
                   <center><h2><strong>SHIPMENT VALIDATION APPLICATION FORM</strong></h2></center>
                   <div class="ln_solid"></div>
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="?<?php echo paramEncrypt('hal=member-order-input')?>">
                     <font size="">
-                   
+
 
                     <div class="col-sm-12">
                     <div class="form-group">
                       <label class="control-label col-md-5" for="first-name">Order No.
                       </label>
                       <div class="col-md-4 font-hijau">
-                        <?php 
+                        <?php
                         date_default_timezone_set('Asia/Jakarta');
                         $bln=date("m");
                         $thn=date("Y");
@@ -67,9 +67,9 @@
                       <label class="control-label col-md-5 " for="first-name">Company Name <span class="required"></span>
                       </label>
                       <div class="col-md-4 font-hijau">
-                        <?php 
+                        <?php
                         $kode=$_SESSION['kode'];
-                        $comp_name=mysql_fetch_array(mysql_query("select nama from t4t_partisipan where id='$kode'"));
+                        $comp_name=mysql_fetch_array(mysql_query("select name from t4t_participant where id='$kode'"));
                         echo $comp_name[0];
                         ?>
                         <input type="hidden" name="comp" value="<?php echo $comp_name[0]; ?>" >
@@ -87,11 +87,11 @@
                           <option value="2">Non Container</option>
 
                         </select>
-                        
+
                       </div>
                     </div>
-                    
-  
+
+
 
                     <div class="ln_solid"></div>
                     <div class="form-group">
@@ -110,7 +110,7 @@
           </div>
 
           <?php
-          include '../js/riojs.php'; 
+          include '../js/riojs.php';
          // include '../layout/js.php';
 
            ?>
@@ -520,7 +520,7 @@
         });
     </script>
     <!-- /knob -->
-    
+
 
 </body>
 

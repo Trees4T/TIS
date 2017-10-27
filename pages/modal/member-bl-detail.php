@@ -73,7 +73,7 @@
           <div class="col-md-8 font-hijau">
             <?php
 
-            $company=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
+            $company=$conn->query("select name from t4t_participant where id='$kode'")->fetch();
             echo $company[0];
              ?>
               <input type="hidden" name="id_comp" value="<?php echo $kode; ?>" >
@@ -115,7 +115,7 @@
         </div>
 
         <?php
-            $pic_name=$conn->query("select pic from t4t_partisipan where id='$kode'")->fetch();
+            $pic_name=$conn->query("select pic from t4t_participant where id='$kode'")->fetch();
              if ($pic_name[0]=="") {
 
              }else{
@@ -146,32 +146,7 @@
 
           </div>
         </div>
-<?php
-$no_id=$conn->query("select no from t4t_partisipan where id='$kode'")->fetch();
-$kode_buyer=$load_shipment['buyer'];
-$cek_customer=$conn->query("select kode_retailer,retailer_name from t4t_retailer where id_partisipan='$no_id[0]' and kode_retailer='$kode_buyer'")->fetch();
-//echo mysql_error();
-if ($cek_customer==true) {
 
-?>
-        <div class="form-group col-sm-12">
-          <label class="control-label col-md-4" for="first-name">Customer Code <span class="required"></span>
-          </label>
-          <div class="col-md-8 font-hijau">
-            <?php if ($load_shipment['buyer']==true) {
-
-              echo $load_shipment['buyer']." - ";
-              echo $cek_customer[1];
-            }else{
-              echo "-";
-              } ?>
-
-          </div>
-        </div>
-
-<?php
-}
-?>
 
         <div class="form-group col-sm-12">
           <label class="control-label col-md-4" for="first-name">Bill of Lading copy attached <span class="required"></span>
@@ -188,23 +163,74 @@ if ($cek_customer==true) {
         </div>
 
 
+        <?php
+        if ($_SESSION['level']=="part") {
+          $cek_customer=$office->cek_relation($kode); //t4t_retailer
+        }
 
 
+        if ($cek_customer->repeat_id == true) {
+        ?>
+
+                    <div class="form-group col-md-12">
+                      <label class="control-label col-md-4" for="first-name">Customer Code <span class="required"></span>
+                      </label>
+                      <div class="col-md-8">
+
+                          <?php
+                          $cek_buyer = $office->cek_ship_relation_buyer($load_shipment['no_shipment']);
+                          $nama_buyer= $office->nama_relation_buyer($kode,$cek_buyer->buyer);
+
+                          if ($cek_buyer->buyer==true): ?>
+                            <input type="text" class="form-control" value="<?php echo $cek_buyer->buyer; echo " (".$nama_buyer->name.")"; ?>" readonly>
+                            <?php else: ?>
+                              <input type="text" class="form-control" value="-" readonly>
+                          <?php endif; ?>
+
+                      </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                      <label class="control-label col-md-4" for="first-name">WIN Owner <span class="required"></span>
+                      </label>
+                      <div class="col-md-8">
+                        <?php
+                        if ($cek_buyer->relation==1): ?>
+                          <input type="text" class="form-control"  value="<?php echo $cek_buyer->buyer; echo " (".$nama_buyer->name.")"; ?>" readonly>
+                          <?php else: ?>
+                          <input type="text" class="form-control"  value="<?php $member=$office->data_member($kode); echo $member->name; ?> <i>(default)</i>" readonly>
+                        <?php endif; ?>
 
 
-<br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br>
-<br><br><br>
+                      </div>
+                    </div>
+
+        <?php
+        }
+        ?>
+
+
+<form class="" action="" method="post">
+
+</form>
 
 </div>
 <div class="modal-footer">
+
+
+
+<a href="?<?php echo paramEncrypt('hal=member-shipment-pending-edit&id_ship='.$load_shipment['no'].'&edit=1')?>" type="button" class="btn btn-warning">Update</a>
 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
 </div>
 </div>
 
 </div>
 </div>
 <!-- end modal -->
+
+<!-- <script type="text/javascript">
+ function form_submit() {
+   document.getElementById("form-special").submit();
+  }
+ </script> -->

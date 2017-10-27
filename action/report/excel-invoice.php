@@ -92,7 +92,10 @@ $bold = array(
 // $q_partisipan 	= "";
 // //$result 		= $mysqli->query($q_partisipan);
 
-$row = $conn->query("select * from t4t_partisipan where id='$id_member'")->fetch();
+$row = $conn->query("SELECT no,id,type as tipe,name as nama,address as alamat,phone as tlp,fax,director as direktur,pic,
+                                      product as prod_utama,outlet_qty as jml_outlet,material as bhn_utama, janjian,date_join as wkt_isi,email,
+                                      email1 as email2,email2 as email3,website,introduction,header
+                                      FROM t4t_participant where id='$id_member'")->fetch();
 
 $company_name 	= $row['nama'];
 $address 				= $row['alamat'];

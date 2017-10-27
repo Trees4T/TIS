@@ -16,7 +16,7 @@ $comp         =$_POST['comp'];
 $type         =$_POST['type'];
 $tags         =$_POST['tags'];
 
-$email_member =$conn->query("select email from t4t_partisipan where id='$id_member'")->fetch();
+$email_member =$conn->query("select email from t4t_participant where id='$id_member'")->fetch();
 
 date_default_timezone_set('Asia/Jakarta');
 $tahun=date("Y");

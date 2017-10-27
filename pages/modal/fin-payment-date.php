@@ -20,7 +20,7 @@
           <div class="col-md-8 font-hijau">
             <?php
             $kode=$load_shipment['id_comp'];
-            $comp_name=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
+            $comp_name=$conn->query("select name from t4t_participant where id='$kode'")->fetch();
             echo $comp_name[0];
             ?>
           </div>

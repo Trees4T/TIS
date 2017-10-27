@@ -9,10 +9,13 @@ date_default_timezone_set('Asia/Jakarta');
 if ($_POST['no_order']) {
 
 
+if ($_SESSION['level']=='part') {
+  $kode         = $_SESSION['kode'];
+}elseif ($_SESSION['level']=='mkt') {
+  $kode         = $_POST['comp'];
+}
 
-$kode         =$_SESSION['kode'];
 $no_order     =$_POST['no_order'];
-$company      =$_POST['comp'];
 $type_prod    =$_POST['type_prod'];
 $tags         =$_POST['tags'];
 $destination  =$_POST['destination'];
@@ -23,6 +26,7 @@ $last_wins    =$conn->query("SELECT FLOOR(wins) as win FROM t4t_wins where bl!='
 $last         =$last_wins[0];
 $wins1        =$last+1;
 $wins2        =$last+$tags;
+$company      =$conn->query("SELECT name from t4t_participant where id='$kode' ")->fetch();
 
 //INSERT t4t_order
 // # - no order - id comp - tipe prod - jml wins - kota tujuan - wkt order - # - # - wins1 - wins2 - quantity - #
@@ -163,7 +167,7 @@ $mail->Body    = '
                   <tr>
                     <td><b>Member</td>
                     <td>:</td>
-                    <td>'.$company.'</td>
+                    <td>'.$company[0].'</td>
                   </tr>
                   <tr class="active" >
                     <td><b>Porduct Type</td>
@@ -211,7 +215,12 @@ if(!$mail->send()) {
 ###############end mail############
 
 $_SESSION['success']=1;
-header("location:../dashboard/member.php?0a00deda25fea44b15316334aaed9df2b644f32672559d0c193973f519b0eaa6");
+if ($_SESSION['level']=='part') {
+  header("location:../dashboard/member.php?0a00deda25fea44b15316334aaed9df2b644f32672559d0c193973f519b0eaa6");
+}elseif ($_SESSION['level']=='mkt') {
+  header("location:../dashboard/marketing.php?0a00deda25fea44b15316334aaed9df2b644f32672559d0c193973f519b0eaa6");
+}
+
 
 
 }else{

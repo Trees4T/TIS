@@ -1,7 +1,7 @@
 <?php include '../koneksi/koneksi.php';
 session_start();
 $kode=$_SESSION['kode_member'];
-$nama_member=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
+$nama_member=$conn->query("select name from t4t_participant where id='$kode'")->fetch();
 
 $actual_link=$_SESSION['link'];
  ?>
@@ -188,12 +188,12 @@ $('#unpaid_list<?php echo $load_tahun['th'] ?>').DataTable( {
         <!-- start accordion -->
         <div class="accordion" id="accordion2" role="tablist" aria-multiselectable="true">
             <?php
-            $tahun2_cek=$conn->query("select substr(wkt_shipment,1,4) as th,bl_tgl,bl,kota_tujuan,fee,acc from t4t_shipment where id_comp='$kode' and acc_paid=1 and acc=1  group by th order by th desc");
+            $tahun2_cek=$conn->query("select substr(wkt_shipment,1,4) as th,bl_tgl,bl,kota_tujuan,fee,acc from t4t_shipment where id_comp='$kode' and acc_paid=1  group by th order by th desc");
 
             if ($cek3=$tahun2_cek->fetch()=="") {
                 echo "No result found.";
             }else{
-            $tahun2=$conn->query("select substr(wkt_shipment,1,4) as th,bl_tgl,bl,kota_tujuan,fee,acc from t4t_shipment where id_comp='$kode' and acc_paid=1 and acc=1  group by th order by th desc");
+            $tahun2=$conn->query("select substr(wkt_shipment,1,4) as th,bl_tgl,bl,kota_tujuan,fee,acc from t4t_shipment where id_comp='$kode' and acc_paid=1  group by th order by th desc");
             while ($load_tahun2=$tahun2->fetch()) {
 
             ?>
@@ -234,7 +234,7 @@ $('#unpaid_list<?php echo $load_tahun['th'] ?>').DataTable( {
                     <?php
                     $th=$load_tahun2['th'];
 
-                    $shipment=$conn->query("select * from t4t_shipment where wkt_shipment like '%$th%' and id_comp='$kode' and acc_paid=1 and acc=1 order by wkt_shipment desc");
+                    $shipment=$conn->query("select * from t4t_shipment where wkt_shipment like '%$th%' and id_comp='$kode' and acc_paid=1 order by wkt_shipment desc");
                     while ($load_shipment=$shipment->fetch()) {
 
 

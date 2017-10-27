@@ -29,7 +29,7 @@ if (isset($btn_save)) {
   }else{
 
 
-    $change=$conn->query("update otenuser set passwd='$new_password' where kode='$kode'");  
+    $change=$conn->query("update otenuser set passwd='$new_password' where kode='$kode'");
     $_SESSION['success']=1;
     header("location:../dashboard/$link");
     //header("location:../dashboard/member.php?6395214e8e018ee999140ed8f9a794dfd6f00c2062bf8aa477535c4ae459b986");

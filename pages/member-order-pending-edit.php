@@ -1,4 +1,4 @@
-<?php 
+<?php
 $id_order=$_SESSION['id_order'];
  ?>
 
@@ -10,7 +10,7 @@ $id_order=$_SESSION['id_order'];
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
@@ -27,7 +27,7 @@ $id_order=$_SESSION['id_order'];
                 </div>
                 <div class="x_content">
                   <br />
-                  <?php 
+                  <?php
                   if ($_SESSION['success']==1) {
                     ?>
                 <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -41,21 +41,21 @@ $id_order=$_SESSION['id_order'];
                   unset($_SESSION['success']);
                   unset($_SESSION['order']);
                    ?>
-                  
+
                   <center><h2><strong>ORDER HANG TAGS / WINS</strong></h2></center>
                   <div class="ln_solid"></div>
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="../action/member-order-edit.php">
                     <font size="">
-                   
+
 
                     <div class="col-sm-12">
                     <div class="form-group">
                       <label class="control-label col-md-5" for="first-name">Order No.
                       </label>
                       <div class="col-md-4 font-hijau">
-                        <?php 
+                        <?php
                         $data=$conn->query("select * from t4t_order where no='$id_order'")->fetch();
-                        
+
                          ?>
                          <label class="control-label"><?php echo $data['no_order']; ?></label>
                          <input type="hidden" name="no_order" value="<?php echo $data['no_order']; ?>" >
@@ -66,16 +66,16 @@ $id_order=$_SESSION['id_order'];
                       <label class="control-label col-md-5 " for="first-name">Company Name <span class="required"></span>
                       </label>
                       <div class="col-md-4 font-hijau">
-                        <?php 
+                        <?php
                         $kode=$_SESSION['kode'];
-                        $comp_name=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
-                       
+                        $comp_name=$conn->query("select name from t4t_participant where id='$kode'")->fetch();
+
                         ?>
                         <label class="control-label"><?php  echo $comp_name[0]; ?></label>
                         <input type="hidden" name="comp" value="<?php echo $comp_name[0]; ?>" >
                       </div>
                     </div>
-                  
+
                     <div class="col-md-2"></div>
                     <div class="form-group col-md-8" align="center">
                       <table id="table-container">
@@ -94,7 +94,7 @@ $id_order=$_SESSION['id_order'];
                         </tr>
                         </thead>
                         <tbody>
-                        <?php 
+                        <?php
                         $no_order=$data['no_order'];
                         $jml_cont=$conn->query("select count(no) from t4t_ordercontainer where no_order='$no_order'")->fetch();
                         $i=1;
@@ -104,13 +104,13 @@ $id_order=$_SESSION['id_order'];
 
                           $tgl_stuf=$load_cont['tgl_stuf'];
                           $ex_tgl=explode("-", $tgl_stuf);
-                          $tanggal_stf=$ex_tgl[2]."-".$ex_tgl[1]."-".$ex_tgl[0];  
+                          $tanggal_stf=$ex_tgl[2]."-".$ex_tgl[1]."-".$ex_tgl[0];
 
                           $container1=$conn->query("select jml from t4t_ordercontainer where no_cont=1 and no_order='$no_order' limit $ii,1")->fetch();
                           $container2=$conn->query("select jml from t4t_ordercontainer where no_cont=2 and no_order='$no_order' limit $ii,1")->fetch();
                           $container3=$conn->query("select jml from t4t_ordercontainer where no_cont=3 and no_order='$no_order' limit $ii,1")->fetch();
                           $container4=$conn->query("select jml from t4t_ordercontainer where no_cont=4 and no_order='$no_order' limit $ii,1")->fetch();
-                          $container5=$conn->query("select jml from t4t_ordercontainer where no_cont=5 and no_order='$no_order' limit $ii,1")->fetch();                 
+                          $container5=$conn->query("select jml from t4t_ordercontainer where no_cont=5 and no_order='$no_order' limit $ii,1")->fetch();
                          ?>
 <td><input type="" name="qty" value="QTY" class="form-control" readonly=""></td>
 <td><input type="number" name="n20<?php echo $i ?>" class="form-control" min="0" value="<?php echo $container1[0] ?>"></td>
@@ -120,28 +120,28 @@ $id_order=$_SESSION['id_order'];
 <td><input type="number" name="n601" class="form-control" min="0" value="<?php echo $container5[0] ?>"></td>
 <td><input type="text" name="tgl1" class="form-control" id="datepicker" required="" value="<?php echo $tanggal_stf ?>"></td>
 <td><!-- <a class="btn btn-danger" onclick="deleteRow1(this)" value="delete" id="delete1" data-toggle="" data-placement="right" title="Delete"><i class="fa fa-times"></i></a> --></td>
-                        
+
                         </tbody>
-                          <?php 
+                          <?php
                           $i++;
                          }
                            ?>
                       </table>
                       <div align="right">
-                     
+
                       <!-- <a class="btn btn-success" onclick="addField()"><i class="fa fa-plus"></i> Add</a> -->
                       <input type="hidden" id="forinput" name="forinput" value="1" >
-           
+
                       </div>
                     </div>
                     <div class="col-md-2"></div>
-                 
+
                     <div class="form-group">
                       <label class="control-label col-md-5" for="first-name">Type of Product <span class="required"></span>
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="type_prod" id="" value="<?php echo $data['tipe_prod'] ?>">
-                        
+
                       </div>
                     </div>
 
@@ -150,7 +150,7 @@ $id_order=$_SESSION['id_order'];
                       </label>
                       <div class="col-md-4">
                         <ul class="to_do">
-                        <?php 
+                        <?php
                         $wood=$conn->query("select * from t4t_pohonen");
 
                         while ($data_pohon=$wood->fetch()) {
@@ -158,20 +158,20 @@ $id_order=$_SESSION['id_order'];
                           $pohon=$conn->query("select a.id_pohon,b.no from t4t_pohonen a, t4t_orderphn b where a.id_pohon=b.no_phnen2 and no_order='$no_order' and a.id_pohon=$id_pohon")->fetch();
                          ?>
                             <li>
-                            <?php 
+                            <?php
                             if ($pohon[0]!="") {
                              ?>
-                             <p><input type="checkbox" class="flat" name="item[]" value="<?php echo $data_pohon[0] ?>" checked> <?php echo $data_pohon[1] ?> </p> 
+                             <p><input type="checkbox" class="flat" name="item[]" value="<?php echo $data_pohon[0] ?>" checked> <?php echo $data_pohon[1] ?> </p>
                              <?php
                             }else{
                              ?>
-                                <p><input type="checkbox" class="flat" name="item[]" value="<?php echo $data_pohon[0] ?>"> <?php echo $data_pohon[1] ?> </p> 
+                                <p><input type="checkbox" class="flat" name="item[]" value="<?php echo $data_pohon[0] ?>"> <?php echo $data_pohon[1] ?> </p>
                               <?php } ?>
                             </li>
                         <?php
 
                         }
-                         ?>    
+                         ?>
                         </ul>
                       </div>
                     </div>
@@ -196,10 +196,10 @@ $id_order=$_SESSION['id_order'];
                             <th>Qty</th>
                           </thead>
                           <tbody>
-                          <?php 
+                          <?php
                           $other=$conn->query("select * from t4t_req");
                           while ($data_other=$other->fetch()) {
-                            
+
                             $no_req=$data_other[0];
                             $request=$conn->query("select a.jml,b.no from t4t_orderrequest a, t4t_req b where a.no_req=b.no and a.no_order='$no_order' and a.no_req=$no_req ")->fetch();
                            ?>
@@ -208,7 +208,7 @@ $id_order=$_SESSION['id_order'];
                               <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                               <td width="80px"><input type="number" class="form-control" name="req<?php echo $data_other[0] ?>" min="0" value='<?php echo $request[0] ?>'></td>
                             </tr>
-                          <?php 
+                          <?php
                            }
                            ?>
                           </tbody>
@@ -224,8 +224,8 @@ $id_order=$_SESSION['id_order'];
                       </div>
                     </div> -->
 
-                    <?php 
-                      $pic_name=$conn->query("select pic from t4t_partisipan where id='$kode'")->fetch();
+                    <?php
+                      $pic_name=$conn->query("select pic from t4t_participant where id='$kode'")->fetch();
                        if ($pic_name[0]=="") {
                          #none
                        }else{
@@ -234,18 +234,18 @@ $id_order=$_SESSION['id_order'];
                       <label class="control-label col-md-5" for="first-name">PIC <span class="required"></span>
                       </label>
                       <div class="col-md-4 font-hijau">
-                      
+
                       <label class="control-label">
                         <?php echo $pic_name[0] ?>
                       </label>
-                        
+
                          <input type="hidden" name="pic" value="<?php echo $pic_name[0]; ?>">
                       </div>
                     </div>
-                    <?php 
+                    <?php
                         } ?>
-                    
-  
+
+
 
                     <div class="ln_solid"></div>
                     <div class="form-group">
@@ -259,14 +259,14 @@ $id_order=$_SESSION['id_order'];
                     </font>
                   </form>
 
-       
+
                 </div>
               </div>
             </div>
           </div>
 
           <?php
-          include '../js/riojs.php'; 
+          include '../js/riojs.php';
          // include '../layout/js.php';
 
            ?>
@@ -676,7 +676,7 @@ $id_order=$_SESSION['id_order'];
         });
     </script>
     <!-- /knob -->
-    
+
 
 </body>
 

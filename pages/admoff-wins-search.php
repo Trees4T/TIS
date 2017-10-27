@@ -151,7 +151,7 @@ unset($_SESSION['win']);
                                                 $order_2 = $conn->query("SELECT * from t4t_order where wins1 <= '$nomor_win' and wins2 >= '$nomor_win' or wins1='$nomor_win' and wins2='$nomor_win'");
                                                     while ($load_order=$order_2->fetch()) {
                                                       $id_part = $load_order['id_comp'];
-                                                      $nm_part = $conn->query("SELECT nama from t4t_partisipan where id='$id_part'")->fetch();
+                                                      $nm_part = $conn->query("SELECT name from t4t_participant where id='$id_part'")->fetch();
                                                      ?>
                                                         <label>Order No.</label>
                                                         <h3 class="green"><?php echo $load_order['no_order'] ?></h3>
@@ -213,7 +213,7 @@ unset($_SESSION['win']);
   $bl_ketemu    = $_SESSION['ketemu'];
   $shipment     = $conn->query("SELECT * from t4t_shipment where bl='$bl_ketemu'")->fetch();
     $id_comp = $shipment['id_comp'];
-  $nm_part_ship = $conn->query("SELECT nama from t4t_partisipan where id='$id_comp'")->fetch();
+  $nm_part_ship = $conn->query("SELECT name from t4t_participant where id='$id_comp'")->fetch();
 ?>
                           <!-- shipment -->
                                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -320,7 +320,7 @@ if (isset($jml_loop_order_search)) {
   $no_ship = $_SESSION['shipment'];
   $shipment     = $conn->query("SELECT * from t4t_shipment where no_shipment='$no_ship'")->fetch(PDO::FETCH_OBJ);
     $id_comp = $shipment->id_comp;
-  $nm_part_ship = $conn->query("SELECT nama from t4t_partisipan where id='$id_comp'")->fetch();
+  $nm_part_ship = $conn->query("SELECT name from t4t_participant where id='$id_comp'")->fetch();
 ?>
 <!-- shipment -->
           <div class="col-md-12 ">

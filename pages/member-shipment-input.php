@@ -1,292 +1,414 @@
-<?php
-
-?>
 <div class="">
+  <div class="page-title">
+    <div class="title_left">
+      <h3>Shipment <small></small></h3>
+    </div>
+    <div class="title_right">
+      <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
 
-          <div class="page-title">
-            <div class="title_left">
-              <h3>Shipment <small></small></h3>
-            </div>
-            <div class="title_right">
-              <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+      </div>
+    </div>
+  </div>
 
-              </div>
-            </div>
-          </div>
+  <div class="clearfix"></div>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h2><i class="fa fa-plus-circle"></i> New Shipment </h2>
+
+       <!-- ##### Link Shipment List #####   -->
+       <?php if ($_SESSION['level'] == "mkt"): ?>
+
+         <ul class="nav navbar-right panel_toolbox"><b>
+           <a href="?<?php echo paramEncrypt('hal=admoff-shipment-list')?>" data-toggle="tooltip" data-placement="left" title="Go to shipment list"><i class="fa fa-eye"></i> Go to Shipment Lists</a></b>
+         </ul>
+
+       <?php elseif($_SESSION['level'] == "part"): ?>
+
+         <ul class="nav navbar-right panel_toolbox"><b>
+           <a href="?<?php echo paramEncrypt('hal=member-shipment-list')?>" data-toggle="tooltip" data-placement="left" title="Go to shipment list"><i class="fa fa-eye"></i> Go to Shipment Lists</a></b>
+         </ul>
+
+       <?php endif; ?>
+       <!-- ##### Link Shipment List #####   -->
+
           <div class="clearfix"></div>
-          <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="x_panel">
-                <div class="x_title">
-                  <h2><i class="fa fa-plus-circle"></i> New Shipment </h2>
-                  <ul class="nav navbar-right panel_toolbox"><b>
-                    <a href="?<?php echo paramEncrypt('hal=member-shipment-list')?>" data-toggle="tooltip" data-placement="left" title="Go to shipment list"><i class="fa fa-eye"></i> Go to Shipment Lists</a></b>
-                  </ul>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                  <br />
-                    <?php
-                  if ($_SESSION['success']==1) {
-                    ?>
-                <div class="alert alert-success alert-dismissible fade in" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                    </button>
-                    <strong><i class="fa fa-check-circle"></i> Success!</strong> Your shipment successfully processed.
-                </div>
-                  <?php
-                  }
+        </div>
+        <div class="x_content">
+          <br />
+            <?php
+          if ($_SESSION['success']==1) {
+            ?>
+        <div class="alert alert-success alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+            </button>
+            <strong><i class="fa fa-check-circle"></i> Success!</strong> Your shipment successfully processed.
+        </div>
+          <?php
+          }
 
-                  if($_SESSION['success']==2){
-                  ?>
-                <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                    </button>
-                    <strong><i class="fa fa-warning"></i> Warning!</strong> Please input the container size. <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>
-                </div>
-                  <?php
-                  }
+          if($_SESSION['success']==2){
+          ?>
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+            </button>
+            <strong><i class="fa fa-warning"></i> Warning!</strong> Please input the container size. <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>
+        </div>
+          <?php
+          }
 
-                  if($_SESSION['success']==3){
-                  ?>
-                <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                    </button>
-                    <strong><i class="fa fa-warning"></i> Warning!</strong> Bill of Lading No. has already been taken. <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>
-                </div>
-                  <?php
-                  }
+          if($_SESSION['success']==3){
+          ?>
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+            </button>
+            <strong><i class="fa fa-warning"></i> Warning!</strong> Bill of Lading No. has already been taken. <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>
+        </div>
+          <?php
+          }
 
-                  if($_SESSION['success']==4){
-                  ?>
-                <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                    </button>
-                    <strong><i class="fa fa-warning"></i> Warning!</strong> Hang tags numbers is not valid, please check again. <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>
-                </div>
-                  <?php
-                  }
+          if($_SESSION['success']==4){
+          ?>
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+            </button>
+            <strong><i class="fa fa-warning"></i> Warning!</strong> Hang tags numbers is not valid, please check again. <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>
+        </div>
+          <?php
+          }
 
-                  unset($_SESSION['success']);
-                   ?>
-                  <center><h2><strong>SHIPMENT REPORT</strong></h2></center>
-                  <div class="ln_solid"></div>
-                  <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="../action/member-shipment-input.php" enctype="multipart/form-data">
-                    <font size="">
+          unset($_SESSION['success']);
+           ?>
+          <center><h2><strong>SHIPMENT REPORT</strong></h2></center>
+          <div class="ln_solid"></div>
 
-
-                    <div class="col-sm-12">
-                    <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Shipment Report No.
-                      </label>
-                      <div class="col-md-4 font-hijau">
 <?php
 $kode=$_SESSION['kode'];
-
-$tgl=date("dmy");
-$cek_nosh=$conn->query("select floor(substr(no_shipment,12,10)) as no_sh from t4t_shipment where id_comp='$kode' and no_shipment like '%$tgl%' order by no_sh desc limit 1")->fetch();
-$no_sh=$cek_nosh[0]+1;
 ?>
-                    <label class="control-label"><?php echo $_SESSION['kode']."".$tgl."".$no_sh; ?></label>
-                       <input type="hidden" name="no_ship" value="<?php echo $_SESSION['kode']."".$tgl."".$no_sh ?>" >
-                      </div>
-                    </div>
 
-                    <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Bill of Lading No. <span class="required red">*</span>
-                      </label>
-                      <div class="col-md-4">
-                        <input type="text" class="form-control" name="bl" required>
+<form class="form-horizontal form-label-left" action="" method="post">
+<div class="col-sm-12">
+<div class="form-group">
+<label class="control-label col-md-5" for="first-name">Company Name <span class="required"></span>
+</label>
 
-                      </div>
-                    </div>
+<!-- ##### CONDITION #####   -->
+<?php if ($_SESSION['level']=="part"): ?>
 
-                    <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Bill of Lading Date <span class="required red">*</span>
-                      </label>
-                      <div class="col-md-4">
-                        <input type="text" class="form-control" id="single_cal2" name="tglbl" required>
-                        <span class="fa fa-calendar form-control-feedback right" aria-hidden="true"></span>
-                      </div>
-                    </div>
+<div class="col-md-4 font-hijau">
+  <?php
+  $company=$office->data_member($kode); //t4t_partisipan
+   ?>
+<label class="control-label"><?php echo $company->name ?></label>
+  <input type="hidden" name="id_comp" value="<?php echo $kode; ?>" id="comp">
+</div>
 
-                    <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Company Name <span class="required"></span>
-                      </label>
-                      <div class="col-md-4 font-hijau">
-                        <?php
+<?php elseif($_SESSION['level']=="mkt"): ?>
 
-                        $company=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
-                         ?>
-                      <label class="control-label"><?php echo $company[0]; ?></label>
-                          <input type="hidden" name="id_comp" value="<?php echo $kode; ?>" id="comp">
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Order No. <span class="required red">*</span>
-                      </label>
-                      <div class="col-md-4">
-                        <select multiple="" class="form-control" name="order[]" id="order" required>
-<?php
-
-$no_order=$conn->query("select no_order from t4t_order where id_comp='$kode' and acc=1 order by no desc");
-while ($data_order=$no_order->fetch()) {
-
-?>
-                          <option><?php echo $data_order[0] ?></option>
-<?php
-}
- ?>
-                        </select>
-
-                      </div>
-                      <p>To select multiple options, press Ctrl (windows) / Command (Mac) button while selecting the Order.</p>
-                    </div>
-
-                    <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Hang Tag Numbers Used <span class="required red">*</span>
-                      <br>
-                      </label>ex : 2,100,5-10,11-30
-                      <!-- <i id="loaderIcon" class="fa fa-spinner fa-spin"></i> -->
-                      <div class="col-md-4">
-                        <textarea type="text" class="form-control" name="wins_used" id="wins_used" onBlur="cekValidasi()" required></textarea>
-                      <span id="status"></span>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label class="control-label col-md-5">Required <span class="required red">*</span>
-                      </label>
-                      <div class="col-md-4 control-label">
-                        <table>
-                          <thead>
-                            <th><center>Container</center></th>
-                            <th></th>
-                            <th><center>Qty</center></th>
-                          </thead>
-                          <tbody>
-
-
-<?php
-$container=$conn->query("select * from t4t_container");
-while ($data_container=$container->fetch()) {
- ?>
-                            <tr>
-                              <td><?php echo $data_container[1] ?></td>
-                              <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                              <td width="90px"><input type="number" class="form-control" name="cont<?php echo $data_container[0] ?>" min="0"></td>
-                            </tr>
-<?php
-}
- ?>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name"> Items QTY  <span class="required red">*</span>
-                      </label>
-                      <div class="col-md-2">
-                        <input type="number" class="form-control" min="0" name="item_qty" required>
-                      </div>
-                    </div>
-
-                    <?php
-                        $pic_name=$conn->query("select pic from t4t_partisipan where id='$kode'")->fetch();
-                         if ($pic_name[0]=="") {
-                           #
-                         }else{
-                         ?>
-                    <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">PIC <span class="required"></span>
-                      </label>
-                      <div class="col-md-4 font-hijau">
-                      <label class="control-label">
-                        <?php echo $pic_name[0]; ?>
-                      </label>
-                         <input type="hidden" name="pic" value="<?php echo $pic_name[0]; ?>">
-                      </div>
-                    </div>
-                    <?php
-                    }
-                    ?>
-
-                    <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Destination City <span class="required red">*</span>
-                      </label>
-                      <div class="col-md-4">
-                        <input type="text" class="form-control col-md-7 col-xs-12" name="destination" required>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Note <span class="required"></span>
-                      </label>
-                      <div class="col-md-4">
-                        <textarea type="text" class="form-control" name="note"></textarea>
-
-                      </div>
-                    </div>
-<?php
-$no_id=$conn->query("select no from t4t_partisipan where id='$kode'")->fetch();
-$cek_customer=$conn->query("select kode_retailer from t4t_retailer where id_partisipan='$no_id[0]'");
-
-if ($cek=$cek_customer->fetch()==true) {
-
-
- ?>
-                    <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Customer Code <span class="required"></span>
-                      </label>
-                      <div class="col-md-4">
-                        <select class="form-control" name="c_code">
-                          <option value="">- Choose -</option>
-      <?php
-      $customer=$conn->query("select kode_retailer,retailer_name from t4t_retailer where id_partisipan='$no_id[0]'");
-      while ( $data_customer=$customer->fetch()) {
-      ?>
-                          <option value="<?php echo $data_customer[0] ?>"><?php echo $data_customer[0]; echo " (".$data_customer[1].")"; ?></option>
+<?php $kode_comp = $_REQUEST['id_comp']; ?>
+<input type="hidden" name="id_comp" value="<?php echo $kode_comp; ?>" id="comp">
+<div class="col-md-4">
+  <select class="form-control" name="id_comp" onchange='this.form.submit()'>
     <?php
-    } ?>
-                        </select>
+      if ($kode_comp!="") {
+      $nama_company = $office->data_member($kode_comp);//t4t_partisipan
+    ?>
+    <option value="<?php echo $kode_comp ?>"><?php echo $nama_company->name ?></option>
+    <?php
+      }else{
+    ?>
+    <option value="">- Choose -</option>
+    <?php
+      }
+    ?>
 
-                      </div>
-                    </div>
+    <?php
+    $list_comp = $office->data_member_list();//t4t_partisipan
+    ?>
 
-<?php
-}
-?>
+    <?php
+    foreach ($list_comp as $nama_comp) {
+    ?>
+    <option value="<?php echo $nama_comp->id ?>"><?php echo $nama_comp->name ?></option>
+    <?php
+    }
+    ?>
 
-                    <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Bill of Lading copy attached <span class="required red">*</span>
-                      </label>
-                      <div class="col-md-4">
-                        <input type="file" class="form-control col-md-7 col-xs-12" name="bl_files" required>
-                       <!--  <p class="red">*maximum upload size 200kb.</p> -->
-                      </div>
-                    </div>
-
-
+  </select>
+  <noscript><input type="submit" value="id_comp"></noscript>
+</div>
 
 
+<?php endif; ?>
+<!-- ##### CONDITION #####   -->
 
-                    <div class="ln_solid"></div>
-                    <div class="form-group">
-                      <div class="col-md-5 col-md-offset-5">
-                        <a href="?<?php echo paramEncrypt('hal=member-shipment-input')?>" class="btn btn-primary">Reset</a>
-                        <button type="submit" class="btn btn-success">Submit</button>
-                      </div>
-                    </div>
-                    </div>
+</div>
+</div>
+</form>
 
-                    </font>
-                  </form>
-                </div>
+
+
+          <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="../action/member-shipment-input.php" enctype="multipart/form-data">
+            <font size="">
+
+            <div class="col-sm-12">
+
+              <input type="hidden" name="id_comp" value="<?php if($_SESSION['level']=="part"){ echo $kode; }elseif($_SESSION['level']=="mkt"){ echo $kode_comp; }  ?>" id="comp">
+
+            <div class="form-group">
+              <label class="control-label col-md-5" for="first-name">Shipment Report No.
+              </label>
+              <div class="col-md-4 font-hijau">
+
+          <?php
+          $tgl=date("dmy");
+          if ($_SESSION['level']=="part") {
+            $cek_nosh=$office->cek_nosh($kode,$tgl);
+          }elseif ($_SESSION['level']=="mkt") {
+            $cek_nosh=$office->cek_nosh($kode_comp,$tgl);
+          }
+          $no_sh=$cek_nosh->no_sh+1;
+          ?>
+
+          <?php if ($_SESSION['level']=="part"): ?>
+
+            <label class="control-label"><?php echo $_SESSION['kode']."".$tgl."".$no_sh; ?></label>
+               <input type="hidden" name="no_ship" value="<?php echo $_SESSION['kode']."".$tgl."".$no_sh ?>" >
+
+          <?php elseif($_SESSION['level']=="mkt"): ?>
+                  <?php if ($kode_comp!=""): ?>
+                    <label class="control-label"><?php echo $kode_comp."".$tgl."".$no_sh; ?></label>
+                       <input type="hidden" name="no_ship" value="<?php echo $kode_comp."".$tgl."".$no_sh ?>" >
+                  <?php else: ?>
+                    <label class="control-label red">Please choose the company name first.</label>
+                  <?php endif; ?>
+
+          <?php endif; ?>
+
+
+
               </div>
             </div>
-          </div>
+
+            <div class="form-group">
+              <label class="control-label col-md-5" for="first-name">Bill of Lading No. <span class="required red">*</span>
+              </label>
+              <div class="col-md-4">
+                <input type="text" class="form-control" name="bl" required>
+
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-md-5" for="first-name">Bill of Lading Date <span class="required red">*</span>
+              </label>
+              <div class="col-md-4">
+                <input type="text" class="form-control" id="single_cal2" name="tglbl" required onkeydown="return false">
+                <span class="fa fa-calendar form-control-feedback right" aria-hidden="true"></span>
+              </div>
+            </div>
+
+
+
+            <div class="form-group">
+              <label class="control-label col-md-5" for="first-name">Order No. <span class="required red">*</span>
+              </label>
+              <div class="col-md-4">
+                <select multiple="" class="form-control" name="order[]" id="order" required>
+                <?php
+                if ($_SESSION['level']=="part") {
+                  $no_order=$office->order_list($kode);
+                }elseif($_SESSION['level']=="mkt"){
+                  $no_order=$office->order_list($kode_comp);
+                }
+
+                foreach ($no_order as $data_order) {
+                ?>
+                  <option><?php echo $data_order->no_order ?></option>
+                <?php
+                }
+                 ?>
+                </select>
+
+              </div>
+              <p>To select multiple options, press Ctrl (windows) / Command (Mac) button while selecting the Order.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-md-5" for="first-name">Hang Tag Numbers Used <span class="required red">*</span>
+              <br>
+              </label>ex : 2,100,5-10,11-30
+              <!-- <i id="loaderIcon" class="fa fa-spinner fa-spin"></i> -->
+              <div class="col-md-4">
+                <textarea type="text" class="form-control" name="wins_used" id="wins_used" onBlur="cekValidasi()" required></textarea>
+              <span id="status"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-md-5">Required <span class="required red">*</span>
+              </label>
+              <div class="col-md-4 control-label">
+                <table>
+                  <thead>
+                    <th><center>Container</center></th>
+                    <th></th>
+                    <th><center>Qty</center></th>
+                  </thead>
+                  <tbody>
+
+
+                <?php
+                $container = $office->container_list();
+                foreach ($container as $data_container) {
+                ?>
+                    <tr>
+                      <td><?php echo $data_container->cont ?></td>
+                      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                      <td width="90px"><input type="number" class="form-control" name="cont<?php echo $data_container->no ?>" min="0"></td>
+                    </tr>
+                <?php
+                }
+                ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-md-5" for="first-name"> Items QTY  <span class="required red">*</span>
+              </label>
+              <div class="col-md-2">
+                <input type="number" class="form-control" min="0" name="item_qty" required>
+              </div>
+            </div>
+
+            <?php
+
+            if ($_SESSION['level']=="part") {
+              $pic_name=$office->data_member($kode); //t4t_partisipan
+            }elseif($_SESSION['level']=="mkt"){
+              $pic_name=$office->data_member($kode_comp); //t4t_partisipan
+            }
+                 if ($pic_name->pic=="") {
+                   #
+                 }else{
+                 ?>
+            <div class="form-group">
+              <label class="control-label col-md-5" for="first-name">PIC <span class="required"></span>
+              </label>
+              <div class="col-md-4 font-hijau">
+              <label class="control-label">
+                <?php echo $pic_name->pic; ?>
+              </label>
+                 <input type="hidden" name="pic" value="<?php echo $pic_name->pic; ?>">
+              </div>
+            </div>
+                <?php
+                }
+                ?>
+
+            <div class="form-group">
+              <label class="control-label col-md-5" for="first-name">Destination City <span class="required red">*</span>
+              </label>
+              <div class="col-md-4">
+                <input type="text" class="form-control col-md-7 col-xs-12" name="destination" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-md-5" for="first-name">Note <span class="required"></span>
+              </label>
+              <div class="col-md-4">
+                <textarea type="text" class="form-control" name="note"></textarea>
+
+              </div>
+            </div>
+<?php
+// if ($_SESSION['level']=="part") {
+// $no_id=$office->data_member($kode); //t4t_partisipan
+// }elseif ($_SESSION['level']=="mkt") {
+// $no_id=$office->data_member($kode_comp); //t4t_partisipan
+// }
+
+if ($_SESSION['level']=="part") {
+  $cek_customer=$office->cek_relation($kode); //t4t_retailer
+}elseif ($_SESSION['level']=="mkt") {
+  $cek_customer=$office->cek_relation($kode_comp); //t4t_retailer
+}
+
+
+if ($cek_customer->repeat_id == true) {
+?>
+            <div class="form-group">
+              <label class="control-label col-md-5" for="first-name">Customer Code <span class="required"></span>
+              </label>
+              <div class="col-md-4">
+                <select class="form-control" name="c_code">
+                  <option value="">- Choose -</option>
+                  <?php
+                  if ($_SESSION['level']=="part") {
+                    $customer=$office->retailer_list2($kode);//t4t_retailer
+                  }elseif ($_SESSION['level']=="mkt") {
+                    $customer=$office->retailer_list2($kode_comp);//t4t_retailer
+                  }
+                  foreach ($customer as $data_customer) {
+                  ?>
+                  <option value="<?php echo $data_customer->repeat_id ?>"><?php echo $data_customer->repeat_id; echo " (".$data_customer->name.")"; ?></option>
+                  <?php
+                  } ?>
+                </select>
+
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label class="control-label col-md-5" for="first-name">WIN Owner <span class="required"></span>
+              </label>
+              <div class="col-md-4">
+                <select class="form-control" name="relation">
+                  <option value="0"><?php $member=$office->data_member($kode); echo $member->name; ?> <i>(default)</i></option>
+                  <option value="1">Customer</option>
+                </select>
+              </div>
+            </div>
+
+<?php
+}
+?>
+
+
+            <div class="form-group">
+              <label class="control-label col-md-5" for="first-name">Bill of Lading copy attached <span class="required red">*</span>
+              </label>
+              <div class="col-md-4">
+                <input type="file" class="form-control col-md-7 col-xs-12" name="bl_files" required>
+               <!--  <p class="red">*maximum upload size 200kb.</p> -->
+              </div>
+            </div>
+
+
+
+
+
+            <div class="ln_solid"></div>
+            <div class="form-group">
+              <div class="col-md-5 col-md-offset-5">
+                <a href="?<?php echo paramEncrypt('hal=member-shipment-input')?>" class="btn btn-primary">Reset</a>
+                <button type="submit" class="btn btn-success">Submit</button>
+              </div>
+            </div>
+            </div>
+
+            </font>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
                      <!-- js -->
                   </div>

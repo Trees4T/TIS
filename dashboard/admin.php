@@ -7,11 +7,11 @@ if (isset($_SESSION['level']))
 {
 	// jika level admin
 	if ($_SESSION['level'] == "adm")
-   {   
+   {
    }
-   //elseif ($_SESSION['level'] == "mkt" ) 
+   //elseif ($_SESSION['level'] == "mkt" )
    // {
-   	
+
    // }
    // jika kondisi level user maka akan diarahkan ke halaman lain
    else

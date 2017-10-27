@@ -1,5 +1,5 @@
-<?php 
-$id_ship=$_SESSION['id_ship']
+<?php
+$id_ship=$_SESSION['id_ship'];
 ?>
 <div class="">
 
@@ -9,7 +9,7 @@ $id_ship=$_SESSION['id_ship']
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
@@ -26,7 +26,7 @@ $id_ship=$_SESSION['id_ship']
                 </div>
                 <div class="x_content">
                   <br />
-                    <?php 
+                    <?php
                   if ($_SESSION['success']==1) {
                     ?>
                 <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -61,16 +61,23 @@ $id_ship=$_SESSION['id_ship']
                    ?>
                   <center><h2><strong>SHIPMENT REPORT</strong></h2></center>
                   <div class="ln_solid"></div>
+                  <?php if ($edit==1): ?>
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="../action/edit-buyer-shipment.php" enctype="multipart/form-data">
+                      <font size="">
+                    <?php else: ?>
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="../action/member-shipment-edit.php" enctype="multipart/form-data">
+                      <font size="">
+                  <?php endif; ?>
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="../action/member-shipment-edit.php" enctype="multipart/form-data">
                     <font size="">
-                   
+
 
                     <div class="col-sm-12">
                     <div class="form-group">
                       <label class="control-label col-md-5" for="first-name">Shipment Report No.
                       </label>
                       <div class="col-md-4 font-hijau">
-<?php 
+<?php
 $kode=$_SESSION['kode'];
 $data=$conn->query("select * from t4t_shipment where no='$id_ship'")->fetch();
 
@@ -84,22 +91,24 @@ $data=$conn->query("select * from t4t_shipment where no='$id_ship'")->fetch();
                       <label class="control-label col-md-5" for="first-name">Bill of Lading No. <span class="required red">*</span>
                       </label>
                       <div class="col-md-4">
-                        <input type="text" class="form-control" name="bl" value="<?php echo $data['bl'] ?>" required>
-                        
+                        <input type="text" class="form-control" name="bl" value="<?php echo $data['bl'] ?>" required <?php if ($edit==1) {
+                          echo "readonly"; } ?>>
+
                       </div>
                     </div>
 
-                    <?php 
+                    <?php
                     $tanggal=$data['bl_tgl'];
                     $ex_tgl=explode("-", $tanggal);
-                    $tanggal_bl=$ex_tgl[2]."/".$ex_tgl[1]."/".$ex_tgl[0];  
+                    $tanggal_bl=$ex_tgl[2]."/".$ex_tgl[1]."/".$ex_tgl[0];
                      ?>
 
                     <div class="form-group">
                       <label class="control-label col-md-5" for="first-name">Bill of Lading Date <span class="required red">*</span>
                       </label>
                       <div class="col-md-4">
-                        <input type="text" class="form-control" id="single_cal2" name="tglbl" value="<?php echo $tanggal_bl ?>" required>
+                        <input type="text" class="form-control" id="single_cal2" name="tglbl" value="<?php echo $tanggal_bl ?>" required <?php if ($edit==1) {
+                          echo "readonly"; } ?>>
                         <span class="fa fa-calendar form-control-feedback right" aria-hidden="true"></span>
                       </div>
                     </div>
@@ -109,28 +118,28 @@ $data=$conn->query("select * from t4t_shipment where no='$id_ship'")->fetch();
                       </label>
                       <div class="col-md-4">
                       <div class="font-hijau">
-                      <?php 
+                      <?php
                        $no_ordership=$conn->query("select no_order from t4t_shipment where no='$id_ship'")->fetch();
-                       
+
                        ?>
                        <label class="control-label"><?php echo $no_ordership[0]; ?></label>
                        </div>
-                      
-                        <select multiple="" class="form-control" name="order[]" >
-<?php  
+
+                        <select multiple="" class="form-control" name="order[]" <?php if ($edit==1) { echo "readonly"; } ?>>
+<?php
 
 $no_order=$conn->query("select no_order from t4t_order where id_comp='$kode' and acc=1 order by no desc");
 while ($data_order=$no_order->fetch()) {
 
 ?>
-  
+
                           <option><?php echo $data_order[0] ?></option>
 
-<?php 
+<?php
 }
  ?>
                         </select>
-                        
+
                       </div><br>
                       <p>Select the option if you want to change Order No.</p>
                       <p>To select multiple options, press Ctrl (windows) / Command (Mac) button while selecting the Order.</p>
@@ -140,9 +149,9 @@ while ($data_order=$no_order->fetch()) {
                       <label class="control-label col-md-5" for="first-name">Hang Tag numbers used <span class="required red">*</span>
                       </label>ex : 2,100,5-10,11-30
                       <div class="col-md-4">
-                        <textarea type="text" class="form-control" name="wins_used" required><?php echo $data['wins_used'] ?></textarea>
+                        <textarea type="text" class="form-control" name="wins_used" required <?php if ($edit==1) { echo "readonly"; } ?>><?php echo $data['wins_used'] ?></textarea>
                         <br>
-                        
+
                       </div>
                     </div>
 
@@ -150,16 +159,16 @@ while ($data_order=$no_order->fetch()) {
                       <label class="control-label col-md-5" for="first-name">Company Name <span class="required"></span>
                       </label>
                       <div class="col-md-4 font-hijau">
-                        <?php 
-                  
-                        $company=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
-                        
+                        <?php
+
+                        $company=$conn->query("select name from t4t_participant where id='$kode'")->fetch();
+
                          ?>
                          <label class="control-label"><?php echo $company[0]; ?></label>
                           <input type="hidden" name="id_comp" value="<?php echo $kode; ?>" >
                       </div>
                     </div>
-                    
+
                     <div class="form-group">
                       <label class="control-label col-md-5" for="first-name">Required <span class="required"></span>
                       </label>
@@ -171,20 +180,20 @@ while ($data_order=$no_order->fetch()) {
                             <th>Qty</th>
                           </thead>
                           <tbody>
-<?php 
+<?php
 $no=1;
 $container=$conn->query("select * from t4t_container");
 while ($data_container=$container->fetch()) {
   $no_sh=$data['no_shipment'];
   $cont=$conn->query("select jml from t4t_ordercontainer where no_order='$no_sh' and no_cont='$no'")->fetch();
-  
+
  ?>
                             <tr>
                               <td><?php echo $data_container[1] ?></td>
                               <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                              <td width="90px"><input type="number" class="form-control" name="cont<?php echo $data_container[0] ?>" min="0" value="<?php echo $cont[0] ?>"></td>
+                              <td width="90px"><input type="number" class="form-control" name="cont<?php echo $data_container[0] ?>" min="0" value="<?php echo $cont[0] ?>" <?php if ($edit==1) { echo "readonly"; } ?>></td>
                             </tr>
-<?php 
+<?php
 $no++;
 }
  ?>
@@ -197,12 +206,12 @@ $no++;
                       <label class="control-label col-md-5" for="first-name"> Items QTY  <span class="required red">*</span>
                       </label>
                       <div class="col-md-2">
-                        <input type="number" class="form-control" min="0" name="item_qty" value="<?php echo $data['item_qty'] ?>" required>
+                        <input type="number" class="form-control" min="0" name="item_qty" value="<?php echo $data['item_qty'] ?>" required <?php if ($edit==1) { echo "readonly"; } ?>>
                       </div>
                     </div>
 
-                    <?php 
-                        $pic_name=$conn->query("select pic from t4t_partisipan where id='$kode'")->fetch();
+                    <?php
+                        $pic_name=$conn->query("select pic from t4t_participant where id='$kode'")->fetch();
                          if ($pic_name[0]=="") {
                            #
                          }else{
@@ -212,7 +221,7 @@ $no++;
                       </label>
                       <div class="col-md-4 font-hijau">
                       <label class="control-label">
-                        <?php echo $pic_name[0]; ?>                         
+                        <?php echo $pic_name[0]; ?>
                       </label>
                          <input type="hidden" name="pic" value="<?php echo $pic_name[0]; ?>">
                       </div>
@@ -225,7 +234,7 @@ $no++;
                       <label class="control-label col-md-5" for="first-name">Destination City <span class="required red">*</span>
                       </label>
                       <div class="col-md-4">
-                        <input type="text" class="form-control col-md-7 col-xs-12" name="destination" value="<?php echo $data['kota_tujuan'] ?>" required>
+                        <input type="text" class="form-control col-md-7 col-xs-12" name="destination" value="<?php echo $data['kota_tujuan'] ?>" required <?php if ($edit==1) { echo "readonly"; } ?>>
                       </div>
                     </div>
 
@@ -233,77 +242,108 @@ $no++;
                       <label class="control-label col-md-5" for="first-name">Note <span class="required"></span>
                       </label>
                       <div class="col-md-4">
-                        <textarea type="text" class="form-control" name="note"><?php echo $data['note'] ?></textarea>
-                        
+                        <textarea type="text" class="form-control" name="note" <?php if ($edit==1) { echo "readonly"; } ?>><?php echo $data['note'] ?></textarea>
+
                       </div>
                     </div>
-<?php 
-$no_id=$conn->query("select no from t4t_partisipan where id='$kode'")->fetch();
-$cek_customer=$conn->query("select kode_retailer,retailer_name from t4t_retailer where id_partisipan='$no_id[0]'");
+                    <?php
+                    if ($_SESSION['level']=="part") {
+                      $cek_customer=$office->cek_relation($kode); //t4t_retailer
+                    }
 
-if ($cek=$cek_customer->fetch()==true) {
-  
 
- ?>
-                    <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Customer Code <span class="required"></span>
-                      </label>
-                      <div class="col-md-4">
-                        <select class="form-control" name="c_code">
-                          <option value="<?php if ($data['buyer']!="") {
-                            echo $data['buyer'];
-                          } ?>">
-                          <?php  
-                          if ($data['buyer']!="") {
-                            echo $data['buyer'];
-                          }else{
-                          ?>
-                          - Choose - <?php } ?></option>
-      <?php 
-      $customer=$conn->query("select kode_retailer,retailer_name from t4t_retailer where id_partisipan='$no_id[0]'"); 
-      while ( $data_customer=$customer->fetch()) {
-      ?>
-                          <option value="<?php echo $data_customer[0] ?>"><?php echo $data_customer[0]; echo " (".$data_customer[1].")"; ?></option>
-    <?php 
-    } ?>
-                        </select>
-                        
-                      </div>
-                    </div>
+                    if ($cek_customer->repeat_id == true) {
+                    ?>
 
-<?php 
-} 
-?>             
+                                <div class="form-group">
+                                  <label class="control-label col-md-5" for="first-name">Customer Code <span class="required"></span>
+                                  </label>
+                                  <div class="col-md-4">
+                                    <select class="form-control" name="c_code">
+                                      <?php
+                                      $cek_buyer = $office->cek_ship_relation_buyer($data['no_shipment']);
+                                      $nama_buyer= $office->nama_relation_buyer($kode,$cek_buyer->buyer);
+
+                                      if ($cek_buyer->buyer==true): ?>
+                                          <option value="<?php echo $cek_buyer->buyer ?>"><?php echo $cek_buyer->buyer; echo " (".$nama_buyer->name.")"; ?></option>
+                                        <?php else: ?>
+                                          <option value="">- Choose -</option>
+                                      <?php endif; ?>
+
+                                      <?php
+                                      if ($_SESSION['level']=="part") {
+                                        $customer=$office->retailer_list2($kode);//t4t_retailer
+                                      }
+                                      foreach ($customer as $data_customer) {
+                                      ?>
+                                      <option value="<?php echo $data_customer->repeat_id ?>"><?php echo $data_customer->repeat_id; echo " (".$data_customer->name.")"; ?></option>
+                                      <?php
+                                      } ?>
+                                    </select>
+
+                                  </div>
+                                </div>
+
+                                <div class="form-group">
+                                  <label class="control-label col-md-5" for="first-name">WIN Owner <span class="required"></span>
+                                  </label>
+                                  <div class="col-md-4">
+                                    <select class="form-control" name="relation">
+                                      <?php
+
+                                      if ($cek_buyer->relation==1): ?>
+                                          <option value="1"><?php echo $cek_buyer->buyer; echo " (".$nama_buyer->name.")"; ?></option>
+                                        <?php else: ?>
+                                          <option value="0"><?php $member=$office->data_member($kode); echo $member->name; ?> <i>(default)</i></option>
+                                      <?php endif; ?>
+                                      <option value="0"><?php $member=$office->data_member($kode); echo $member->name; ?> <i>(default)</i></option>
+                                      <option value="1">Customer (new update)</option>
+                                    </select>
+                                  </div>
+                                </div>
+
+                    <?php
+                    }
+                    ?>
+
 
                     <div class="form-group">
                       <label class="control-label col-md-5" for="first-name">Bill of Lading copy attached <span class="required"></span>
                       </label>
                       <div class="col-md-4">
-                        <input type="file" class="form-control col-md-7 col-xs-12" name="bl_files">
-                        <?php 
+                        <input type="file" class="form-control col-md-7 col-xs-12" name="bl_files" <?php if ($edit==1) { echo "readonly"; } ?>>
+                        <?php
                         $foto=$data['foto'];
                         $ex_foto=explode("-", $foto);
                         ?>
                         <a href="" data-toggle="modal" data-target="#img-bl-attatch"><?php  echo $ex_foto[2] ?></a>
-                        <?php 
+                        <?php
                         if ($foto=="") {
                             echo "no attached file found.";
-                          }  
+                          }
                         ?><br>
                         <!-- <p class="red">*maximum upload size 200kb.</p> -->
                       </div>
                     </div>
 
                     <?php include 'modal/img-bl-attatch.php'; ?>
-                    
-  
+
+
 
                     <div class="ln_solid"></div>
                     <div class="form-group">
-                      <div class="col-md-5 col-md-offset-5">
-                        <a href="?<?php echo paramEncrypt('hal=member-shipment-pending-edit')?>" class="btn btn-primary">Reset</a>
-                        <button type="submit" class="btn btn-success">Submit</button>
-                      </div>
+                      <?php if ($edit==1): ?>
+                          <div class="col-md-5 col-md-offset-5">
+
+                            <button type="submit" name="edit-buyer" class="btn btn-warning">Update</button>
+                          </div>
+                        <?php else: ?>
+                          <div class="col-md-5 col-md-offset-5">
+                            <a href="?<?php echo paramEncrypt('hal=member-shipment-pending-edit')?>" class="btn btn-primary">Reset</a>
+                            <button type="submit" class="btn btn-success">Submit</button>
+                          </div>
+                      <?php endif; ?>
+
                     </div>
                     </div>
 
@@ -743,7 +783,7 @@ if ($cek=$cek_customer->fetch()==true) {
         });
     </script>
     <!-- /knob -->
-   
+
 </body>
 
 </html>

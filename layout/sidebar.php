@@ -9,7 +9,18 @@
         function __autoload($class){
          include_once('../action/function/class.'.$class.".php");
         }
-        $fc = new fc();
+        if ($_SESSION['level']=="fc") {
+          $fc = new fc();
+        }elseif (
+          $_SESSION['level']=="mkt" or
+          $_SESSION['level']=="fin" or
+          $_SESSION['level']=="part" or
+          $_SESSION['level']=="admoff"
+          ) {
+          $office = new office();
+        }
+
+
 
 
         //untuk mendecode url yang di encrypt
@@ -38,6 +49,8 @@
             $group='Admin Officer';
         }elseif ($id_group=='fin') {
             $group='Finance';
+        }elseif ($id_group=='mkt') {
+            $group='Marketing';
         }
     ?>
 
@@ -61,7 +74,7 @@
                         ?>
                             <img src="../../management_t4t/gbr/poto/<?php echo $foto_fc->foto ?>" alt="..." class="img-circle profile_img" height='60' width='60'>
                         <?php
-                        }elseif ($id_group=='part' or $id_group=='admoff' or $id_group=='fin') {
+                      }elseif ($id_group=='part' or $id_group=='admoff' or $id_group=='fin' or $id_group=='mkt') {
                             # code...
                         }else{
                          ?>
@@ -77,7 +90,7 @@
                             <h2><?php echo $_SESSION['nama_part'] ?></h2>
                         </div><br><br><br><br>
                         <?php
-                        }elseif($id_group=='admoff' or $id_group=='fin'){
+                      }elseif($id_group=='admoff' or $id_group=='fin'  or $id_group=='mkt'){
                         ### Empty ###
                         }else{
                          ?>
@@ -107,6 +120,8 @@
                                 include 'sidebar-admoff.php';
                             }elseif ($_SESSION['level']=="fin") {
                                 include 'sidebar-fin.php';
+                            }elseif ($_SESSION['level']=="mkt") {
+                                include 'sidebar-mkt.php';
                             }
 
                             ?>
@@ -121,7 +136,7 @@
                     </div>
                     <!-- /sidebar menu -->
                     <?php
-                    if ($id_group=='admoff' or $id_group=='fin') {
+                    if ($id_group=='admoff' or $id_group=='fin' or $id_group=='mkt') {
                         # code...
                     }else{
                     ?>
@@ -159,7 +174,7 @@
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                 <?php
-                                if ($id_group=='part' or $id_group=='admoff' or $id_group=='fin') {
+                                if ($id_group=='part' or $id_group=='admoff' or $id_group=='fin' or $id_group=='mkt') {
                                     echo " | ";
                                 }else{
                                  ?>
@@ -180,14 +195,17 @@
                                          echo "Admin Officer";
                                      }elseif($id_group=='fin'){
                                          echo "Finance";
-                                     }else{
+                                     }elseif($id_group=='mkt'){
+                                         echo "Marketing";
+                                     }
+                                     else{
                                          echo $username;
                                      } ?>
 
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                             <?php
-                            if ($id_group=='admoff' or $id_group=='fin') {
+                            if ($id_group=='admoff' or $id_group=='fin' or $id_group=='mkt') {
                             ?>
                                 <ul class="dropdown-menu dropdown-usermenu animated fadeInDown pull-right">
                                     <li><a href="?<?php echo paramEncrypt('hal=change-password')?>">  Change Password</a>
@@ -245,6 +263,7 @@
             if ($id_ship=$var['id_ship']) {
                 $_SESSION['id_ship']=$id_ship;
             }
+            $edit = $var['edit'];
             ############# member ############
 
             ############# fc ############
@@ -256,6 +275,8 @@
             $nama_kab   =$var['nama_kab'];
             $thn_tanam  =$var['thn_tanam'];
 
+            $id_kel_tani=$var['id_kel_tani'];
+            $lahan      =$var['lahan'];
             #monitoring detail
             $id_lahan   =$var['id_lahan'];
             $mon        =$var['mon'];
@@ -270,6 +291,12 @@
             ############# Finance #############
             $sts_paid   =$var['sts_paid'];
             ############# Finance #############
+
+            ############# Marketing #############
+            $kode       =$var['id'];
+            $up_member  =$var['up'];
+            $tipe       =$var['tipe'];
+            ############# Marketing #############
 
             //concate dengan nama file
             $halaman="../pages/$page.php";

@@ -23,7 +23,7 @@ if (isset($btn_save)) {
   $pic      =$_POST['pic'];
 
 
-  $conn->query("update t4t_partisipan set nama='$comp_name', alamat='$address', tlp='$telp', fax='$fax', email='$email1', email2='$email2', email3='$email3', website='$website', direktur='$director', pic='$pic', prod_utama='$wood' where id='$kode'");
+  $conn->query("update t4t_participant set name='$comp_name', address='$address', phone='$telp', fax='$fax', email='$email1', email1='$email2', email2='$email3', website='$website', director='$director', pic='$pic', product='$wood' where id='$kode'");
 
   $_SESSION['success']=1;
   header("location:../dashboard/member.php?e4744a4ac1300c2709b543daa52128adba8407366100d6893624739e93be6d95");

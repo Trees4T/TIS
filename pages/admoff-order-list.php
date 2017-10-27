@@ -13,6 +13,18 @@
         <div class="x_title">
             <h2><i class="fa fa-folder-open"></i> Order List <small></small></h2>
 
+    <!-- ##### CONDITION #####   -->
+    <?php
+      if ($_SESSION['level']=="mkt") {
+    ?>
+            <ul class="nav navbar-right panel_toolbox">
+                <a href="?<?php echo paramEncrypt('hal=member-order-input')?>" data-toggle="tooltip" data-placement="left" title="Create new order"><i class="fa fa-plus-circle"></i> Create New Order</a>
+            </ul>
+    <?php
+    }
+    ?>
+    <!-- ##### CONDITION #####   -->
+
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
@@ -27,7 +39,7 @@
           <tbody>
           <?php
           $no=1;
-          $member=$conn->query("select no, nama, id from t4t_partisipan order by nama");
+          $member=$conn->query("select no, name, id from t4t_participant order by name");
           while ($data_meber=$member->fetch()) {
             $id_part=$data_meber[2];
 

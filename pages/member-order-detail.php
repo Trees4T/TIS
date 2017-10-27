@@ -1,6 +1,6 @@
 
 <div class="">
-<?php 
+<?php
 echo $id_order=$_GET['no'];
 
  ?>
@@ -10,7 +10,7 @@ echo $id_order=$_GET['no'];
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
@@ -27,7 +27,7 @@ echo $id_order=$_GET['no'];
                 </div>
                 <div class="x_content">
                   <br />
-                  <?php 
+                  <?php
                   if ($_SESSION['success']==1) {
                     ?>
                 <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -40,19 +40,19 @@ echo $id_order=$_GET['no'];
 
                   unset($_SESSION['success']);
                    ?>
-                  
+
                   <center><h2><strong>SHIPMENT VALIDATION APPLICATION FORM</strong></h2></center>
                   <div class="ln_solid"></div>
                   <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="../action/member-order-input.php">
                     <font size="">
-                   
+
 
                     <div class="col-sm-12">
                     <div class="form-group">
                       <label class="control-label col-md-5" for="first-name">Order No.
                       </label>
                       <div class="col-md-4 font-hijau">
-                        <?php 
+                        <?php
                         date_default_timezone_set('Asia/Jakarta');
                         $bln=date("m");
                         $thn=date("Y");
@@ -71,15 +71,15 @@ echo $id_order=$_GET['no'];
                       <label class="control-label col-md-5 " for="first-name">Company Name <span class="required"></span>
                       </label>
                       <div class="col-md-4 font-hijau">
-                        <?php 
+                        <?php
                         $kode=$_SESSION['kode'];
-                        $comp_name=$conn->query("select nama from t4t_partisipan where id='$kode'")->fetch();
+                        $comp_name=$conn->query("select name from t4t_participant where id='$kode'")->fetch();
                         echo $comp_name[0];
                         ?>
                         <input type="hidden" name="comp" value="<?php echo $comp_name[0]; ?>" >
                       </div>
                     </div>
-                  
+
                     <div class="col-md-2"></div>
                     <div class="form-group col-md-8" align="center">
                       <table id="table-container">
@@ -110,20 +110,20 @@ echo $id_order=$_GET['no'];
                         </tbody>
                       </table>
                       <div align="right">
-                     
+
                       <a class="btn btn-success" onclick="addField()"><i class="fa fa-plus"></i> Add</a>
                       <input type="hidden" id="forinput" name="forinput" value="1" >
-           
+
                       </div>
                     </div>
                     <div class="col-md-2"></div>
-                 
+
                     <div class="form-group">
                       <label class="control-label col-md-5" for="first-name">Type of Product <span class="required"></span>
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="type_prod" id="">
-                        
+
                       </div>
                     </div>
 
@@ -132,17 +132,17 @@ echo $id_order=$_GET['no'];
                       </label>
                       <div class="col-md-4">
                         <ul class="to_do">
-                        <?php 
+                        <?php
                         $wood=$conn->query("select * from t4t_pohonen");
                         while ($data_pohon=$wood->fetch()) {
-                          
+
                          ?>
                             <li>
                                 <p><input type="checkbox" class="flat" name="item[]" value="<?php echo $data_pohon[0] ?>"> <?php echo $data_pohon[1] ?> </p>
                             </li>
-                        <?php 
+                        <?php
                         }
-                         ?>    
+                         ?>
                         </ul>
                       </div>
                     </div>
@@ -166,17 +166,17 @@ echo $id_order=$_GET['no'];
                             <th>Qty</th>
                           </thead>
                           <tbody>
-                          <?php 
+                          <?php
                           $other=$conn->query("select * from t4t_req");
                           while ($data_other=$other->fetch()) {
-                            
+
                            ?>
                             <tr>
                               <td><?php echo $data_other[1] ?></td>
                               <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                               <td width="80px"><input type="number" class="form-control" name="req<?php echo $data_other[0] ?>" min="0"></td>
                             </tr>
-                          <?php 
+                          <?php
                            }
                            ?>
                           </tbody>
@@ -196,8 +196,8 @@ echo $id_order=$_GET['no'];
                       <label class="control-label col-md-5" for="first-name">PIC <span class="required"></span>
                       </label>
                       <div class="col-md-4 font-hijau">
-                        <?php 
-                        $pic_name=$conn->query("select pic from t4t_partisipan where id='$kode'")->fetch();
+                        <?php
+                        $pic_name=$conn->query("select pic from t4t_participant where id='$kode'")->fetch();
                          if ($pic_name[0]=="") {
                            echo "none";
                          }else{
@@ -207,8 +207,8 @@ echo $id_order=$_GET['no'];
                          <input type="hidden" name="pic" value="<?php echo $pic_name[0]; ?>">
                       </div>
                     </div>
-                    
-  
+
+
 
                     <div class="ln_solid"></div>
                     <div class="form-group">
@@ -232,7 +232,7 @@ echo $id_order=$_GET['no'];
           </div>
 
           <?php
-          include '../js/riojs.php'; 
+          include '../js/riojs.php';
          // include '../layout/js.php';
 
            ?>
@@ -642,7 +642,7 @@ echo $id_order=$_GET['no'];
         });
     </script>
     <!-- /knob -->
-    
+
 
 </body>
 

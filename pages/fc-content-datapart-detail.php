@@ -49,7 +49,19 @@
                                       echo "<b>".$nama_petani->nm_petani;"<b>"
                                       ?> <br>
                                       <div class="avatar-view-petani" title="">
-                                                  <img src="../images/default.png" alt="Avatar" width="100%">
+                                      <?php
+                                      $data_petani = $fc->t4t_petani_detail($id_desa,$kd_petani);
+                                      if ($data_petani->foto!="") {
+                                      ?>
+                                      <img src="../../management_t4t/gbr/poto/<?php echo $data_petani->foto ?>" alt="Avatar" width="100%">
+                                      <?php
+                                      }else{
+                                      ?>
+                                      <img src="../images/default.png" alt="Avatar" width="100%">
+                                      <?php
+                                      }
+                                      ?>
+
                                       </div>
                                       </td>
                                       <td>

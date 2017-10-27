@@ -38,6 +38,7 @@
                     <div class="col-sm-10">
 
                     <div class="form-group">
+                    <?php $_idmu = $nama_mu->kd_mu; ?>
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Management Unit <span class="required"></span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12 font-hijau">
@@ -105,6 +106,13 @@
                       </div>
                     </div>
 
+                  </form>
+                  <form action="../action/fc.php" method="post">
+                    <input type="hidden" name="id_mu" value="<?php echo $_idmu ?>">
+                    <input type="hidden" name="kd_ta" value="<?php echo $kode_ta ?>">
+                    <input type="hidden" name="id_desa" value="<?php echo $_desa ?>">
+                    <input type="hidden" name="kd_fc" value="<?php echo $kode_fc ?>">
+
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">No. Doc <span class="required"></span>
                       </label>
@@ -120,9 +128,10 @@
                       <label class="control-label">
                         <?php
                         $no_lahan = $fc->no_lahan($_desa);
-                        echo $no_lahan->no+1;
+                        echo $_nolahan = $no_lahan->no+1;
 
                         ?>
+                        <input type="hidden" name="no_lahan" value="<?php echo $_nolahan ?>">
                       </label>
                       </div>
                     </div>
@@ -132,7 +141,7 @@
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama Partisipan / Institusi<span class="required"></span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <select class="form-control" name="nama">
+                        <select class="form-control" name="kd_petani">
                           <option value="">- Pilih Partisipan / Institusi -</option>
                           <?php
                           $nama= $fc->list_nama_part($_desa);
@@ -149,7 +158,7 @@
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Status Lahan <span class="required"></span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <select class="form-control">
+                        <select class="form-control" name="status_lahan">
                           <option>- Pilih Status -</option>
                           <option value="Pribadi">Pribadi</option>
                           <option value="Umum">Umum</option>
@@ -169,7 +178,7 @@
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tipe Silvikultur <span class="required"></span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <select class="form-control">
+                        <select class="form-control" name="id_lahan">
                           <option>- Pilih Tipe Silvikultur -</option>
                           <?php
                           $silvi=$fc->list_silvil();
@@ -183,34 +192,34 @@
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Luas Lahan <span class="required"></span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Luas Lahan <span class="required"></span>
                       </label>
-                      <div class="col-md-6 col-sm-6 col-xs-12 font-hijau">
-                      <label class="control-label">
-                        otomatis
-                      </label>
+                      <div class="col-md-3">
+                        <input type="number" class="form-control x" name="luas_tanam" min="0" >
                       </div>
+                      <div class="col-md-2 font-hijau"><label class="control-label"> m²</label></div>
                     </div>
 
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Penutupan Lahan <span class="required"></span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <select class="form-control">
+                        <select class="form-control y" name="penutupan" onchange="auto_luastanam()">
                           <option>- Pilih Penutupan Lahan -</option>
-                          <option value="0% s/d 25%">0% s/d 25%</option>
-                          <option value="25% s/d 50%">25% s/d 50%</option>
-                          <option value="50% s/d 75%">50% s/d 75%</option>
-                          <option value="75% s/d 100%">75% s/d 100%</option>
+                          <option value="100">0% s/d 25%</option>
+                          <option value="75">25% s/d 50%</option>
+                          <option value="50">50% s/d 75%</option>
+                          <option value="25">75% s/d 100%</option>
                         </select>
                       </div>
+
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Luas Tanam <span class="required"></span>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Luas Tanam <span class="required"></span>
                       </label>
-                      <div class="col-md-4">
-                        <input type="number" class="form-control" name="luas_tanam" min="0">
+                      <div class="col-md-3">
+                        <input type="text" name="luas_tanam" value="" class="form-control z" onchange="auto_luastanam()" readonly="">
                       </div>
                       <div class="col-md-2 font-hijau"><label class="control-label"> m²</label></div>
                     </div>
@@ -219,7 +228,7 @@
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Jenis Tanam <span class="required"></span>
                       </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <select class="form-control">
+                        <select class="form-control" name="id_pohon">
                           <option>- Pilih Jenis Tanam -</option>
                           <?php
                           $tanaman=$fc->list_pohon();
@@ -234,7 +243,7 @@
                     <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Jumlah Usulan <span class="required"></span>
                       </label>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
+                      <div class="col-md-6 ">
                         <input type="number" name="usulan" class="form-control" min="0">
                       </div>
                     </div>
@@ -243,8 +252,8 @@
                     <div class="ln_solid"></div>
                     <div class="form-group">
                       <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                        <button type="submit" class="btn btn-primary">Cancel</button>
-                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="reset" name="" value="" class="btn btn-primary">Cancel</button>
+                        <button type="submit" name="btn_input_rentanam" class="btn btn-success">Submit</button>
                       </div>
                     </div>
                     </div>
@@ -295,7 +304,15 @@
         });
     </script>
     <!-- /input mask -->
+    <script>
 
+    function auto_luastanam(){
+      var x = $(".x").val();
+      var y = $(".y").val();
+      z= parseInt(x)*parseInt(y)/100;
+      $(".z").val(z);
+    }
+    </script>
 
 </body>
 

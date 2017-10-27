@@ -6,7 +6,7 @@
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                
+
               </div>
             </div>
           </div>
@@ -16,20 +16,20 @@
               <div class="x_panel">
                 <div class="x_title">
                   <h2> Trees Planted </h2>
-                  
+
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                   <br />
-                  
-               
+
+
                     <font size="">
-                   
+
 
                     <div class="col-sm-12">
-                
-                   
-                                
+
+
+
                                 <div class="x_content">
 
 
@@ -38,7 +38,7 @@
                                         <form class="form-horizontal" method="post" action="">
                                             <fieldset>
                                                 <div class="control-group">
-                                                <?php 
+                                                <?php
                                                 date_default_timezone_set('Asia/Jakarta');
                                                 $waktu    = date("d/m/Y");
                                                 $tahun    = date("Y");
@@ -47,16 +47,16 @@
                                                         $bln_lalu='12';
                                                         $tahun=$tahun-1;
                                                     }
-                                                
+
                                                  ?>
                                               <label class="control-label">Date Range <span class="required red">*</span>
-                                              </label><br>  
+                                              </label><br>
                                                     <div class="controls">
                                                         <div class="input-prepend input-group">
                                                             <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-                                                            <input type="text" style="width: 200px" name="range_tanggal" id="reservation" class="form-control" value="<?php 
+                                                            <input type="text" style="width: 200px" name="range_tanggal" id="reservation" class="form-control" value="<?php
                                                             if ($_POST['range_tanggal']=="") {
-                                                               echo "01/".$bln_lalu."/".$tahun." - ";  echo $waktu; 
+                                                               echo "01/".$bln_lalu."/".$tahun." - ";  echo $waktu;
                                                             }else{
                                                                 echo $_POST['range_tanggal'];
                                                             } ?>" />
@@ -64,7 +64,7 @@
                                                     </div>
                                                 </div>
                                             </fieldset>
-                                            <?php 
+                                            <?php
                                             if ($_SESSION['level']=='fin') {
                                             ?>
                                             <fieldset>
@@ -73,30 +73,30 @@
                                               </label><br>
                                               <div class="controls col-sm-5">
                                                 <select class="form-control" name="member">
-                                                <?php 
+                                                <?php
                                                 if (isset($_POST['member'])) {
                                                     $id_member = $_POST['member'];
-                                                    $nama0=$conn->query("select id,nama from t4t_partisipan where id='$id_member'")->fetch();
-                                                ?>    
+                                                    $nama0=$conn->query("select id,name from t4t_participant where id='$id_member'")->fetch();
+                                                ?>
                                                    <option value="<?php echo $nama0[0] ?>"> <?php echo $nama0[1] ?></option>
                                                 <?php
                                                 }
                                                  ?>
                                                   <option value="null"> - Choose -</option>
-                                               <?php  
-                                               $nama = $conn->query("select id,nama from t4t_partisipan order by nama");
-                                               while ($data_nama=$nama->fetch()) {                                               
-                                               ?>   
+                                               <?php
+                                               $nama = $conn->query("select id,name from t4t_participant order by name");
+                                               while ($data_nama=$nama->fetch()) {
+                                               ?>
                                                   <option value="<?php echo $data_nama[0] ?>"><?php echo $data_nama[1] ?></option>
-                                                <?php 
+                                                <?php
                                                 } ?>
-                                                 
+
                                                 </select>
                                               </div>
                                             </div>
                                             </fieldset>
                                             <?php } ?>
-                                           
+
 
                                             <br>
                                             <div class="ln_solid"></div>
@@ -111,7 +111,7 @@
 
 
                                     </div>
-<?php  
+<?php
 if ($_POST['range_tanggal']==true) {
 
 
@@ -121,10 +121,10 @@ if ($_POST['range_tanggal']==true) {
         $exp_tanggal=explode("-", $tanggal);
         $tanggal_awal=$exp_tanggal[0];
         $tanggal_akhir=$exp_tanggal[1];
-            
+
             $exp_t_awal=explode("/", $tanggal_awal);
             $nilai_t_awal=trim($exp_t_awal[2])."-".$exp_t_awal[1]."-".$exp_t_awal[0];
-            
+
             $exp_t_akhir=explode("/", $tanggal_akhir);
             $nilai_t_akhir=trim($exp_t_akhir[2])."-".$exp_t_akhir[1]."-".trim($exp_t_akhir[0]);
     #end
@@ -151,7 +151,7 @@ if ($_POST['range_tanggal']==true) {
                                                 <th><center>M. Unit</center></th> -->
                                                 <th><center>Trees QTY</center></th>
                                                 <th><center>Retailer</center> </th>
-                                          
+
                                             </tr>
                                         </thead>
 
@@ -166,7 +166,7 @@ if ($_POST['range_tanggal']==true) {
                             $no=1;
                             $tree_planted=$conn->query("SELECT s.wkt_shipment,s.bl,s.id_comp,s.no,h.bl,h.jml_phn,s.bl_tgl,h.petani,h.desa,h.ta,h.mu,s.buyer,s.no_shipment from t4t_shipment s join t4t_htc h on s.bl=h.bl AND s.id_comp='$kode' and s.wkt_shipment between '$nilai_t_awal' and '$nilai_t_akhir' order by h.no desc");
                             while ($data=$tree_planted->fetch()) {
-                                
+
                             //echo mysql_error();
                              ?>
 
@@ -180,7 +180,7 @@ if ($_POST['range_tanggal']==true) {
                                     <!-- <td class=" " align="center" width="12.5%"><?php echo $data[9] ?></td>
                                     <td class=" " align="center" width="12.5%"><?php echo $data[10] ?></td> -->
                                     <td class=" " align="center" width="5%"><?php echo $data[5] ?></td>
-                                    <td class=" " align="center" width="5%"><?php 
+                                    <td class=" " align="center" width="5%"><?php
                                     if ($data[11]!='') {
                                         $ret=$data[11];
                                         $nama_ret=$conn->query("SELECT retailer_name from t4t_retailer where kode_retailer='$ret'")->fetch();
@@ -189,47 +189,47 @@ if ($_POST['range_tanggal']==true) {
                                         }else{
                                             echo $ret;
                                         }
-                                      
+
                                     }else{
                                         echo "-";
                                         } ?></td>
 
                                 </tr>
-                                          
-                            <?php 
-                              $no++;  
+
+                            <?php
+                              $no++;
 
                               $total_tree[]=$data[5];
                             }
-                             ?>      
+                             ?>
                                 <tfoot>
                                     <tr class="font-hijau">
                                         <td colspan="6">TOTAL</td>
                                         <td align="center" class="font-hijau"><b><?php echo $tot_tree=number_format(array_sum($total_tree)) ?></b></td>
                                     </tr>
-                                </tfoot>  
+                                </tfoot>
                                         </tbody>
                                     <?php $_SESSION['tot_tree']=$tot_tree ?>
                                     </table>
-<?php 
+<?php
 }
  ?>
                                 </div>
-               
+
 
 
                       </div>
 
-                    
 
 
-  
 
-                    
+
+
+
                     </div>
 
                     </font>
-                 
+
                 </div>
               </div>
             </div>
@@ -525,7 +525,7 @@ if ($_POST['range_tanggal']==true) {
         });
     </script>
     <!-- /ion_range -->
-   
+
       <!-- Datatables -->
 
         <script src="../js/datatables/js/jquery.dataTables.js"></script>

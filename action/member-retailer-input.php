@@ -7,7 +7,7 @@ include '../koneksi/koneksi.php';
 	date_default_timezone_set('Asia/Jakarta');
 	$tanggal=date("Y-m-d h:i:s");
 	$kode=$_SESSION['kode'];
-	$id_part=$conn->query("select no from t4t_partisipan where id='$kode'")->fetch();
+	$id_part=$conn->query("select no from t4t_participant where id='$kode'")->fetch();
 
 	$code=$_POST['code'];
 	$name=$_POST['nama'];
@@ -73,7 +73,7 @@ if ($_POST['code']) {
 		} catch (PDOException $e) {
 			echo $insert_error = $e->getMessage();
 		}
-		
+
 		if ($insert_error==false) {
 			$_SESSION['success']=3;
 			$_SESSION['message']=$name;

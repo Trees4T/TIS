@@ -1,4 +1,4 @@
-<?php 
+<?php
 $actual_link0 = "$_SERVER[REQUEST_URI]";
 $actual_link1 = explode("dashboard/", $actual_link0);
 $actual_link  = $actual_link1[1];
@@ -17,9 +17,9 @@ $actual_link  = $actual_link1[1];
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
-                  
+
                             <div class="x_content">
-                            <?php 
+                            <?php
                               if ($_SESSION['success']==1) {
                                 ?>
                             <div class="alert alert-success alert-dismissible fade in" role="alert">
@@ -63,14 +63,14 @@ $actual_link  = $actual_link1[1];
                                             <input id="password2" type="password" name="password2" data-validate-linked="password" class="form-control col-md-7 col-xs-12" required="required">
                                         </div>
                                     </div>
-                                    
-                                    <input type="hidden" name="link" value="<?php echo $actual_link ?>">
 
+                                    <input type="hidden" name="link" value="<?php echo $actual_link ?>">
+                                    <input type="hidden" name="btn_change_pass" value="1">
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-md-offset-3">
                                             <a href="?<?php echo paramEncrypt('hal=change-password')?>" class="btn btn-primary">Clear</a>
-                                            <button id="send" type="submit" name="btn_change_pass" class="btn btn-success">Save Changes</button>
+                                            <button id="send" type="submit" name="" class="btn btn-success">Save Changes</button>
                                         </div>
                                     </div>
                                 </form>
@@ -80,8 +80,8 @@ $actual_link  = $actual_link1[1];
                     </div>
                 </div>
             </div>
-            
-            
+
+
         </div>
         <!-- /page content -->
     </div>
