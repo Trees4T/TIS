@@ -128,7 +128,7 @@ while ($data=$tree_planted->fetch())
 
        //data loop
        $objPHPExcel->setActiveSheetIndex(0)
-							->setCellValue($A,$data[0])
+							->setCellValue($A,date("Y-m-d", strtotime($data[0])))
 							->setCellValue($B,$data[1])
 							->setCellValue($C,$data[2])
 							->setCellValue($D,$data[3])

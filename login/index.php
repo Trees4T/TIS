@@ -114,7 +114,7 @@ if ($_SESSION['kode']!="") {
                             <div>
                                 <h1><i class="fa fa-tree" style="font-size: 26px;"></i> Trees4Trees&trade;</h1>
 
-                                <p>©<?php echo date("Y") ?> Trees4Trees&trade; All Rights Reserved.  </p>
+                                <p>© <?php echo date("Y") ?> Trees4Trees&trade; All Rights Reserved.  </p>
                             </div>
                         </div>
                     </form>

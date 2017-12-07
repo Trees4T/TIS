@@ -53,7 +53,7 @@
                                       $data_petani = $fc->t4t_petani_detail($id_desa,$kd_petani);
                                       if ($data_petani->foto!="") {
                                       ?>
-                                      <img src="../../management_t4t/gbr/poto/<?php echo $data_petani->foto ?>" alt="Avatar" width="100%">
+                                      <img src="../assets/gbr/poto/<?php echo $data_petani->foto ?>" alt="Avatar" width="100%">
                                       <?php
                                       }else{
                                       ?>

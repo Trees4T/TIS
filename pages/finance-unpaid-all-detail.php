@@ -99,7 +99,7 @@ if ($sts_paid==1) {
                       <th rowspan="2"><center>Shipment No.</center></th>
                       <th rowspan="2"><center>Order No.</center></th>
                       <th colspan="5"><center>Container Size</center></th>
-                      <th rowspan="2"><center>Dest. City</center></th>
+                      <th rowspan="2"><center>Company Name</center></th>
                       <th rowspan="2"><center>Fee</center></th>
                       <th rowspan="2"><center>Paid</center></th>
                   </tr>
@@ -115,13 +115,14 @@ if ($sts_paid==1) {
               <tbody>
       <?php
       $th=$pil_th;
-      $shipment=$conn->query("select * from t4t_shipment where wkt_shipment like '%$pil_th%' and acc_paid='0' order by wkt_shipment desc");
+      $shipment=$conn->query("SELECT a.*,b.name FROM t4t_shipment a JOIN t4t_participant b ON a.id_comp=b.id
+        WHERE a.wkt_shipment LIKE '%$pil_th%' AND a.acc_paid='0' ");
       while ($load_shipment=$shipment->fetch()) {
 
 
       ?>
                   <tr>
-                      <td align="center"><?php echo $load_shipment['wkt_shipment'] ?></td>
+                      <td align="center"><?php echo date("Y-m-d", strtotime($load_shipment['wkt_shipment']))  ?></td>
 
                       <td align="center">
                         <a href="#" data-toggle="modal" data-target="#detail<?php echo $load_shipment['no'] ?>">
@@ -189,7 +190,7 @@ if ($sts_paid==1) {
                           }
                           ?>
                       </td>
-                      <td align="center"><?php echo $load_shipment['kota_tujuan'] ?></td>
+                      <td align="center"><?php echo $load_shipment['name'] ?></td>
                       <td align="center">
                         <?php
                         if ($load_shipment['fee']=='0') {
@@ -202,7 +203,7 @@ if ($sts_paid==1) {
                           ?>
                           <a href="#" data-toggle="modal" data-target="#fee<?php echo $load_shipment['no'] ?>">
                           <?php
-                        echo $load_shipment['fee'];
+                            echo $load_shipment['fee'];
                           ?>
                           </a>
                           <?php

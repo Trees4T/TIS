@@ -1,6 +1,12 @@
 <div class="modal fade" id="paid<?php echo $load_shipment['no'] ?>" role="dialog">
     <div class="modal-dialog ">
-
+<?php
+if ($load_shipment['acc_paid']==1) {
+  $btn = 'Unpaid';
+}else{
+  $btn = 'Paid';
+}
+?>
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -8,12 +14,14 @@
           <h4 class="modal-title">
           <?php
           if ($load_shipment['acc']==1) {
+
           ?>
             <div class="font-hijau">
                <i class="fa fa-check-circle-o "> </i> Paid
             </div>
           <?php
           }else{
+
           ?>
             <div class="red font-bold">
                &empty; Unpaid
@@ -77,7 +85,7 @@
             <input type="hidden" name="bl" value="<?php echo $load_shipment['bl'] ?>">
             <input type="hidden" name="shipment" value="<?php echo $load_shipment['no_shipment'] ?>">
 
-            <button type="submit" name="btn_save_unpaid" class="btn btn-success">Save Changes</button>
+            <button type="submit" name="btn_save_unpaid" class="btn btn-success"><?php echo $btn ?></button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
           </form>
         <br>

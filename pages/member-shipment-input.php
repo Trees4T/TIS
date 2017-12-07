@@ -39,45 +39,38 @@
         <div class="x_content">
           <br />
             <?php
-          if ($_SESSION['success']==1) {
+
+            if ($_SESSION['success']==1) {
+              $symbol ='success';
+              $text   ='<strong><i class="fa fa-check-circle"></i> Success!</strong> Your shipment successfully processed.';
+            }elseif ($_SESSION['success']==2) {
+              $symbol ='danger';
+              $text   ='<strong><i class="fa fa-warning"></i> Warning!</strong> Please input the container size. <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>';
+            }elseif ($_SESSION['success']==3) {
+              $symbol ='danger';
+              $text   ='<strong><i class="fa fa-warning"></i> Warning!</strong> Bill of Lading No. has already been taken. <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>';
+            }elseif ($_SESSION['success']==4) {
+              $symbol ='danger';
+              $text   ='<strong><i class="fa fa-warning"></i> Warning!</strong> Hang tags numbers is not valid, please check again. <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>';
+            }elseif ($_SESSION['success']==5) {
+              $symbol ='danger';
+              $text   ='<strong><i class="fa fa-warning"></i> Warning!</strong> Customer code is not filled or select another WIN Owner, please check again. <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>';
+            }
+
+
+
+            if ($_SESSION['success']==true) {
+
             ?>
-        <div class="alert alert-success alert-dismissible fade in" role="alert">
+        <div class="alert alert-<?php echo $symbol ?> alert-dismissible fade in" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
             </button>
-            <strong><i class="fa fa-check-circle"></i> Success!</strong> Your shipment successfully processed.
+            <?php echo $text ?>
         </div>
           <?php
+
           }
 
-          if($_SESSION['success']==2){
-          ?>
-        <div class="alert alert-danger alert-dismissible fade in" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-            </button>
-            <strong><i class="fa fa-warning"></i> Warning!</strong> Please input the container size. <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>
-        </div>
-          <?php
-          }
-
-          if($_SESSION['success']==3){
-          ?>
-        <div class="alert alert-danger alert-dismissible fade in" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-            </button>
-            <strong><i class="fa fa-warning"></i> Warning!</strong> Bill of Lading No. has already been taken. <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>
-        </div>
-          <?php
-          }
-
-          if($_SESSION['success']==4){
-          ?>
-        <div class="alert alert-danger alert-dismissible fade in" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-            </button>
-            <strong><i class="fa fa-warning"></i> Warning!</strong> Hang tags numbers is not valid, please check again. <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>
-        </div>
-          <?php
-          }
 
           unset($_SESSION['success']);
            ?>
@@ -150,7 +143,7 @@ $kode=$_SESSION['kode'];
 
 
 
-          <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="../action/member-shipment-input.php" enctype="multipart/form-data">
+          <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="../action/member-shipment-input.php" enctype="multipart/form-data" name="hasil">
             <font size="">
 
             <div class="col-sm-12">
@@ -186,7 +179,6 @@ $kode=$_SESSION['kode'];
                   <?php endif; ?>
 
           <?php endif; ?>
-
 
 
               </div>
@@ -286,6 +278,62 @@ $kode=$_SESSION['kode'];
             </div>
 
             <?php
+            // if ($_SESSION['level']=="part") {
+            // $no_id=$office->data_member($kode); //t4t_partisipan
+            // }elseif ($_SESSION['level']=="mkt") {
+            // $no_id=$office->data_member($kode_comp); //t4t_partisipan
+            // }
+
+            if ($_SESSION['level']=="part") {
+              $cek_customer=$office->cek_relation($kode); //t4t_retailer
+            }elseif ($_SESSION['level']=="mkt") {
+              $cek_customer=$office->cek_relation($kode_comp); //t4t_retailer
+            }
+
+
+            if ($cek_customer->repeat_id == true) {
+            ?>
+
+                        <div class="form-group">
+                          <label class="control-label col-md-5" for="first-name">WIN Owner <span class="required"></span>
+                          </label>
+                          <div class="col-md-4">
+                            <select class="form-control" name="relation" id="owner" onchange="win_ownerValidasi()">
+                              <option value="1">Customer <i>(default)</i></option>
+                              <option value="0"><?php $member=$office->data_member($kode); echo $member->name; ?> </option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="control-label col-md-5" for="first-name">Customer Code <span class="required"></span>
+                          </label>
+                          <div class="col-md-4">
+                            <select class="form-control" name="c_code" onchange="win_ownerValidasi()" id="c_code">
+                              <option value="">- Choose -</option>
+                              <?php
+                              if ($_SESSION['level']=="part") {
+                                $customer=$office->retailer_list2($kode);//t4t_retailer
+                              }elseif ($_SESSION['level']=="mkt") {
+                                $customer=$office->retailer_list2($kode_comp);//t4t_retailer
+                              }
+                              foreach ($customer as $data_customer) {
+                              ?>
+                              <option value="<?php echo $data_customer->repeat_id ?>"><?php echo $data_customer->repeat_id; echo " (".$data_customer->name.")"; ?></option>
+                              <?php
+                              } ?>
+                            </select>
+                          </div>
+                          <span id="hasil"></span>
+                        </div>
+
+
+
+            <?php
+            }
+            ?>
+
+            <?php
 
             if ($_SESSION['level']=="part") {
               $pic_name=$office->data_member($kode); //t4t_partisipan
@@ -314,9 +362,10 @@ $kode=$_SESSION['kode'];
               <label class="control-label col-md-5" for="first-name">Destination City <span class="required red">*</span>
               </label>
               <div class="col-md-4">
-                <input type="text" class="form-control col-md-7 col-xs-12" name="destination" required>
+                <input type="text" class="form-control col-md-7 col-xs-12" name="destination" onblur="win_ownerValidasi()" id="pemicu" required>
               </div>
             </div>
+
 
             <div class="form-group">
               <label class="control-label col-md-5" for="first-name">Note <span class="required"></span>
@@ -326,60 +375,6 @@ $kode=$_SESSION['kode'];
 
               </div>
             </div>
-<?php
-// if ($_SESSION['level']=="part") {
-// $no_id=$office->data_member($kode); //t4t_partisipan
-// }elseif ($_SESSION['level']=="mkt") {
-// $no_id=$office->data_member($kode_comp); //t4t_partisipan
-// }
-
-if ($_SESSION['level']=="part") {
-  $cek_customer=$office->cek_relation($kode); //t4t_retailer
-}elseif ($_SESSION['level']=="mkt") {
-  $cek_customer=$office->cek_relation($kode_comp); //t4t_retailer
-}
-
-
-if ($cek_customer->repeat_id == true) {
-?>
-            <div class="form-group">
-              <label class="control-label col-md-5" for="first-name">Customer Code <span class="required"></span>
-              </label>
-              <div class="col-md-4">
-                <select class="form-control" name="c_code">
-                  <option value="">- Choose -</option>
-                  <?php
-                  if ($_SESSION['level']=="part") {
-                    $customer=$office->retailer_list2($kode);//t4t_retailer
-                  }elseif ($_SESSION['level']=="mkt") {
-                    $customer=$office->retailer_list2($kode_comp);//t4t_retailer
-                  }
-                  foreach ($customer as $data_customer) {
-                  ?>
-                  <option value="<?php echo $data_customer->repeat_id ?>"><?php echo $data_customer->repeat_id; echo " (".$data_customer->name.")"; ?></option>
-                  <?php
-                  } ?>
-                </select>
-
-              </div>
-            </div>
-
-
-            <div class="form-group">
-              <label class="control-label col-md-5" for="first-name">WIN Owner <span class="required"></span>
-              </label>
-              <div class="col-md-4">
-                <select class="form-control" name="relation">
-                  <option value="0"><?php $member=$office->data_member($kode); echo $member->name; ?> <i>(default)</i></option>
-                  <option value="1">Customer</option>
-                </select>
-              </div>
-            </div>
-
-<?php
-}
-?>
-
 
             <div class="form-group">
               <label class="control-label col-md-5" for="first-name">Bill of Lading copy attached <span class="required red">*</span>
@@ -389,10 +384,6 @@ if ($cek_customer->repeat_id == true) {
                <!--  <p class="red">*maximum upload size 200kb.</p> -->
               </div>
             </div>
-
-
-
-
 
             <div class="ln_solid"></div>
             <div class="form-group">
@@ -409,6 +400,7 @@ if ($cek_customer->repeat_id == true) {
       </div>
     </div>
   </div>
+  <!-- end row -->
 
                      <!-- js -->
                   </div>
@@ -674,6 +666,20 @@ if ($cek_customer->repeat_id == true) {
     	success:function(data){
     		$("#status").html(data);
     		$("#loaderIcon").hide();
+    	},
+    	error:function (){}
+    	});
+    }
+    </script>
+    <script>
+    function win_ownerValidasi() {
+    	$("#loaderIcon").show();
+    	jQuery.ajax({
+    	url: "../action/validasi_win_owner.php",
+    	data:'ret='+$("#c_code").val()+'&owner='+$("#owner").val(),
+    	type: "POST",
+      success:function(data){
+        $("#hasil").html(data);
     	},
     	error:function (){}
     	});

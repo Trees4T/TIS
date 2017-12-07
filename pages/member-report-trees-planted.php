@@ -171,7 +171,7 @@ if ($_POST['range_tanggal']==true) {
                              ?>
 
                                 <tr class="even pointer">
-                                    <td class=" " align="center" width="12.5%"><?php echo $data[0] ?></td>
+                                    <td class=" " align="center" width="12.5%"><?php echo date("Y-m-d", strtotime($data[0])) ?></td>
                                     <td class=" " align="center" width="12.5%"><?php echo $data[12] ?></td>
                                     <td class=" " align="center" width="12.5%"><?php echo $data[6] ?></td>
                                     <td class=" " width="12.5%"><?php echo $data[1] ?></td>
@@ -183,9 +183,11 @@ if ($_POST['range_tanggal']==true) {
                                     <td class=" " align="center" width="5%"><?php
                                     if ($data[11]!='') {
                                         $ret=$data[11];
-                                        $nama_ret=$conn->query("SELECT retailer_name from t4t_retailer where kode_retailer='$ret'")->fetch();
-                                        if ($nama_ret[0]==true) {
-                                            echo $nama_ret[0];
+
+                                        $nama_retailer = $office->nama_retailer($_SESSION['kode'],$ret);
+                                        //$nama_ret=$conn->query("SELECT retailer_name from t4t_retailer where kode_retailer='$ret'")->fetch();
+                                        if ($nama_retailer->name==true) {
+                                            echo $nama_retailer->name;
                                         }else{
                                             echo $ret;
                                         }

@@ -70,7 +70,7 @@ $actual_link  = $actual_link1[1];
                                         <th><center>No. Order</center></th>
                                         <th><center>Hang Tags Requested</center></th>
                                         <th><center>WINS Number</center></th>
-                                        <th><center>Destination City</center></th>
+                                        <th><center>Company Name</center></th>
                                         <th><center>Approved</center></th>
                                     </tr>
                                 </thead>
@@ -79,7 +79,10 @@ $actual_link  = $actual_link1[1];
                         <?php
                         $bulan = date("Y-m");
 
-                        $order=$conn->query("select no, wkt_order, no_order, jml_wins, acc, tipe_prod, wins1, wins2, kota_tujuan,id_comp from t4t_order where acc=0 and wkt_order like '%$bulan-%'");
+                        $order=$conn->query("SELECT a.no, a.wkt_order, a.no_order, a.jml_wins, a.acc, a.tipe_prod, a.wins1, a.wins2, a.kota_tujuan, a.id_comp, b.name
+                        FROM t4t_order a JOIN t4t_participant b
+                        ON a.id_comp=b.id
+                        WHERE a.acc=0  and wkt_order like '%$bulan-%'");
                         while ($load_order=$order->fetch()) {
                             $id_order=$load_order['no'];
                             $kode    =$load_order['id_comp'];
@@ -101,7 +104,7 @@ $actual_link  = $actual_link1[1];
                                         </td>
                                         <td align="center">
                                             <?php
-                                            echo $load_order['kota_tujuan']
+                                            echo $load_order['name']
                                             ?>
                                         </td>
 

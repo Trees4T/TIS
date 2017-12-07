@@ -40,7 +40,7 @@ $nama_mu        = $fc->nama_mu($kode_kabupaten,$kode_provinsi);
                       <?php
                       if ($data->foto!="") {
                       ?>
-                      <img src="../../management_t4t/gbr/poto/<?php echo $data->foto ?>" alt="Avatar" width="100%">
+                      <img src="../assets/gbr/poto/<?php echo $data->foto ?>" alt="Avatar" width="100%">
                       <?php
                       }else{
                       ?>

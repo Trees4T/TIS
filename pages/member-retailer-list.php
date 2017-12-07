@@ -13,7 +13,7 @@
         <div class="x_title">
             <h2><i class="fa fa-folder-open"></i> Retailer List <small></small></h2>
             <ul class="nav navbar-right panel_toolbox">
-                <a href="?<?php echo paramEncrypt('hal=member-retailer-input')?>" data-toggle="tooltip" data-placement="left" title="Add new retailers"><i class="fa fa-plus-circle"></i> Input Retailers</a>
+                <!-- <a href="?<?php //echo paramEncrypt('hal=member-retailer-input')?>" data-toggle="tooltip" data-placement="left" title="Add new retailers"><i class="fa fa-plus-circle"></i> Input Retailers</a> -->
             </ul>
             <div class="clearfix"></div>
         </div>
@@ -69,8 +69,8 @@
                                                 <th width="15%"><center>Code<center> </th>
                                                 <th width="25%"><center>Retailer</center> </th>
                                                 <th width="15%"><center>Phone</center> </th>
-                                                <th width="15%"><center>CP</center> </th>
-                                                <th width="15%"><center>Action</center> </th>
+                                                <th width="15%"><center>PIC</center> </th>
+                                                <!-- <th width="15%"><center>Action</center> </th> -->
                                             </tr>
 
                                         </thead>
@@ -91,26 +91,26 @@
 
                                 <tr class="even pointer">
                                     <td align="center"><?php echo $no ?></td>
-                                    <td><?php echo $retailers->related_part ?></td>
-                                    <td><?php echo $retailers->name ?></td>
+                                    <td><center><?php echo $retailers->repeat_id ?></center></td>
+                                    <td><a href="#" data-toggle="modal" data-target="#ModalLihat<?php echo $retailers->no ?>"><?php echo $retailers->name ?></a></td>
                                     <td><?php echo $retailers->phone ?></td>
-                                    <td><?php echo $retailers->director ?></td>
-                                    <td align="center">
-                <a href="#" data-toggle="modal" data-target="#ModalEdit<?php echo $retailers->no ?>">Edit <i class="fa fa-edit"></i></a>
+                                    <td><?php echo $retailers->pic ?></td>
+                                    <!-- <td align="center">
+                <a href="#" data-toggle="modal" data-target="#ModalEdit<?php //echo $retailers->no ?>">Edit <i class="fa fa-edit"></i></a>
                 |
-                <a href="#" data-toggle="modal" data-target="#ModalHapus<?php echo $retailers->no ?>">Delete <i class="fa fa-trash"></i></a>
-                                    </td>
+                <a href="#" data-toggle="modal" data-target="#ModalHapus<?php //echo $retailers->no ?>">Delete <i class="fa fa-trash"></i></a>
+                                    </td> -->
                                 </tr>
-                                <!-- Modal Edit-->
-                                 <div class="modal fade" id="ModalEdit<?php echo $retailers->no ?>" role="dialog">
+                                <!-- Modal Lihat-->
+                                 <div class="modal fade" id="ModalLihat<?php echo $retailers->no ?>" role="dialog">
                                    <div class="modal-dialog ">
 
                                      <!-- Modal content-->
                                      <div class="modal-content">
                                        <div class="modal-header">
                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                         <h4 class="modal-title font-kuning">
-                                         <i class="fa fa-edit"></i> Edit <strong><?php echo strtoupper($retailers->name) ?></strong>
+                                         <h4 class="modal-title">
+                                         <strong><?php echo strtoupper($retailers->name) ?></strong>
                                          </h4>
                                        </div>
 
@@ -123,7 +123,7 @@
                                                      <label class="control-label col-md-3" for="first-name">Retailer Code <span class="required">*</span>
                                                      </label>
                                                      <div class="col-md-6">
-                                                       <input type="text" class="form-control" name="code" required value="<?php echo $retailers->related_part ?>">
+                                                       <input type="text" class="form-control" name="code" required value="<?php echo $retailers->repeat_id ?>">
 
                                                      </div>
                                                    </div>
@@ -243,7 +243,161 @@
                                                    <div class="form-group">
                                                      <div class="col-md-5 col-md-offset-5"> <br>
 
-                                                       <button type="submit" name="edit" value="edit" class="btn btn-success">Submit</button>
+                                                       <!-- <button type="submit" name="edit" value="edit" class="btn btn-success">Submit</button> -->
+                                                     </div>
+                                                   </div>
+
+                                                 </form>
+
+                                       </div>
+                                     </div>
+
+                                   </div>
+                                 </div>
+                                 <!-- end modal -->
+                                <!-- Modal Edit-->
+                                 <div class="modal fade" id="ModalEdit<?php echo $retailers->no ?>" role="dialog">
+                                   <div class="modal-dialog ">
+
+                                     <!-- Modal content-->
+                                     <div class="modal-content">
+                                       <div class="modal-header">
+                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                         <h4 class="modal-title font-kuning">
+                                         <i class="fa fa-edit"></i> Edit <strong><?php echo strtoupper($retailers->name) ?></strong>
+                                         </h4>
+                                       </div>
+
+
+                                       <div class="modal-footer">
+                                               <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="../action/member-retailer-input.php">
+
+                                                   <div class="col-sm-12"><br>
+                                                   <div class="form-group">
+                                                     <label class="control-label col-md-3" for="first-name">Retailer Code <span class="required">*</span>
+                                                     </label>
+                                                     <div class="col-md-6">
+                                                       <input type="text" class="form-control" name="code" required value="<?php echo $retailers->repeat_id ?>">
+
+                                                     </div>
+                                                   </div>
+                                                   </div>
+
+                                                   <div class="col-sm-12">
+                                                   <div class="form-group">
+                                                     <label class="control-label col-md-3" for="first-name">Retailer Name <span class="required">*</span>
+                                                     </label>
+                                                     <div class="col-md-6">
+                                                       <input type="text" class="form-control" name="nama" required value="<?php echo $retailers->name ?>">
+
+                                                     </div>
+                                                   </div>
+                                                   </div>
+
+                                                   <div class="col-sm-12">
+                                                   <div class="form-group">
+                                                     <label class="control-label col-md-3" for="first-name">Address <span class="required">*</span>
+                                                     </label>
+                                                     <div class="col-md-6">
+                                                       <input type="text" class="form-control" name="alamat" required value="<?php echo $retailers->address ?>">
+
+                                                     </div>
+                                                   </div>
+                                                   </div>
+
+                                                   <!-- <div class="col-sm-12">
+                                                   <div class="form-group">
+                                                     <label class="control-label col-md-3" for="first-name">City <span class="required">*</span>
+                                                     </label>
+                                                     <div class="col-md-6">
+                                                       <input type="text" class="form-control" name="kota" required value="<?php// echo $retailers->city'] ?>">
+
+                                                     </div>
+                                                   </div>
+                                                   </div> -->
+
+                                                   <!-- <div class="col-sm-12">
+                                                   <div class="form-group">
+                                                     <label class="control-label col-md-3" for="first-name">Country <span class="required">*</span>
+                                                     </label>
+                                                     <div class="col-md-6">
+                                                       <input type="text" class="form-control" name="negara" required value="<?php //echo $retailers->country'] ?>">
+
+                                                     </div>
+                                                   </div>
+                                                   </div> -->
+
+                                                   <div class="col-sm-12">
+                                                   <div class="form-group">
+                                                     <label class="control-label col-md-3" for="first-name">Email <span class="required">*</span>
+                                                     </label>
+                                                     <div class="col-md-6">
+                                                       <input type="email" class="form-control" name="email" required value="<?php echo $retailers->email ?>">
+
+                                                     </div>
+                                                   </div>
+                                                   </div>
+
+                                                   <div class="col-sm-12">
+                                                   <div class="form-group">
+                                                     <label class="control-label col-md-3" for="first-name">Phone <span class="required"></span>
+                                                     </label>
+                                                     <div class="col-md-6">
+                                                       <input type="text" class="form-control" name="phone" value="<?php echo $retailers->phone ?>">
+
+                                                     </div>
+                                                   </div>
+                                                   </div>
+
+                                                   <div class="col-sm-12">
+                                                   <div class="form-group">
+                                                     <label class="control-label col-md-3" for="first-name">Fax <span class="required"></span>
+                                                     </label>
+                                                     <div class="col-md-6">
+                                                       <input type="text" class="form-control" name="fax" value="<?php echo $retailers->fax ?>">
+
+                                                     </div>
+                                                   </div>
+                                                   </div>
+
+                                                   <div class="col-sm-12">
+                                                   <div class="form-group">
+                                                     <label class="control-label col-md-3" for="first-name">Website <span class="required"></span>
+                                                     </label>
+                                                     <div class="col-md-6">
+                                                       <input type="text" class="form-control" name="web" value="<?php echo $retailers->website ?>">
+
+                                                     </div>
+                                                   </div>
+                                                   </div>
+
+                                                   <div class="col-sm-12">
+                                                   <div class="form-group">
+                                                     <label class="control-label col-md-3" for="first-name">PIC <span class="required">*</span>
+                                                     </label>
+                                                     <div class="col-md-6">
+                                                       <input type="text" class="form-control" name="cp" required value="<?php echo $retailers->pic ?>">
+
+                                                     </div>
+                                                   </div>
+                                                   </div>
+
+                                                   <div class="col-sm-12">
+                                                   <div class="form-group">
+                                                     <label class="control-label col-md-3" for="first-name">Director <span class="required"></span>
+                                                     </label>
+                                                     <div class="col-md-6">
+                                                       <input type="text" class="form-control" name="director" value="<?php echo $retailers->director ?>">
+
+                                                     </div>
+                                                   </div>
+                                                   </div>
+
+                                                   <input type="hidden" name="id_ret" value="<?php echo $retailers->no ?>">
+                                                   <div class="form-group">
+                                                     <div class="col-md-5 col-md-offset-5"> <br>
+
+                                                       <!-- <button type="submit" name="edit" value="edit" class="btn btn-success">Submit</button> -->
                                                      </div>
                                                    </div>
 
@@ -282,7 +436,7 @@
                                          <input type="hidden" name="code" required value="<?php echo $retailers->related_part ?>">
                                          <input type="hidden" name="nama" required value="<?php echo $retailers->name ?>">
                                          <input type="hidden" name="id_ret" value="<?php echo $retailers->name ?>">
-                                         <button type="submit" class="btn btn-danger" name="delete" value="delete">Yes sure.</button>
+                                         <!-- <button type="submit" class="btn btn-danger" name="delete" value="delete">Yes sure.</button> -->
                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                        </form>
                                        </div>

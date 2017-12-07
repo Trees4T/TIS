@@ -15,7 +15,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2> WINS Report </h2>
+                  <h2> Order & Shipment Report </h2>
 
                   <div class="clearfix"></div>
                 </div>
@@ -74,9 +74,9 @@
                                                 <?php
                                                 $nm_status=$_POST['status'];
                                                 if ($nm_status==0) {
-                                                    $nm_status="Unapproved";
+                                                    $nm_status="Unpaid";
                                                 }elseif ($nm_status==1) {
-                                                    $nm_status="Approved";
+                                                    $nm_status="Paid";
                                                 }elseif ($nm_status==2) {
                                                     $nm_status="All";
                                                 }
@@ -87,8 +87,8 @@
                                                 <?php
                                                     }
                                                 ?>
-                                                <option value="1">Approved</option>
-                                                <option value="0">Unapproved</option>
+                                                <option value="1">Paid</option>
+                                                <option value="0">Unpaid</option>
                                                 <option value="2">All</option>
 
                                                 </select>
@@ -147,7 +147,7 @@ if ($_POST['range_tanggal']==true) {
                                                 <!-- <th><center>BL No.</center> </th> -->
                                                 <th><center>Order No.</center></th>
                                                 <th><center>Wins Number</center></th>
-                                                <th><center>Status Approve</center></th>
+                                                <th><center>Payment Status </center></th>
                                             </tr>
                                         </thead>
 
@@ -158,11 +158,11 @@ if ($_POST['range_tanggal']==true) {
                             $no=1;
                             if ($sts==1 or $sts==0) {
                                 $wins_rep=$conn->query("select id_comp,wkt_shipment,no_shipment,bl,no_order,wins_used,acc,
-                                    no,no,bl_tgl,item_qty,kota_tujuan,note,buyer,foto
-                                     from t4t_shipment where wkt_shipment BETWEEN '$nilai_t_awal' and '$nilai_t_akhir' and acc='$sts'");
+                                    no,no,bl_tgl,item_qty,kota_tujuan,note,buyer,foto,acc_paid
+                                     from t4t_shipment where wkt_shipment BETWEEN '$nilai_t_awal' and '$nilai_t_akhir' and acc_paid='$sts'");
                             }elseif ($sts==2) {
                                 $wins_rep=$conn->query("select id_comp,wkt_shipment,no_shipment,bl,no_order,wins_used,acc,
-                                no,no,bl_tgl,item_qty,kota_tujuan,note,buyer,foto
+                                no,no,bl_tgl,item_qty,kota_tujuan,note,buyer,foto,acc_paid
                                  from t4t_shipment where wkt_shipment BETWEEN '$nilai_t_awal' and '$nilai_t_akhir'");
                             }
 
@@ -177,19 +177,19 @@ if ($_POST['range_tanggal']==true) {
                                         $nama=$conn->query("select name from t4t_participant where id='$id_comp'")->fetch();
                                         echo $nama[0];
                                         ?></td>
-                                    <td align="center" width="7.5%"><?php echo $load_shipment[1] ?></td>
+                                    <td align="center" width="7.5%"><?php echo date("Y-m-d", strtotime($load_shipment[1])) ?></td>
                                     <td align="center" width="7.5%"><a href="#" data-toggle="modal" data-target="#myModal<?php echo $load_shipment['no'] ?>"><?php echo $load_shipment[2] ?></a></td>
                                     <!-- <td align="center" width="7.5%"><?php echo $data[3] ?></td> -->
                                     <td align="center" width="7.5%"><textarea readonly=""><?php echo $load_shipment[4] ?></textarea></td>
                                     <td align="center" width="15%"><textarea readonly=""><?php echo $load_shipment[5] ?></textarea></td>
                                     <td align="center" width="5%"><?php
-                                        if ($load_shipment[6]==1) {
+                                        if ($load_shipment['acc_paid']==1) {
                                             ?>
                                             <i class="fa fa-check-square-o"></i>
                                             <?php
                                         }else{
                                             ?>
-                                            <i class="fa fa-square-o"></i>
+                                            <div class="font-15 red">&empty;</div>
                                             <?php
                                         }
 
@@ -198,7 +198,7 @@ if ($_POST['range_tanggal']==true) {
                                 </tr>
     <!-- Modal -->
   <?php
-  include 'modal/bl-detail.php';
+  include 'modal/member-bl-detail.php';
   ?>
   <!-- end modal -->
                             <?php

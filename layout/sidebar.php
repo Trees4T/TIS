@@ -72,7 +72,7 @@
                             $kode=$_SESSION['kode'];
                             $foto_fc  = $conn->query("SELECT foto from t4t_fc where kode='$kode'")->fetch(PDO::FETCH_OBJ);
                         ?>
-                            <img src="../../management_t4t/gbr/poto/<?php echo $foto_fc->foto ?>" alt="..." class="img-circle profile_img" height='60' width='60'>
+                            <img src="../assets/gbr/poto/<?php echo $foto_fc->foto ?>" alt="..." class="img-circle profile_img" height='60' width='60'>
                         <?php
                       }elseif ($id_group=='part' or $id_group=='admoff' or $id_group=='fin' or $id_group=='mkt') {
                             # code...
@@ -180,7 +180,7 @@
                                  ?>
                                     <img src="<?php
                                     if ($id_group=='fc') {
-                                        echo "../../management_t4t/gbr/poto/".$foto_fc->foto."";
+                                        echo "../assets/gbr/poto/".$foto_fc->foto."";
                                     }else{
                                         echo "../images/default.png";
                                     }

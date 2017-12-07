@@ -7,7 +7,9 @@ include '../koneksi/koneksi.php';
 
 date_default_timezone_set('Asia/Jakarta');
 
-$cek_eror_wins = $_SESSION['eror'];
+$cek_eror_wins       = $_SESSION['eror'];
+$cek_eror_wins_owner = $_SESSION['eror_owner'];
+
 
 if ($_SESSION['level']=="part") {
   $link_user = "member";
@@ -18,6 +20,9 @@ if ($_SESSION['level']=="part") {
 
 if ($cek_eror_wins==1) {
   $_SESSION['success']=4;
+  header("location:../dashboard/".$link_user.".php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
+}elseif($cek_eror_wins_owner==1){
+  $_SESSION['success']=5;
   header("location:../dashboard/".$link_user.".php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
 }else{
 
@@ -56,7 +61,7 @@ if ($cek_eror_wins==1) {
     		$namafile =$bl_files['name'];
     		$namafile2=$no_shipment.'-'.$waktu.'-'.$namafile;
 
-    		$tujuan   ="../../management_t4t/gbr/shipment/$namafile2";
+    		$tujuan   ="../assets/gbr/shipment/$namafile2";
 
         //cek no bl
     		$cek_bl=$conn->query("SELECT bl from t4t_shipment where bl='$bl'")->fetch();

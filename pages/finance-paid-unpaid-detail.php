@@ -122,7 +122,7 @@ if ($sts_paid==1) {
 
       ?>
                   <tr>
-                      <td align="center"><?php echo $load_shipment['wkt_shipment'] ?></td>
+                      <td align="center" width="10%"><?php echo date("Y-m-d", strtotime($load_shipment['wkt_shipment']))  ?></td>
 
                       <td align="center">
                         <a href="#" data-toggle="modal" data-target="#detail<?php echo $load_shipment['no'] ?>">
@@ -275,7 +275,7 @@ include 'modal/fee-update.php';
 
       ?>
                   <tr>
-                      <td align="center"><?php echo $load_shipment['wkt_shipment'] ?></td>
+                      <td align="center" width="10%"><?php echo date("Y-m-d", strtotime($load_shipment['wkt_shipment']))  ?></td>
                       <td align="center">
                         <a href="#" data-toggle="modal" data-target="#detail<?php echo $load_shipment['no'] ?>">
                               <?php echo $load_shipment['no_shipment'] ?>

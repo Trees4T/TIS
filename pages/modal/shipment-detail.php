@@ -193,7 +193,7 @@ if ($cek_customer==true) {
                          echo "-";
                         }else{
                           ?>
-                          <a href="../../management_t4t/gbr/shipment/<?php echo $load_shipment['foto']; ?>" target="_blank">
+                          <a href="../assets/gbr/shipment/<?php echo $load_shipment['foto']; ?>" target="_blank">
                           <?php
                          echo $load_shipment['foto'];
                           ?>

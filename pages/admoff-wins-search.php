@@ -124,7 +124,7 @@
 $nomor_win=$_SESSION['win'];
 if (isset($_SESSION['win'])) {
 
-unset($_SESSION['win']);
+
   //ORDER
   $order = $conn->query("SELECT * from t4t_order where wins1 <= '$nomor_win' and wins2 >= '$nomor_win' or wins1='$nomor_win' and wins2='$nomor_win'");
 
@@ -141,7 +141,7 @@ unset($_SESSION['win']);
                                                 <div class="clearfix"></div>
                                             </div>
                                             <div class="x_content">
-
+                                                <p class="green"> WIN <b><?php echo $_SESSION['win']; ?></b></p>
                                                 <div class="bs-example" data-example-id="simple-jumbotron">
                                                     <div class="jumbotron form-group">
                                                     <?php
@@ -227,7 +227,7 @@ unset($_SESSION['win']);
                                                 <div class="clearfix"></div>
                                             </div>
                                             <div class="x_content">
-
+                                              <p class="green"> WIN <b><?php echo $_SESSION['win']; ?></b></p>
                                                 <div class="bs-example" data-example-id="simple-jumbotron">
                                                     <div class="jumbotron">
                                                       <?php
@@ -313,6 +313,8 @@ unset($_SESSION['win']);
 <?php } ?>
 
 <?php
+
+
 ###### TAHAP 2
 $jml_loop_order_search = $_SESSION['jml'];
 if (isset($jml_loop_order_search)) {
@@ -536,6 +538,8 @@ if (isset($jml_loop_order_search)) {
 }//end if
 ?>
 <?php
+unset($_SESSION['win']);
+
 $ship_tdk_ada = $_SESSION['kosong'];
 unset($_SESSION['kosong']);
 if ($ship_tdk_ada==true) {

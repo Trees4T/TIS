@@ -55,6 +55,15 @@ $id_ship=$_SESSION['id_ship'];
                 </div>
                   <?php
                   }
+                  if($_SESSION['success']==5){
+                  ?>
+                <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    <strong><i class="fa fa-warning"></i> Warning!</strong> Customer code is not filled or select another WIN Owner, please check again. <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>
+                </div>
+                  <?php
+                  }
 
                   unset($_SESSION['success']);
                   unset($_SESSION['no_shipment']);
@@ -125,7 +134,7 @@ $data=$conn->query("select * from t4t_shipment where no='$id_ship'")->fetch();
                        <label class="control-label"><?php echo $no_ordership[0]; ?></label>
                        </div>
 
-                        <select multiple="" class="form-control" name="order[]" <?php if ($edit==1) { echo "readonly"; } ?>>
+                        <select multiple="" class="form-control" name="order[]" id="order" <?php if ($edit==1) { echo "readonly"; } ?>>
 <?php
 
 $no_order=$conn->query("select no_order from t4t_order where id_comp='$kode' and acc=1 order by no desc");
@@ -149,9 +158,9 @@ while ($data_order=$no_order->fetch()) {
                       <label class="control-label col-md-5" for="first-name">Hang Tag numbers used <span class="required red">*</span>
                       </label>ex : 2,100,5-10,11-30
                       <div class="col-md-4">
-                        <textarea type="text" class="form-control" name="wins_used" required <?php if ($edit==1) { echo "readonly"; } ?>><?php echo $data['wins_used'] ?></textarea>
+                        <textarea type="text" class="form-control" name="wins_used" required <?php if ($edit==1) { echo "readonly"; } ?> id="wins_used" onBlur="cekValidasi()"><?php echo $data['wins_used'] ?></textarea>
                         <br>
-
+                        <span id="status"></span>
                       </div>
                     </div>
 
@@ -211,6 +220,67 @@ $no++;
                     </div>
 
                     <?php
+                    if ($_SESSION['level']=="part") {
+                      $cek_customer=$office->cek_relation($kode); //t4t_retailer
+                    }
+                    $cek_buyer = $office->cek_ship_relation_buyer($data['no_shipment']);
+                    $nama_buyer= $office->nama_relation_buyer($kode,$cek_buyer->buyer);
+
+                    if ($cek_customer->repeat_id == true) {
+                    ?>
+                      <div class="form-group">
+                        <label class="control-label col-md-5" for="first-name">WIN Owner <span class="required"></span>
+                        </label>
+                        <div class="col-md-4">
+                          <select class="form-control" name="relation" id="owner" onchange="win_ownerValidasi()">
+                            <?php
+
+                            if ($cek_buyer->relation==1): ?>
+                                <option value="1"><?php echo $cek_buyer->buyer; echo " (".$nama_buyer->name.")"; ?></option>
+                              <?php else: ?>
+                                <option value="0"><?php $member=$office->data_member($kode); echo $member->name; ?> </option>
+                            <?php endif; ?>
+                            <option value="0"><?php $member=$office->data_member($kode); echo $member->name; ?> </option>
+                            <option value="1">Customer (new update)</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-5" for="first-name">Customer Code <span class="required"></span>
+                        </label>
+                        <div class="col-md-4">
+                          <select class="form-control" name="c_code" id="c_code" onchange="win_ownerValidasi()">
+                            <?php
+
+
+                            if ($cek_buyer->buyer==true): ?>
+                                <option value="<?php echo $cek_buyer->buyer ?>"><?php echo $cek_buyer->buyer; echo " (".$nama_buyer->name.")"; ?></option>
+                              <?php else: ?>
+                                <option value="">- Choose -</option>
+                            <?php endif; ?>
+
+                            <?php
+                            if ($_SESSION['level']=="part") {
+                              $customer=$office->retailer_list2($kode);//t4t_retailer
+                            }
+                            foreach ($customer as $data_customer) {
+                            ?>
+                            <option value="<?php echo $data_customer->repeat_id ?>"><?php echo $data_customer->repeat_id; echo " (".$data_customer->name.")"; ?></option>
+                            <?php
+                            } ?>
+                          </select>
+
+                        </div>
+                        <span id="hasil"></span>
+                      </div>
+
+
+                    <?php
+                    }
+                    ?>
+
+                    <?php
                         $pic_name=$conn->query("select pic from t4t_participant where id='$kode'")->fetch();
                          if ($pic_name[0]=="") {
                            #
@@ -234,7 +304,7 @@ $no++;
                       <label class="control-label col-md-5" for="first-name">Destination City <span class="required red">*</span>
                       </label>
                       <div class="col-md-4">
-                        <input type="text" class="form-control col-md-7 col-xs-12" name="destination" value="<?php echo $data['kota_tujuan'] ?>" required <?php if ($edit==1) { echo "readonly"; } ?>>
+                        <input type="text" class="form-control col-md-7 col-xs-12" name="destination" value="<?php echo $data['kota_tujuan'] ?>" required <?php if ($edit==1) { echo "readonly"; } ?> id="pemicu" onblur="win_ownerValidasi()">
                       </div>
                     </div>
 
@@ -246,65 +316,7 @@ $no++;
 
                       </div>
                     </div>
-                    <?php
-                    if ($_SESSION['level']=="part") {
-                      $cek_customer=$office->cek_relation($kode); //t4t_retailer
-                    }
 
-
-                    if ($cek_customer->repeat_id == true) {
-                    ?>
-
-                                <div class="form-group">
-                                  <label class="control-label col-md-5" for="first-name">Customer Code <span class="required"></span>
-                                  </label>
-                                  <div class="col-md-4">
-                                    <select class="form-control" name="c_code">
-                                      <?php
-                                      $cek_buyer = $office->cek_ship_relation_buyer($data['no_shipment']);
-                                      $nama_buyer= $office->nama_relation_buyer($kode,$cek_buyer->buyer);
-
-                                      if ($cek_buyer->buyer==true): ?>
-                                          <option value="<?php echo $cek_buyer->buyer ?>"><?php echo $cek_buyer->buyer; echo " (".$nama_buyer->name.")"; ?></option>
-                                        <?php else: ?>
-                                          <option value="">- Choose -</option>
-                                      <?php endif; ?>
-
-                                      <?php
-                                      if ($_SESSION['level']=="part") {
-                                        $customer=$office->retailer_list2($kode);//t4t_retailer
-                                      }
-                                      foreach ($customer as $data_customer) {
-                                      ?>
-                                      <option value="<?php echo $data_customer->repeat_id ?>"><?php echo $data_customer->repeat_id; echo " (".$data_customer->name.")"; ?></option>
-                                      <?php
-                                      } ?>
-                                    </select>
-
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="control-label col-md-5" for="first-name">WIN Owner <span class="required"></span>
-                                  </label>
-                                  <div class="col-md-4">
-                                    <select class="form-control" name="relation">
-                                      <?php
-
-                                      if ($cek_buyer->relation==1): ?>
-                                          <option value="1"><?php echo $cek_buyer->buyer; echo " (".$nama_buyer->name.")"; ?></option>
-                                        <?php else: ?>
-                                          <option value="0"><?php $member=$office->data_member($kode); echo $member->name; ?> <i>(default)</i></option>
-                                      <?php endif; ?>
-                                      <option value="0"><?php $member=$office->data_member($kode); echo $member->name; ?> <i>(default)</i></option>
-                                      <option value="1">Customer (new update)</option>
-                                    </select>
-                                  </div>
-                                </div>
-
-                    <?php
-                    }
-                    ?>
 
 
                     <div class="form-group">
@@ -783,7 +795,35 @@ $no++;
         });
     </script>
     <!-- /knob -->
-
+    <script>
+    // function cekValidasi() {
+    // 	$("#loaderIcon").show();
+    // 	jQuery.ajax({
+    // 	url: "../action/check_validity.php",
+    // 	data:'wins_used='+$("#wins_used").val()+'&order='+$("#order").val()+'&comp='+$("#comp").val(),
+    // 	type: "POST",
+    // 	success:function(data){
+    // 		$("#status").html(data);
+    // 		$("#loaderIcon").hide();
+    // 	},
+    // 	error:function (){}
+    // 	});
+    // }
+    </script>
+    <script>
+    function win_ownerValidasi() {
+    	$("#loaderIcon").show();
+    	jQuery.ajax({
+    	url: "../action/validasi_win_owner.php",
+    	data:'ret='+$("#c_code").val()+'&owner='+$("#owner").val(),
+    	type: "POST",
+      success:function(data){
+        $("#hasil").html(data);
+    	},
+    	error:function (){}
+    	});
+    }
+    </script>
 </body>
 
 </html>

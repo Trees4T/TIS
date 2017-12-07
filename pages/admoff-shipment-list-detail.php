@@ -102,7 +102,7 @@ $actual_link  = $actual_link1[1];
           $participant = $conn->query("SELECT name from t4t_participant where id='$kode'")->fetch();
         ?>
                     <tr>
-                      <td align="center"><?php echo $load_shipment['wkt_shipment'] ?></td>
+                      <td align="center"><?php echo date("Y-m-d", strtotime($load_shipment['wkt_shipment']))  ?></td>
 
                       <td align="center"><?php echo $participant[0] ?></td>
 
