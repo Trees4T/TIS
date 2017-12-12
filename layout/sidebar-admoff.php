@@ -6,5 +6,6 @@
     <ul class="nav child_menu" style="display: none"> -->
       <li><a href="?<?php echo paramEncrypt('hal=admoff-wins-report')?>"><i class="fa fa-file-pdf-o"></i> Order & Shipment Report</a></li>
       <li><a href="?<?php echo paramEncrypt('hal=admoff-wins-search')?>"><i class="fa fa-globe"></i> WINS INFO</a></li>
+      <li><a href="?<?php echo paramEncrypt('hal=admoff-wins-generate')?>"><i class="fa fa-cogs"></i> URL WINS Generate </a></li>
     <!-- </ul>
 </li> -->

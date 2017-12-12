@@ -1,4 +1,7 @@
 # TIS
+[12 Desember 2017]
+ + Modul Adminoffice (WIN URL Generate)
+
 [7 Desember 2017]
  + [M] Modul Participant, Adminoffice, Finance dengan fungsi Office
 
