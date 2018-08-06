@@ -25,6 +25,7 @@
           </h4>
         </div>
         <div class="modal-body">
+          <form class="" action="#" method="post">
 
                     <div class="form-group col-sm-12">
                       <label class="control-label col-md-4" for="first-name">Shipment Report No.
@@ -203,18 +204,41 @@ if ($cek_customer==true) {
                       </div>
                     </div>
 
+                    <div class="form-group col-sm-12">
+                      <label class="control-label col-md-4" for="first-name">Fee <span class="required"></span>
+                      </label>
+                      <div class="col-md-8 font-hijau">
+                        <?php
 
+                          $fee = $office->shipment_detail($load_shipment['no_shipment']);
+                          echo $fee->fee;
+                        ?>
+                      </div>
+                    </div>
 
+                    <div class="form-group col-sm-12">
+                      <label class="control-label col-md-4" for="first-name">Status Paid <span class="required"></span>
+                      </label>
+                      <div class="col-md-8 font-hijau">
+                        <?php
+                          $paid = $office->shipment_detail($load_shipment['no_shipment']);
+                          if ($fee->acc_paid==1) {
+                              echo "<i class='fa fa-check-square-o'></i> paid";
+                          }else{
+                              echo "<i class='fa fa-square-o'></i> unpaid";
+                          }
 
+                        ?>
+                      </div>
+                    </div>
 
+              <!-- <?php //if ($load_shipment['acc']==0): ?>
+                <div class="" align="center">
+                  <button type="submit" class="btn btn-warning" name="button">Update</button>
+                </div>
+              <?php //endif; ?> -->
 
-         <br><br><br><br><br><br><br><br>
-         <br><br><br><br><br><br><br><br>
-         <br><br><br><br><br><br><br><br>
-         <br><br><br><br><br><br><br><br>
-         <br><br><br><br><br><br><br><br>
-         <br><br><br>
-
+       </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

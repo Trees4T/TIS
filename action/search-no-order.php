@@ -5,6 +5,12 @@ session_start();
 
 $shipment = $_POST['no_ship'];
 
+if ($_SESSION['level']=='mkt') {
+  $link = 'marketing';
+}else{
+  $link = 'admin-office';
+}
+
 function multiexplode ($delimiters,$string) {
 
     $ready = str_replace($delimiters, $delimiters[0], $string);
@@ -17,7 +23,7 @@ $cek_shipment = $conn->query("SELECT wins_used,id_comp from t4t_shipment where n
 if ($cek_shipment[0]== false) {
   echo $_SESSION['shipment']=$shipment;
   echo $_SESSION['kosong']=1;
-  header("location:../dashboard/admin-office.php?cc341787c9dc94e264c6b37728243c42fe9932ba1b1d0d2b903b588d7fd2fb85");
+  header("location:../dashboard/$link.php?cc341787c9dc94e264c6b37728243c42fe9932ba1b1d0d2b903b588d7fd2fb85");
 }else{
   if (isset($shipment)) {
 
@@ -52,7 +58,7 @@ if ($cek_shipment[0]== false) {
                $_SESSION['shipment']=$shipment;
 
       }//end for
-  header("location:../dashboard/admin-office.php?cc341787c9dc94e264c6b37728243c42fe9932ba1b1d0d2b903b588d7fd2fb85");
+  header("location:../dashboard/$link.php?cc341787c9dc94e264c6b37728243c42fe9932ba1b1d0d2b903b588d7fd2fb85");
     }//end while
   }
 }//end if kosong atau tdk kosong shipmentnya

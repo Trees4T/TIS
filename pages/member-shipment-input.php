@@ -55,12 +55,6 @@
             }elseif ($_SESSION['success']==5) {
               $symbol ='danger';
               $text   ='<strong><i class="fa fa-warning"></i> Warning!</strong> Customer code is not filled or select another WIN Owner, please check again. <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>';
-            }elseif ($_SESSION['success']==6) {
-              $symbol ='danger';
-              $text   ='<strong><i class="fa fa-warning"></i> Warning!</strong> Shipment report failed Or The file size exceeds the limit, please compress. <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>';
-            }elseif ($_SESSION['success']==7) {
-              $symbol ='danger';
-              $text   ='<strong><i class="fa fa-warning"></i> Warning!</strong> PNG extension is error, please convert to "JPG or PDF file". <a href="javascript:history.back()"><font color="white">UNDO <i class="fa fa-reply"></i></font></a>';
             }
 
 
@@ -306,7 +300,12 @@ $kode=$_SESSION['kode'];
                           <div class="col-md-4">
                             <select class="form-control" name="relation" id="owner" onchange="win_ownerValidasi()">
                               <option value="1">Customer <i>(default)</i></option>
-                              <option value="0"><?php $member=$office->data_member($kode); echo $member->name; ?> </option>
+                              <?php if ($_SESSION['level']=='mkt'): ?>
+                                <option value="0"><?php $member=$office->data_member($kode_comp); echo $member->name; ?> </option>
+                              <?php elseif($_SESSION['level']=='part'): ?>
+                                <option value="0"><?php $member=$office->data_member($kode); echo $member->name; ?> </option>
+                              <?php endif; ?>
+
                             </select>
                           </div>
                         </div>

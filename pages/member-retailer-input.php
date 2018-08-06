@@ -29,7 +29,7 @@
                 <div class="alert alert-success alert-dismissible fade in" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                     </button>
-                    <strong><i class="fa fa-check-circle"></i> Success!</strong> Your new retailer successfully added.
+                    <strong><i class="fa fa-check-circle"></i> Success!</strong> Your new retailer successfully added. Will be reviewed first with our staff.
                 </div>
                   <?php
                   }
@@ -55,7 +55,7 @@
 
                     <div class="col-sm-12">
                     <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Retailer Code <span class="required">*</span>
+                      <label class="control-label col-md-5" for="first-name">Retailer Code <span class="required red">*</span>
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="code" required>
@@ -63,8 +63,9 @@
                       </div>
                     </div>
 
+
                     <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Retailer Name <span class="required">*</span>
+                      <label class="control-label col-md-5" for="first-name">Retailer Name <span class="required red">*</span>
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="nama" required>
@@ -73,7 +74,16 @@
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Address <span class="required">*</span>
+                      <label class="control-label col-md-5" for="first-name">Director <span class="required red"></span>
+                      </label>
+                      <div class="col-md-4">
+                        <input type="text" class="form-control" name="director">
+
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label col-md-5" for="first-name">Address <span class="required red">*</span>
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="alamat" required>
@@ -81,8 +91,8 @@
                       </div>
                     </div>
 
-                    <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">City <span class="required">*</span>
+                    <!-- <div class="form-group">
+                      <label class="control-label col-md-5" for="first-name">City <span class="required red">*</span>
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="kota" required>
@@ -91,16 +101,16 @@
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Country <span class="required">*</span>
+                      <label class="control-label col-md-5" for="first-name">Country <span class="required red">*</span>
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="negara" required>
 
                       </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Email <span class="required">*</span>
+                      <label class="control-label col-md-5" for="first-name">Email <span class="required red">*</span>
                       </label>
                       <div class="col-md-4">
                         <input type="email" class="form-control" name="email" required>
@@ -109,16 +119,16 @@
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Phone <span class="required"></span>
+                      <label class="control-label col-md-5" for="first-name">Phone <span class="required red"></span>
                       </label>
                       <div class="col-md-4">
-                        <input type="text" class="form-control" name="phone">
+                        <input type="text" class="form-control" name="phone" required>
 
                       </div>
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Fax <span class="required"></span>
+                      <label class="control-label col-md-5" for="first-name">Fax
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="fax">
@@ -127,7 +137,7 @@
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Website <span class="required"></span>
+                      <label class="control-label col-md-5" for="first-name">Website <span class="required red"></span>
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="web">
@@ -136,7 +146,7 @@
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Contact Person <span class="required">*</span>
+                      <label class="control-label col-md-5" for="first-name">Contact Person <span class="required red ">*</span>
                       </label>
                       <div class="col-md-4">
                         <input type="text" class="form-control" name="cp" required>
@@ -145,13 +155,33 @@
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-5" for="first-name">Director <span class="required"></span>
+                      <label class="control-label col-md-5" for="first-name">Material
                       </label>
                       <div class="col-md-4">
-                        <input type="text" class="form-control" name="director">
+                        <input type="text" class="form-control" name="material">
 
                       </div>
                     </div>
+
+                    <div class="form-group">
+                      <label class="control-label col-md-5" for="first-name">Product
+                      </label>
+                      <div class="col-md-4">
+                        <input type="text" class="form-control" name="produk">
+
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label col-md-5" for="first-name">Outlet Qty
+                      </label>
+                      <div class="col-md-4">
+                        <input type="number" class="form-control" name="outlet">
+
+                      </div>
+                    </div>
+
+
 
 
 

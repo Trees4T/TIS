@@ -1,6 +1,6 @@
 <?php
 $id_order=$_SESSION['id_order'];
- ?>
+?>
 
 <div class="">
 

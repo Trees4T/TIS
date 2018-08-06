@@ -5,21 +5,24 @@ session_start();
 ob_start();
 include '../koneksi/koneksi.php';
 	date_default_timezone_set('Asia/Jakarta');
-	$tanggal=date("Y-m-d h:i:s");
+	$tanggal=date("Y-m-d H:i:s");
 	$kode=$_SESSION['kode'];
 	$id_part=$conn->query("select no from t4t_participant where id='$kode'")->fetch();
 
 	$code=$_POST['code'];
 	$name=$_POST['nama'];
 	$address=$_POST['alamat'];
-	$city=$_POST['kota'];
-	$country=$_POST['negara'];
+	// $city=$_POST['kota'];
+	// $country=$_POST['negara'];
 	$email=$_POST['email'];
 	$phone=$_POST['phone'];
 	$fax=$_POST['fax'];
 	$website=$_POST['web'];
 	$contact=$_POST['cp'];
 	$director=$_POST['director'];
+	$material=$_POST['material'];
+	$outlet=$_POST['outlet'];
+	$produk=$_POST['produk'];
 
 if ($_POST['code']) {
 	if ($_POST['edit']) {
@@ -27,7 +30,7 @@ if ($_POST['code']) {
 
 		try {
 			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$conn->query("UPDATE t4t_retailer set kode_retailer='$code',retailer_name='$name',address='$address',city='$city',country='$country',retailer_email='$email',phone='$phone',fax='$fax',retailer_website='$website',contact_person='$contact',director='$director' where id_retailer='$id_retailer'");
+			$conn->query("UPDATE t4t_retailer_acc set kode_retailer='$code',retailer_name='$name',address='$address',city='$city',country='$country',retailer_email='$email',phone='$phone',fax='$fax',retailer_website='$website',contact_person='$contact',director='$director' where id_retailer='$id_retailer'");
 		} catch (PDOException $e) {
 			echo $update_error = $e->getMessage();
 		}
@@ -45,11 +48,12 @@ if ($_POST['code']) {
 
 	}elseif ($_POST['save']) {
 
+
 		try {
 			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$conn->query("INSERT into t4t_retailer
-			(id_retailer,kode_retailer,id_partisipan,retailer_name,address,city,country,phone,fax,contact_person,director,retailer_email,retailer_website,reg_date) values
-			('','$code','$id_part[0]','$name','$address','$city','$country','$phone','$fax','$contact','$director','$email','$website','$tanggal')");
+			$conn->query("INSERT into t4t_retailer_acc
+			(no,id_part,ret_code,type,name,address,phone,fax,pic,director,email,website,date_register,material,outlet_qty,product) values
+			('','$kode','$code','Retailer','$name','$address','$phone','$fax','$contact','$director','$email','$website','$tanggal','$material','$outlet','$produk')");
 		} catch (PDOException $e) {
 			echo $insert_error = $e->getMessage();
 		}
@@ -69,7 +73,7 @@ if ($_POST['code']) {
 
 		try {
 			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$conn->query("DELETE from t4t_retailer where id_retailer='$id_retailer'");
+			$conn->query("DELETE from t4t_retailer_acc where id_retailer='$id_retailer'");
 		} catch (PDOException $e) {
 			echo $insert_error = $e->getMessage();
 		}

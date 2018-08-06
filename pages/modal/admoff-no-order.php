@@ -1,6 +1,6 @@
 <!-- Modal -->
   <div class="modal fade" id="myModal<?php echo $load_order['no'] ?>" role="dialog">
-    <div class="modal-dialog ">
+    <div class="modal-dialog modal-lg">
 
       <!-- Modal content-->
       <div class="modal-content">
@@ -26,7 +26,7 @@
           </h4>
         </div>
         <div class="modal-body">
-
+          <form class="" action="../action/office.php" method="post">
           <div class="form-group col-lg-12">
             <label class="control-label col-md-4">Order No.
             </label>
@@ -54,16 +54,20 @@
           <br>
           <br>
 
+
           <!-- table container -->
           <div class="form-group col-lg-12">
-          <label class="col-md-10"><center>Container</center></label>
-          <label class="col-md-2"> Stuffing </label>
-          <label class="col-md-2">20'</label>
-          <label class="col-md-2">40'</label>
-          <label class="col-md-2">40' HC</label>
-          <label class="col-md-2">45'</label>
-          <label class="col-md-2">60'</label>
-          <label class="col-md-2">Date</label>
+          <div class="col-md-4"></div>
+          <label class="col-md-5"><center>Container</center></label>
+          <label class="col-md-3"> Stuffing </label>
+
+          <div class="col-md-4"></div>
+          <label class="col-md-1">20'</label>
+          <label class="col-md-1">40'</label>
+          <label class="col-md-1">40' HC</label>
+          <label class="col-md-1">45'</label>
+          <label class="col-md-1">60'</label>
+          <label class="col-md-3">Date</label>
 
             <?php
           $no_order=$load_order['no_order'];
@@ -83,13 +87,57 @@
             $container4=$conn->query("select jml from t4t_ordercontainer where no_cont=4 and no_order='$no_order' limit $ii,1")->fetch();
             $container5=$conn->query("select jml from t4t_ordercontainer where no_cont=5 and no_order='$no_order' limit $ii,1")->fetch();
            ?>
+           <div class="col-md-4">
 
-          <label class="col-md-2 font-hijau"><?php echo $container1[0] ?></label>
-          <label class="col-md-2 font-hijau"><?php echo $container2[0] ?></label>
-          <label class="col-md-2 font-hijau"><?php echo $container3[0] ?></label>
-          <label class="col-md-2 font-hijau"><?php echo $container4[0] ?></label>
-          <label class="col-md-2 font-hijau"><?php echo $container5[0] ?></label>
-          <label class="col-md-2 font-hijau"><?php echo $tanggal_stf ?></label>
+           </div>
+           <label class="col-md-1 font-hijau">
+             <?php if ($load_order['acc']==1) {
+               echo $container1[0];
+             }elseif ($load_order['acc']==0) {
+               ?>
+               <input type="number" min="0" name="cont1" value="<?php echo $container1[0];?>" class="form-control" required width="20">
+               <?php
+             } ?></label>
+           <label class="col-md-1 font-hijau">
+             <?php if ($load_order['acc']==1) {
+               echo $container2[0];
+             }elseif ($load_order['acc']==0) {
+               ?>
+               <input type="number" min="0" name="cont2" value="<?php echo $container2[0];?>" class="form-control" required>
+               <?php
+             } ?></label>
+           <label class="col-md-1 font-hijau">
+             <?php if ($load_order['acc']==1) {
+               echo $container3[0];
+             }elseif ($load_order['acc']==0) {
+               ?>
+               <input type="number" min="0" name="cont3" value="<?php echo $container3[0];?>" class="form-control" required>
+               <?php
+             } ?></label>
+           <label class="col-md-1 font-hijau">
+             <?php if ($load_order['acc']==1) {
+               echo $container4[0];
+             }elseif ($load_order['acc']==0) {
+               ?>
+               <input type="number" min="0" name="cont4" value="<?php echo $container4[0];?>" class="form-control" required>
+               <?php
+             } ?></label>
+           <label class="col-md-1 font-hijau">
+             <?php if ($load_order['acc']==1) {
+               echo $container5[0];
+             }elseif ($load_order['acc']==0) {
+               ?>
+               <input type="number" min="0" name="cont5" value="<?php echo $container5[0];?>" class="form-control" required>
+               <?php
+             } ?></label>
+          <label class="col-md-3 font-hijau">
+            <?php if ($load_order['acc']==1) {
+              echo $tanggal_stf;
+            }elseif ($load_order['acc']==0) {
+              ?>
+              <input type="date" name="tgl_stuf" value="<?php  echo date("Y-m-d",strtotime($tanggal_stf)); ?>" class="form-control" required>
+              <?php
+            } ?></label>
 
 
                           <?php
@@ -99,13 +147,20 @@
 
 
           </div>
-          <br><br><br><br><br><br>
+
 
            <div class="form-group col-lg-12">
               <label class="control-label col-md-4" for="first-name">Type of Product <span class="required"></span>
               </label>
               <div class="col-md-8 font-hijau">
-                <?php echo $load_order['tipe_prod'] ?>
+                <?php if ($load_order['acc']==1) {
+                  echo $load_order['tipe_prod'];
+                }elseif ($load_order['acc']==0) {
+                  ?>
+                  <input type="text" name="type" value="<?php echo $load_order['tipe_prod']; ?>" class="form-control">
+                  <?php
+                }
+                ?>
 
               </div>
             </div>
@@ -116,31 +171,53 @@
               </label>
               <div class="col-md-8">
                 <ul class="to_do">
-                <?php
-                $wood=$conn->query("select * from t4t_pohonen");
-
-                while ($data_pohon=$wood->fetch()) {
-                  $id_pohon=$data_pohon[0];
-                  $pohon=$conn->query("select a.id_pohon,b.no from t4t_pohonen a, t4t_orderphn b where a.id_pohon=b.no_phnen2 and no_order='$no_order' and a.id_pohon=$id_pohon")->fetch();
-                 ?>
                   <?php
-                    if ($pohon[0]!="") {
+                  if ($load_order['acc']==1) {
+                    $wood=$conn->query("select * from t4t_pohonen");
+                    while ($data_pohon=$wood->fetch()) {
+                      $id_pohon=$data_pohon[0];
+                      $pohon=$conn->query("select a.id_pohon,b.no from t4t_pohonen a, t4t_orderphn b where a.id_pohon=b.no_phnen2 and no_order='$no_order' and a.id_pohon=$id_pohon")->fetch();
                      ?>
-                    <li>
+                      <?php
+                        if ($pohon[0]!="") {
+                         ?>
+                        <li>
+                         <p><input type="checkbox" class="flat" name="item[]" value="<?php echo $data_pohon[0] ?>" checked disabled="disabled"> <?php echo $data_pohon[1] ?> </p>
+                        </li>
+                         <?php
+                        }else{
 
-                     <p class="font-hijau"><input type="checkbox" class="flat" name="item[]" value="<?php echo $data_pohon[0] ?>" checked disabled="disabled"> <?php echo $data_pohon[1] ?> </p>
+                       }
+                    } //end while
 
-                    </li>
-                     <?php
-                    }else{
+                  }else{
+                    $wood=$office->pohon_list();
+                    foreach ($wood as $data_pohon) {
+                      $detail = $office->wood_species_detail($data_pohon->id_pohon,$load_order['no_order']);
                      ?>
-                       <!--  <p><input type="checkbox" class="flat" name="item[]" value="<?php echo $data_pohon[0] ?>" disabled="disabled"> <?php echo $data_pohon[1] ?> </p>  -->
-                      <?php } ?>
+                        <li>
+                          <?php
+                          if ($detail[0]->id_pohon==true) {
+                            ?>
+                            <p><input type="checkbox" class="icheckbox_flat-green" name="item[]"
+                              value="<?php echo $data_pohon->id_pohon ?>" <?php echo checked ?>>
+                              <?php echo $data_pohon->nama_pohon ?> </p>
+                            <?php
+                          }else {
+                            ?>
+                            <p><input type="checkbox" class="icheckbox_flat-green" name="item[]"
+                              value="<?php echo $data_pohon->id_pohon ?>">
+                              <?php echo $data_pohon->nama_pohon ?> </p>
+                            <?php
+                          }
+                          ?>
 
-                <?php
+                        </li>
+                    <?php
+                  } //end foreach
 
-                }
-                 ?>
+                  } //end else
+                  ?>
                 </ul>
               </div>
             </div>
@@ -150,8 +227,15 @@
               <label class="control-label col-md-4" for="first-name"> Quantity WINS <span class="required"></span>
               </label>
               <div class="col-md-8 font-hijau">
-              <?php $jml_tag=$conn->query("select jml_wins from t4t_order where no_order='$no_order'")->fetch();
-               echo $jml_tag[0] ?>
+              <?php $jml_tag=$conn->query("select jml_wins from t4t_order where no_order='$no_order'")->fetch(); ?>
+               <?php if ($load_order['acc']==1) {
+                 echo $jml_tag[0];
+               }elseif ($load_order['acc']==0) {
+                 ?>
+                 <input type="number" name="tag" value="<?php echo $jml_tag[0]; ?>" class="form-control">
+                 <?php
+               }
+               ?>
               </div>
             </div>
             <br><br><br>
@@ -160,8 +244,26 @@
               <label class="control-label col-md-4" for="first-name"> WINS Range <span class="required"></span>
               </label>
               <div class="col-md-8 font-hijau">
-              <?php $wins=$conn->query("select wins1,wins2 from t4t_order where no_order='$no_order'")->fetch();
-               echo $wins[0].' - '.$wins[1] ?>
+              <?php $wins=$conn->query("select wins1,wins2 from t4t_order where no_order='$no_order'")->fetch(); ?>
+
+                <?php if ($load_order['acc']==1) {
+                  echo $wins[0].' - '.$wins[1];
+                }elseif ($load_order['acc']==0) {
+                  ?>
+
+                    <div class="col-md-5">
+                      <input type="number" class="form-control" min=0 name="wins1" value="<?php echo $wins[0] ?>">
+                    </div>
+                    <div class="col-md-2">
+                      to
+                    </div>
+                    <div class="col-md-5">
+                      <input type="number" class="form-control" min=0 name="wins2" value="<?php echo $wins[1] ?>">
+                    </div>
+
+                <?php
+                }
+                ?>
               </div>
             </div>
             <br><br><br>
@@ -175,14 +277,17 @@
                 <?php
                 $other=$conn->query("select * from t4t_req");
                 while ($data_other=$other->fetch()) {
-
                   $no_req=$data_other[0];
                   $request=$conn->query("select a.jml,b.no from t4t_orderrequest a, t4t_req b where a.no_req=b.no and a.no_order='$no_order' and a.no_req=$no_req ")->fetch();
 
                  ?>
                     <li>
-
-                     <?php echo $request[0]; echo " - ".$data_other[1]; ?>
+                      <?php if ($load_order['acc']==1): ?>
+                        <?php echo $request[0]; echo " - ".$data_other[1]; ?>
+                        <?php else: ?>
+                            <input type="number" name="req[]" value="<?php echo $request[0]; ?>" style="width:40px" min="0">
+                         <?php echo " - ".$data_other[1]; ?>
+                      <?php endif; ?>
 
                     </li>
                   <?php } ?>
@@ -192,12 +297,20 @@
             <div class="form-group col-lg-12">
               <label class="control-label col-md-4" for="first-name">Destination City<span class="required"></span>
               </label>
-              <div class="col-md-8 font-hijau">
-                <?php if ($load_order['kota_tujuan']!=''): ?>
-                    <?php echo $load_order['kota_tujuan']; ?>
-                  <?php else: ?>
-                    <?php echo '-'; ?>
-                <?php endif; ?>
+              <div class="col-md-8 font">
+                <?php if ($load_order['acc']==1) {
+                  if ($load_order['kota_tujuan']!=''):
+                   echo $load_order['kota_tujuan'];
+                   else:
+                   echo '-';
+                   endif;
+                }elseif ($load_order['acc']==0) {
+                  ?>
+                  <input type="text" name="destination" value="<?php echo $load_order['kota_tujuan']; ?>" class="form-control">
+                  <?php
+                }
+                ?>
+
 
               </div>
             </div>
@@ -217,8 +330,16 @@
             </div>
             <?php } ?>
 
+            <?php if ($load_order['acc']==0): ?>
+              <div class="" align="center">
+                <button type="submit" name="btn-edit-order" class="btn btn-warning">Update</button>
+              </div>
+            <?php endif; ?>
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <div class="">
+              &nbsp;
+            </div>
+        </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

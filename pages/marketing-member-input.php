@@ -27,8 +27,14 @@ if ($up_member=="1") {
               <div class="x_panel">
                 <div class="x_title">
                   <h2><i class="fa "></i> Account </h2>
+                  <?php if ($up_member=="1"): ?>
+                      <span class="right"><h5><a href="?<?php echo paramEncrypt('hal=marketing-member-list') ?>">
+                        <br>
+                      <i class="fa fa-arrow-circle-left"></i> Back</a> </h5></span>
+                  <?php endif; ?>
 
                   <div class="clearfix"></div>
+
                 </div>
                 <div class="x_content">
                   <br />
@@ -54,40 +60,57 @@ if ($up_member=="1") {
 
                    <?php  $tipe_part = $_REQUEST['type']; ?>
 
-                   <?php if ($up_member=="1") { }else{ ?>
+                   <?php// if ($up_member=="1") { }else{ ?>
                    <form class="form-horizontal form-label-left" action="" method="post">
                      <div class="col-sm-12">
                      <div class="form-group">
                        <label class="control-label col-md-4">Participant Type <span class="required red">*</span>
                        </label>
                        <div class="col-md-5">
-                       <select class="form-control" name="type" onchange='this.form.submit()'>
+                       <select class="form-control selectpicker" name="type" onchange='this.form.submit()' data-live-search="true">
                          <?php if ($tipe_part==true): ?>
 
-                                 <?php if ($tipe_part=="MF"): ?>
-                                   <option value="MF">Manufacturer</option>
-                                 <?php elseif($tipe_part=="RT"): ?>
-                                   <option value="RT">Retailer</option>
+                                 <?php if ($tipe_part=="Manufacturer"): ?>
+                                   <option value="Manufacturer">Manufacturer</option>
+                                 <?php elseif($tipe_part=="Retailer"): ?>
+                                   <option value="Retailer">Retailer</option>
+                                 <?php elseif($tipe_part=="Donor"): ?>
+                                   <option value="Donor">Donor</option>
+                                 <?php elseif($tipe_part=="Merchant"): ?>
+                                   <option value="Merchant">Merchant</option>
+                                 <?php elseif($tipe_part=="Recipient"): ?>
+                                   <option value="Recipient">Recipient</option>
+                                 <?php elseif($tipe_part=="Sponsor"): ?>
+                                   <option value="Sponsor">Sponsor</option>
                                  <?php endif; ?>
-
+                         <?php elseif($tipe_part==false && $up_member=="1" ): ?>
+                                 <option data-tokens="<?php echo $data->type ?>" value="<?php echo $data->type ?>"><?php echo $data->type ?></option>
                          <?php else: ?>
                            <option value="">- Choose Type -</option>
                          <?php endif; ?>
-                         <option value="MF">Manufacturer</option>
-                         <option value="RT">Retailer</option>
+
+                        <?php
+                          $type_list = $office->type_part_list();
+                         ?>
+                         <?php foreach ($type_list as $type_lists): ?>
+                        <option value="<?php echo $type_lists->type ?>"><?php echo $type_lists->type ?></option>
+                         <?php endforeach; ?>
+                         <!-- <option value="Manufacturer">Manufacturer</option>
+                         <option value="Retailer">Retailer</option>
+                         <option value="Donor">Donor</option> -->
                        </select>
                        </div>
                      </div>
                      </div>
                     <noscript><input type="submit" value="type"></noscript>
                    </form>
-                   <?php } ?>
+                   <?php// } ?>
 
               <?php
-              if ($tipe=="Manufacturer") {
-                $tipe_part='MF';
-              }elseif($tipe=="Retailer"){
+              if ($tipe_part=="Retailer") {
                 $tipe_part='RT';
+              }else{
+                $tipe_part='MF';
               }
               ?>
 
@@ -104,6 +127,9 @@ if ($up_member=="1") {
 
                     <div class="form-group">
                       <?php
+                      if ($tipe_part=='DN') {
+                        $tipe_part='MF';
+                      }
                       $no_id_comp = $office->cek_id_comp($tipe_part);
                       ?>
                       <label class="control-label col-md-4">ID Company <span class="required red">*</span>
@@ -131,10 +157,10 @@ if ($up_member=="1") {
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-4">Company Name <span class="required red">*</span>
+                      <label class="control-label col-md-4">Participant Name / Company Name <span class="required red">*</span>
                       </label>
                       <div class="col-md-5">
-                        <input type="text" class="form-control" name="comp_name" placeholder="Company Name" value="<?php echo $data->name ?>" required>
+                        <input type="text" class="form-control" name="comp_name" placeholder="Participant Name / Company Name" value="<?php echo $data->name ?>" required>
                       </div>
                     </div>
 
@@ -171,10 +197,10 @@ if ($up_member=="1") {
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-4">E-mail 2 <span class="required red">*</span>
+                      <label class="control-label col-md-4">E-mail 2
                       </label>
                       <div class="col-md-5">
-                        <input type="text" class="form-control" name="email2" placeholder="E-mail 2" value="<?php echo $data->email1 ?>" required>
+                        <input type="text" class="form-control" name="email2" placeholder="E-mail 2" value="<?php echo $data->email1 ?>">
                       </div>
                     </div>
 
@@ -231,18 +257,18 @@ if ($up_member=="1") {
                     <?php } ?>
 
                     <div class="form-group">
-                      <label class="control-label col-md-4">Header <span class="required"></span>
-                      </label>
+                      <!-- <label class="control-label col-md-4">Header <span class="required"></span>
+                      </label> -->
                       <div class="col-md-5">
-                        <textarea name="header" class="form-control" rows="2" cols="80"><?php echo $data->header ?></textarea>
+                        <textarea name="header" class="form-control" rows="2" cols="80" style="display:none;"><?php echo $data->header ?></textarea>
                       </div>
                     </div>
 
                     <div class="form-group">
-                      <label class="control-label col-md-4">Introduction	: <span class="required"></span>
-                      </label>
+                      <!-- <label class="control-label col-md-4">Introduction	: <span class="required"></span>
+                      </label> -->
                       <div class="col-md-8">
-                        <textarea name="intro" class="form-control" rows="12" cols="80"><?php if ($up_member==1): ?><?php echo $data->introduction ?>
+                        <textarea name="intro" class="form-control" rows="12" cols="80" style="display:none;"><?php if ($up_member==1): ?><?php echo $data->introduction ?>
                         <?php else: ?>Dear {name},
 
 Congratulations and thank you.
@@ -277,6 +303,10 @@ Thank you.
                     </div>
                     </div>
 
+                    <!-- $actual_link -->
+                    <?php $actual_link = $office->current_link(); ?>
+                    <input type="hidden" name="tipe" value="<?php echo $_REQUEST['type'] ?>">
+                    <input type="hidden" name="actual_link" value="<?php echo $actual_link ?>">
                     </font>
                   </form>
                 <?php } ?>

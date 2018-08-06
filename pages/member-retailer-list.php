@@ -13,7 +13,7 @@
         <div class="x_title">
             <h2><i class="fa fa-folder-open"></i> Retailer List <small></small></h2>
             <ul class="nav navbar-right panel_toolbox">
-                <!-- <a href="?<?php //echo paramEncrypt('hal=member-retailer-input')?>" data-toggle="tooltip" data-placement="left" title="Add new retailers"><i class="fa fa-plus-circle"></i> Input Retailers</a> -->
+                <a href="?<?php echo paramEncrypt('hal=member-retailer-input')?>" data-toggle="tooltip" data-placement="left" title="Add new retailers"><i class="fa fa-plus-circle"></i> Input Retailers</a>
             </ul>
             <div class="clearfix"></div>
         </div>

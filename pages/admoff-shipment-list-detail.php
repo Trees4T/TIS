@@ -142,17 +142,33 @@ $actual_link  = $actual_link1[1];
                             echo $d[0];
                             ?>
                         </td>
-                        <td align="center"><a href="#" data-toggle="modal" data-target="#win<?php echo $load_shipment['no'] ?>"><i class="fa fa-search-plus"></i>View and Edit</a> </td>
+                        <td align="center">
+                          <?php if ($_SESSION['level']=='mkt'): ?>
+                              <textarea name="name" readonly class="form-control" rows="2" cols="80"><?php echo $load_shipment['wins_used'] ?></textarea>
+                            <?php else: ?>
+                              <a href="#" data-toggle="modal" data-target="#win<?php echo $load_shipment['no'] ?>"><i class="fa fa-search-plus"></i>View and Edit</a>
+                          <?php endif; ?>
+
+                        </td>
                         <td align="center">
                             <?php
                             $approve=$conn->query("SELECT acc from t4t_shipment where no_shipment='$no_shipment'")->fetch();
                             if ($approve[0]=="1") {
                                 ?>
-                                <a href="#" data-toggle="modal" data-target="#acc1<?php echo $load_shipment['no'] ?>"><i class="fa fa-check-square-o"></i></a>
+                                <?php if ($_SESSION['level']=='mkt'): ?>
+                                    <i class="fa fa-check-square-o"></i>
+                                  <?php else: ?>
+                                    <a href="#" data-toggle="modal" data-target="#acc1<?php echo $load_shipment['no'] ?>"><i class="fa fa-check-square-o"></i></a>
+                                <?php endif; ?>
                                 <?php
                             }else{
                                 ?>
-                                <a href="#"  data-toggle="modal" data-target="#acc0<?php echo $load_shipment['no'] ?>"><i class="fa fa-square-o"></i></a>
+                                <?php if ($_SESSION['level']=='mkt'): ?>
+                                    <i class="fa fa-square-o"></i>
+                                  <?php else: ?>
+                                    <a href="#"  data-toggle="modal" data-target="#acc0<?php echo $load_shipment['no'] ?>"><i class="fa fa-square-o"></i></a>
+                                <?php endif; ?>
+
                                 <?php
                             }
 
@@ -162,7 +178,7 @@ $actual_link  = $actual_link1[1];
 
 <!-- Modal -->
 <?php
-include 'modal/admoff-bl-detail.php';
+include 'modal/member-bl-detail.php';
 
 if ($_SESSION['level']=='admoff') {
   include 'modal/admoff-win-edit.php';

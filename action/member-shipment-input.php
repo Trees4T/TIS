@@ -63,15 +63,6 @@ if ($cek_eror_wins==1) {
 
     		$tujuan   ="../gbr/shipment/$namafile2";
 
-        $cek_namafile = explode('.', $namafile);
-        $cek_jml_ekstensi = count($cek_namafile);
-        $hasil_cek_ekstensi = $cek_namafile[$cek_jml_ekstensi-1];
-
-    if ($hasil_cek_ekstensi=='png') {
-      $_SESSION['success']=7; //ekstensi error
-      header("location:../dashboard/".$link_user.".php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
-    }else{
-          
         //cek no bl
     		$cek_bl=$conn->query("SELECT bl from t4t_shipment where bl='$bl'")->fetch();
         if ($cek_bl!="") {
@@ -97,14 +88,11 @@ if ($cek_eror_wins==1) {
     			echo $error_max_file="max file is 200kb";
     		}
 
-      if ($error_unique_bl==true) {
-          $_SESSION['success']=3; //bl error
-          header("location:../dashboard/".$link_user.".php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
-      }elseif ($error_max_file!='') {
-          $_SESSION['success']=6; //shipment error
-          header("location:../dashboard/".$link_user.".php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
-      }
-      elseif ($error_unique_bl==false && $required_cont==true) {
+    if ($error_unique_bl==true) {
+        $_SESSION['success']=3; //bl error
+        header("location:../dashboard/".$link_user.".php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
+    }
+    elseif ($error_unique_bl==false && $required_cont==true) {
 
     	echo $jml_order=count($_POST['order']);
     	for ($i=0; $i < $jml_order ; $i++) {
@@ -263,7 +251,7 @@ if ($cek_eror_wins==1) {
     	$_SESSION['success']=2; //eror maks file 200 kb atau bl no
     	header("location:../dashboard/".$link_user.".php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
     }
-  }//end cek ekstensi
+
 
   }else{
   header("location:../error/403.php");

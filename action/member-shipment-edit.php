@@ -9,6 +9,11 @@ $office = new office();
 date_default_timezone_set('Asia/Jakarta');
 if ($_POST['no_ship']) {
 
+if ($_SESSION['level']=='part') {
+  $level = 'member';
+}elseif ($_SESSION['level']=='mkt') {
+  $level = 'marketing';
+}
 
 $no_shipment =$_POST['no_ship'];
 $bl 		     =$_POST['bl'];
@@ -32,21 +37,20 @@ $kode        =$_SESSION['kode'];
 $waktu=date("His");
 
 $company=$conn->query("select name from t4t_participant where id='$id_comp'")->fetch();
-$cek_no_bl=$conn->query("select bl from t4t_shipment where no_shipment='$no_shipment' ")->fetch();
+$cek_no_bl=$conn->query("select bl,wkt_shipment from t4t_shipment where no_shipment='$no_shipment' ")->fetch();
 $cek_status_bl=$conn->query("select bl from t4t_shipment where bl='$bl'")->fetch();
 
 $cek_eror_wins_owner = $_SESSION['eror_owner'];
 
 if($cek_eror_wins_owner==1){
   $_SESSION['success']=5;
-  header("location:../dashboard/member.php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
+  header("location:../dashboard/".$level.".php?b2800c8a0fe2e3ef22145d600e05fb3d8aa73c14170e5597465065c46886b4cd");
 }else{
 
 	if ($cek_no_bl[0]==$bl or $cek_status_bl[0]==false) {
 
 		//insert shipment
 		# no - no ship - id_comp - bl - bl tgl - win used - win unused - wkt ship - foto - acc - no order - kota - tujuan - fee - diskon - tgl paid - acc paid - note buyer - item qty
-
 
 		$maxsize = 1024 * 10000; // maksimal 200 KB (1KB = 1024 Byte)
 				$bl_files=$_POST['bl_files'];
@@ -73,7 +77,7 @@ if($cek_eror_wins_owner==1){
 
 				copy($tmp_name,$tujuan);
 
-				$conn->query("update t4t_shipment set bl='$bl',bl_tgl='$tgl',wins_used='$wins_used',item_qty='$item_qty',kota_tujuan='$destination',note='$note',buyer='$c_code',foto='$namafile2' where no_shipment='$no_shipment'");
+				$conn->query("UPDATE t4t_shipment set wkt_shipment='$cek_no_bl[1]', bl='$bl',bl_tgl='$tgl',wins_used='$wins_used',item_qty='$item_qty',kota_tujuan='$destination',note='$note',buyer='$c_code',foto='$namafile2' where no_shipment='$no_shipment'");
 
 					//mysql_error();
 
@@ -87,7 +91,7 @@ if($cek_eror_wins_owner==1){
 			$id_retailer = $office->nama_relation_buyer($kode,$c_code);
 			$res_id_ret  = $id_retailer->related_part;
 
-			$conn->query("UPDATE t4t_shipment set buyer='$c_code',relation='$relation' where bl='$bl' ");
+			$conn->query("UPDATE t4t_shipment set wkt_shipment='$cek_no_bl[1]', buyer='$c_code',relation='$relation' where bl='$bl' ");
 			$conn->query("UPDATE t4t_wins set id_retailer='$res_id_ret',relation='$relation' where bl='$bl' ");
 
 
@@ -95,7 +99,7 @@ if($cek_eror_wins_owner==1){
 				#
 			}else{
 				#hapus order
-				$conn->query("update t4t_shipment set no_order='' where no_shipment='$no_shipment'");
+				$conn->query("UPDATE t4t_shipment set wkt_shipment='$cek_no_bl[1]', no_order='' where no_shipment='$no_shipment'");
 			$jml_order=count($_POST['order']);
 			for ($i=0; $i < $jml_order ; $i++) {
 
@@ -112,7 +116,7 @@ if($cek_eror_wins_owner==1){
 					$data_order=$old_order2.", ".$no_order;
 				}
 
-				 $conn->query("update t4t_shipment set no_order='$data_order' where no_shipment='$no_shipment'");
+				 $conn->query("UPDATE t4t_shipment set wkt_shipment='$cek_no_bl[1]', no_order='$data_order' where no_shipment='$no_shipment'");
 
 			  }
 			}
@@ -126,7 +130,12 @@ if($cek_eror_wins_owner==1){
 				$conn->query("update t4t_ordercontainer set jml='$cont' where no_order='$no_shipment' and no_cont='$i'");
 			  }
 			 $no_order_get=$conn->query("select no_order from t4t_shipment where no_shipment='$no_shipment'")->fetch();
-			  ################email##############
+
+       if ($_SESSION['level']=='mkt') {
+         // code...
+       }else{
+
+        ################email##############
 			  require '../assets/PHPMailer/PHPMailerAutoload.php';
 
 			  $mail = new PHPMailer;
@@ -210,19 +219,20 @@ if($cek_eror_wins_owner==1){
 			      echo 'Message has been sent';
 			  }
 			  ###############end mail############
+      }
 
 			$_SESSION['success']=1; //sukses
-			header("location:../dashboard/member.php?".$link."");
+			header("location:../dashboard/".$level.".php?".$link."");
 			$_SESSION['bl']=$bl;
 		}else{
 			$_SESSION['success']=2; //eror maks file 200 kb.
-			header("location:../dashboard/member.php?b2800c8a0fe2e3ef22145d600e05fb3db7558c18581a6d9e2dd1cb4ad7ffeb21");
+			header("location:../dashboard/".$level.".php?b2800c8a0fe2e3ef22145d600e05fb3db7558c18581a6d9e2dd1cb4ad7ffeb21");
 		}
 
 	}//end if cek bl
 	else{
 		$_SESSION['success']=3; //eror bl sudah ada dan beda dari awal.
-		header("location:../dashboard/member.php?b2800c8a0fe2e3ef22145d600e05fb3db7558c18581a6d9e2dd1cb4ad7ffeb21");
+		header("location:../dashboard/".$level.".php?b2800c8a0fe2e3ef22145d600e05fb3db7558c18581a6d9e2dd1cb4ad7ffeb21");
 	}
 
 	}

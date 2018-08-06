@@ -65,6 +65,23 @@ $actual_link  = $actual_link1[1];
         <?php
         }
 
+        if ($_SESSION['success']==4) {
+          $icon = 'fa-check-circle';
+          $alert= 'alert-success';
+          $title= 'Success';
+          $text = 'No. Order '.$_SESSION['order'].' has been updated.';
+        }
+
+        if (isset($_SESSION['success'])) {
+          ?>
+          <div class="alert <?php echo $alert ?> alert-dismissible fade in" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+              </button>
+              <strong><i class="fa <?php echo $icon ?>"></i> <?php echo $title ?>!</strong> <?php echo $text ?>
+          </div>
+          <?php
+        }
+
         unset($_SESSION['success']);
         unset($_SESSION['order']);
         ?>
@@ -103,7 +120,13 @@ $actual_link  = $actual_link1[1];
                                             ?>
                                         </td>
                                         <td align="center">
-                                            <a href="#" data-toggle="modal" data-target="#win<?php echo $load_order['no'] ?>"><?php echo $load_order['wins1'].' to '.$load_order['wins2'] ?></a>
+                                          <?php if ($_SESSION['level']=='mkt'): ?>
+                                              <?php echo $load_order['wins1'].' to '.$load_order['wins2'] ?></a>
+                                            <?php else: ?>
+                                              <a href="#" data-toggle="modal" data-target="#win<?php echo $load_order['no'] ?>">
+                                                <?php echo $load_order['wins1'].' to '.$load_order['wins2'] ?></a>
+                                          <?php endif; ?>
+
                                         </td>
                                         <td align="center">
                                             <?php
@@ -116,11 +139,21 @@ $actual_link  = $actual_link1[1];
                                             $approve=$conn->query("select acc from t4t_order where no_order='$no_order'")->fetch();
                                             if ($approve[0]=="1") {
                                                 ?>
-                                                <a href="#" data-toggle="modal" data-target="#acc1<?php echo $load_order['no'] ?>"><i class="fa fa-check-square-o"></i></a>
+                                                <?php if ($_SESSION['level']=='mkt'): ?>
+                                                    <i class="fa fa-check-square-o"></i>
+                                                  <?php else: ?>
+                                                    <a href="#" data-toggle="modal" data-target="#acc1<?php echo $load_order['no'] ?>"><i class="fa fa-check-square-o"></i></a>
+                                                <?php endif; ?>
+
                                                 <?php
                                             }else{
                                                 ?>
-                                                <a href="#" data-toggle="modal" data-target="#acc0<?php echo $load_order['no'] ?>"><i class="fa fa-square-o"></i></a>
+                                                <?php if ($_SESSION['level']=='mkt'): ?>
+                                                  <i class="fa fa-square-o"></i>
+                                                  <?php else: ?>
+                                                    <a href="#" data-toggle="modal" data-target="#acc0<?php echo $load_order['no'] ?>"><i class="fa fa-square-o"></i></a>
+                                                <?php endif; ?>
+
                                                 <?php
                                             }
 
