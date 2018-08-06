@@ -1,0 +1,15 @@
+id terakhir = 52107 (last update 2/7/2018)
+id terakhir = 52059 (last update 7/6/2018)
+id terakhir = 52009 (last update 2/5/2018)
+id terakhir = 51966 (last update 20/4/2018)
+id terakhir = 51757 (last update 7/3/2018)
+id terakhir = 51487 (last update 21/12/2017)
+
+cara penggunaan:
+1) untuk membersihkan table
+- menggunakan parameter 'delete=true'
+2) untuk menambahkan data manufaktur
+- contoh: http://www.bumihijaulestari.org/system/pages/backdoor/planting-maps.php?type=MF&pos=51487,58000
+3) untuk menambahkan data retailer
+- contoh: http://www.bumihijaulestari.org/system/pages/backdoor/planting-maps.php?type=RT&pos=0,8000
+4)parameter pos untuk menentukan limit awal ditambah tanda (,) "koma" nilai limit akhir sesuai dengan jumlah terakhir data id pada table htc
