@@ -1,47 +1,62 @@
 # TIS
+[6 Agustus 2017]
++ Modul Marketing
+
+[3 Januari 2018]
+ + [M] modal/shipment-detail
+ + [M] modal/admoff-bl-detail
+ + [M] action/member-shipment-edit
+ + [M] action/member-shipment-input
+
+[12 Desember 2017]
+ + Modul Adminoffice (WIN URL Generate)
+
+[7 Desember 2017]
+ + [M] Modul Participant, Adminoffice, Finance dengan fungsi Office
+
 [22 Mei 2017]
-+ / Modul FC OOP
+ + [M] Modul FC OOP
 
 [10 Mei 2017]
 + .htaccess
 
 [2 Mei 2017]
-+ / Invoice Excel Finance
-+ / Unpaid All Finance
+ + [M] Invoice Excel Finance
+ + [M] Unpaid All Finance
 
 [26 April 2017]
-+ / Subjek Email Member Order/Shipment
-+ / hapus shipment di admin officer
-+ / finance tidak perlu lihat dari acc=1 (all)
-+ / finance - container size paid & unpaid
-+ / finance - no_order paid unpaid
-+ / member - paid unpaid container size & no_order
-+ / member - shipment list container size
+ + [M] Subjek Email Member Order/Shipment
+ + [M] hapus shipment di admin officer
+ + [M] finance tidak perlu lihat dari acc=1 (all)
+ + [M] finance - container size paid & unpaid
+ + [M] finance - no_order paid unpaid
+ + [M] member - paid unpaid container size & no_order
+ + [M] member - shipment list container size
 
 [10 Maret 2017]
 + Pencarian or Wins Information
 
 [7 Maret 2017]
-+ / Grafik Contribution Fee Modul Finance
+ + [M] Grafik Contribution Fee Modul Finance
 
 [6 Maret 2017]
-+ / Fix paid unpaid Modul Finance
+ + [M] Fix paid unpaid Modul Finance
 + Edit tgl paid Modul Finance
 
 [3 Maret 2017]
-+ / Fix payment status report
+ + [M] Fix payment status report
 
 [22 Februari 2017]
-+ / Fix pengaturan account member
+ + [M] Fix pengaturan account member
 
 [14 Februari 2017]
-+ / Load Content Ajax Modul FC
+ + [M] Load Content Ajax Modul FC
 
 [13 Februari 2017]
-+ / Load Content Ajax Modul Member
+ + [M] Load Content Ajax Modul Member
 
 [9 Februari 2017]
-+ / Logo
+ + [M] Logo
 
 [7 Februari 2017]
 + Modul Finance
