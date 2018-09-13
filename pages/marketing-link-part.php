@@ -58,7 +58,7 @@ $actual_link  = $actual_link1[1];
         <table class="table table-striped responsive-utilities jambo_table" border="1" id="orderlist">
           <thead>
             <tr>
-              <th width="5%">No.</th>
+              <th width="5%">ID</th>
               <th width="50%">Participant Name</th>
               <th width="40%">Buyers</th>
               <th width="10%">Action</th>
@@ -75,15 +75,17 @@ $actual_link  = $actual_link1[1];
             $tipe    = $members->type;
           ?>
             <tr>
-              <td align="center"><?php echo $no ?></td>
-              <td><a href="#" class="edit-record" data-id="<?php echo $members->id ?>"><?php echo $members->name.' ['.$members->id.']'; ?></a></td>
+              <td align="center"><?php echo $members->id ?></td>
+              <td><a href="#" class="edit-record" data-id="<?php echo $members->id ?>"><?php echo $members->name ?></a></td>
               <td><?php
                 $retailer = $office->retailer_list2($id_part);
                 foreach ($retailer as $retailers) {
-                  $nama_buyer = $office->nama_relation_buyer($id_part,$retailers->repeat_id);
+
+                  $nama_buyer = $office->nama_relation_buyer($id_part,$retailers->no);
                   ?>
                   <a href="#" class="edit-record-ret" data-id="<?php echo $nama_buyer->related_part.'-'.$actual_link ?>">
                   <?php
+  
                   echo $nama_buyer->name;echo ' ['.$retailers->repeat_id.']';
                   ?>
                   </a>

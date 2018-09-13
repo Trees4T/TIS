@@ -28,7 +28,7 @@ if ($date=="") {
  ?>
 <div class="x_panel tile" >
  <div class="x_title">
-     <h2>Shipments from
+     <h2>Shipments 
      </h2>
      <br><br>
      <ul class="nav navbar-left panel_toolbox">

@@ -13,8 +13,8 @@ if ($_SESSION['level']=='mkt') {
 }else{
   $link = 'admin-office';
 }
-$win = 1385085;
-$comp='MF099';
+// $win = 1385085;
+// $comp='MF099';
 $order = $conn->query("SELECT id_comp from t4t_order where wins1 <= '$win' and wins2 >= '$win' OR wins1='$win' AND wins2='$win'");
 while ($load_order = $order->fetch()) {
   $comp=$load_order['id_comp'];

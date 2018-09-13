@@ -1,15 +1,21 @@
-<?php 
+<?php
 session_start();
 include '../../koneksi/koneksi.php';
+include '../../action/function/class.office.php';
+$office = new office();
+
+$date_start = date("Y-m-d", strtotime($office->last30days()));
+$date_end   = date("Y-m-d");
+
 $kode=$_SESSION['kode'];
 $waktu=date("Y-m");
-$jumlah=$conn->query("select count(*) from t4t_order where acc=0 and wkt_order like '%$waktu%'")->fetch();
+$jumlah=$conn->query("SELECT count(*) from t4t_order where acc=0 and date(wkt_order) BETWEEN '$date_start' and '$date_end' ")->fetch();
 
  ?>
  <div class="left"></div>
                         <div class="right">
-                            
-                       <span class="count_top"><i class="fa fa-info-circle"></i> Unapproved Order (this month)</span>
+
+                       <span class="count_top"><i class="fa fa-info-circle"></i> Unapproved Order <br><small>(Last 30 days)</small></span>
 <div class="count <?php if ($jumlah[0]>=1) {
     echo "red";
 }else{

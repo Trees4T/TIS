@@ -73,7 +73,7 @@ $label= 'label label-success';
         <table class="table table-striped responsive-utilities jambo_table" border="1" id="orderlist">
           <thead>
             <tr>
-              <th width="5%">No.</th>
+              <th width="5%">ID</th>
               <th>Participant Name</th>
               <th>Type</th>
               <th>Address</th>
@@ -98,8 +98,8 @@ $label= 'label label-success';
             $tipe    = $members->type;
           ?>
             <tr>
-              <td align="center"><?php echo $no ?></td>
-              <td><a href="#" class="edit-record" data-id="<?php echo $members->id ?>"><?php echo $members->name.' ['.$members->id.']'; ?></a></td>
+              <td align="center"><?php echo $members->id ?></td>
+              <td><a href="#" class="edit-record" data-id="<?php echo $members->id ?>"><?php echo $members->name; ?></a></td>
               <td><?php echo $members->type ?></td>
               <td><?php echo $members->address ?></td>
               <td><?php echo $members->phone ?></td>

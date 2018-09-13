@@ -216,11 +216,13 @@
       }
     }
 
-    public function nama_relation_buyer($id_part,$repeat_id){
+    public function nama_relation_buyer($id_part,$no){
       try {
-        $stmt = $this->conn->prepare("SELECT a.id_part,a.related_part,a.repeat_id,b.name FROM t4t_idrelation a, t4t_participant b
-          WHERE a.related_part=b.id AND a.id_part=? AND a.repeat_id=?");
-        $stmt->execute(array($id_part,$repeat_id));
+
+          $stmt = $this->conn->prepare("SELECT a.id_part,a.related_part,a.repeat_id,b.name FROM t4t_idrelation a, t4t_participant b
+            WHERE a.related_part=b.id AND a.id_part=? AND a.no=?");
+
+        $stmt->execute(array($id_part,$no));
         $res = $stmt->fetch(PDO::FETCH_OBJ);
         return $res;
       } catch (PDOException $e) {
@@ -240,6 +242,19 @@
     }
 
     public function mkt_rep_contrib($id_part,$date_awal,$date_akhir){
+      try {
+        $stmt = $this->conn->query("SELECT * FROM t4t_shipment WHERE id_comp='$id_part' AND date(wkt_shipment) BETWEEN '$date_awal%' AND '$date_akhir%'");
+        $stmt->execute();
+        while ($data= $stmt->fetch(PDO::FETCH_OBJ)) {
+          $res[] =$data;
+        }
+        return $res;
+      } catch (PDOException $e) {
+        echo $e->getMessage();
+      }
+    }
+
+    public function mkt_rep_wincheck($id_part,$date_awal,$date_akhir){
       try {
         $stmt = $this->conn->query("SELECT * FROM t4t_shipment WHERE id_comp='$id_part' AND date(wkt_shipment) BETWEEN '$date_awal%' AND '$date_akhir%'");
         $stmt->execute();
@@ -519,8 +534,10 @@
 
           if ($cari=="shipment") {
             $trans = "trans_type=1";
-          }elseif ($cari=="donation") {
-            $trans = "trans_type=2 and trans_type=3";
+          }elseif ($cari=="donation2") {
+            $trans = "trans_type=2";
+          }elseif ($cari=="donation3") {
+            $trans = "trans_type=3";
           }elseif ($cari="sponsor"){
             $trans = "trans_type=4";
           }
@@ -1086,7 +1103,9 @@
 
     public function retailer_list2($id){
       try {
-        $stmt = $this->conn->prepare("SELECT a.no,a.id_part,a.related_part,a.repeat_id,b.* from t4t_idrelation a, t4t_participant b where a.related_part=b.id and a.id_part=?");
+        $stmt = $this->conn->prepare(" SELECT a.no,a.id_part,a.related_part,a.repeat_id,b.id,
+         b.`type`,b.`name` FROM t4t_idrelation a, t4t_participant b
+         WHERE a.related_part=b.id AND a.id_part=?");
         $stmt->execute(array($id));
         while ($data= $stmt->fetch(PDO::FETCH_OBJ)) {
           $res[] =$data;

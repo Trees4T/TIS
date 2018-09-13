@@ -59,7 +59,7 @@ $date2_format = $ex_date[1];
 
     <div class="x_panel tile fixed_height_390">
         <div class="x_title">
-            <h2>Shipment (in Trees) from
+            <h2>Shipment (in Trees) 
             </h2>
             <br><br>
             <ul class="nav navbar-left panel_toolbox">

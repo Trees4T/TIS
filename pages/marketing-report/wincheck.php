@@ -188,11 +188,11 @@
 <table id="example" class="table table-striped responsive-utilities jambo_table" width='100%' border="1">
 <thead>
   <tr class="headings">
-    <th><center>Checking Date</center></th>
+    <th><center>Checking Date</center> </th>
     <th><center>WINS</center> </th>
-    <th><center>BL</center> </th>
+    <th><center>No. Order</center> </th>
     <th><center>Shipment</center></th>
-    <th><center>Buyer</center></th>
+    <th><center>BL</center></th>
   </tr>
 </thead>
 
@@ -205,9 +205,9 @@ $mkt_report = $office->mkt_rep_contrib($kd_part,$date_awal,$date_akhir);
 foreach ($mkt_report as $mkt_reports) {
 ?>
   <tr class="even pointer">
-    <td width='5%' align="center"><?php echo $no; ?></td>
-    <td width='10%' align="center"><?php echo $mkt_reports->no_order; ?></td>
     <td width='10%' align="center"><?php echo $office->datetime_to_date($mkt_reports->wkt_shipment); ?></td>
+    <td></td>
+    <td width='10%' align="center"><?php echo $mkt_reports->no_order; ?></td>
     <td width='10%' align="center"><?php echo $mkt_reports->no_shipment; ?></td>
     <td width='10%' align="center"><?php echo $mkt_reports->bl; ?></td>
 

@@ -20,9 +20,9 @@ $date2_format = $ex_date[1];
   $last30daytoday = $last30days.'-'.$today;
 
  ?>
-<div class="x_panel tile fixed_height_320" >
+<div class="x_panel tile fixed_height_390" >
  <div class="x_title">
-     <h2>Top 5 Contributors from
+     <h2>Top 5 Contributors
      </h2>
      <br><br>
      <ul class="nav navbar-left panel_toolbox">

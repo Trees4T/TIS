@@ -193,7 +193,7 @@
     <th><center>Shipment Date</center> </th>
     <th><center>Shipment No.</center></th>
     <th><center>BL No.</th>
-    <th><center>Approval Date</th>
+    <!-- <th><center>Approval Date</th> -->
     <th><center>Contribution Fee (USD $)</th>
     <th><center>Payment Date</th>
   </tr>
@@ -213,7 +213,7 @@ foreach ($mkt_report as $mkt_reports) {
     <td width='10%' align="center"><?php echo $office->datetime_to_date($mkt_reports->wkt_shipment); ?></td>
     <td width='10%' align="center"><?php echo $mkt_reports->no_shipment; ?></td>
     <td width='10%' align="center"><?php echo $mkt_reports->bl; ?></td>
-    <td width='10%' align="center"><?php //echo $mkt_reports->; ?></td>
+    <!-- <td width='10%' align="center"><?php //echo $mkt_reports->; ?></td> -->
     <td width='10%' align="right"><?php echo number_format($mkt_reports->fee, 2); ?></td>
     <td width='10%' align="center"><?php echo $mkt_reports->tgl_paid; ?></td>
 
@@ -228,7 +228,7 @@ $total_contrib[]=$mkt_reports->fee;
 </tbody>
 <tfoot>
    <tr class="font-hijau">
-       <td colspan="6">TOTAL</td>
+       <td colspan="5">TOTAL</td>
        <td align="right" class="font-hijau"><b><?php echo $tot_contrib=number_format(array_sum($total_contrib),2) ?></b></td>
        <td colspan="2"></td>
           <?php $_SESSION['tot_contrib']=$tot_contrib ?>

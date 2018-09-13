@@ -11,7 +11,7 @@
           </div>
     <div class="x_panel">
         <div class="x_title">
-            <h2><i class="fa fa-folder-open"></i> Approval of Changes Retailer <small></small></h2>
+            <h2><i class="fa fa-folder-open"></i> Approval of Changes Linked Participants <small></small></h2>
 
             <div class="clearfix"></div>
         </div>

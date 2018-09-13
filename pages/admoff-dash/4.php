@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 include '../../koneksi/koneksi.php';
 $kode=$_SESSION['kode'];
@@ -6,8 +6,9 @@ $jumlah=$conn->query("select count(*) from t4t_order where acc=0 ")->fetch();
  ?>
  <div class="left"></div>
                         <div class="right">
-                            
-                       <span class="count_top"><i class="fa fa-info-circle"></i> Unapproved Order</span>
+
+                       <span class="count_top"><i class="fa fa-info-circle"></i> Unapproved Order
+                         <br> <small>(All)</small></span>
 <div class="count <?php if ($jumlah[0]>=1) {
     echo "red";
 }else{

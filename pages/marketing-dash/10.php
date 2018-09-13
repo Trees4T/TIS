@@ -23,10 +23,13 @@ if ($date=="") {
 }
 
 $pay_shipment = $office->mkt_dash_contrib('shipment','payment',$date);
-$pay_donation = $office->mkt_dash_contrib('donation','payment',$date);
+$pay_donation = $office->mkt_dash_contrib('donation2','payment',$date);
+$pay_donation2 = $office->mkt_dash_contrib('donation3','payment',$date);
 $pay_sponsor  = $office->mkt_dash_contrib('sponsor','payment',$date);
+
 $ship_shipment = $office->mkt_dash_contrib('shipment','shipment',$date);
-$ship_donation = $office->mkt_dash_contrib('donation','shipment',$date);
+$ship_donation = $office->mkt_dash_contrib('donation2','shipment',$date);
+$ship_donation2 = $office->mkt_dash_contrib('donation3','shipment',$date);
 $ship_sponsor  = $office->mkt_dash_contrib('sponsor','shipment',$date);
 
 $pay_total    = $office->mkt_dash_contrib_total('payment',$date);
@@ -37,7 +40,7 @@ $ship_total   = $office->mkt_dash_contrib_total('shipment',$date);
  ?>
 <div class="x_panel tile" >
  <div class="x_title">
-   <h2>Contributions from
+   <h2>Contributions 
    </h2>
      <br><br>
      <ul class="nav navbar-left panel_toolbox">
@@ -123,8 +126,8 @@ $ship_total   = $office->mkt_dash_contrib_total('shipment',$date);
           </tr>
           <tr>
               <td>Donations</td>
-              <td align="center"><?php echo $ship_donation->count ?></td>
-              <td align="right"><?php echo $pay_donation->fee ?></td>
+              <td align="center"><?php echo ($ship_donation->count)+($ship_donation2->count) ?></td>
+              <td align="right"><?php echo ($pay_donation->fee)+($pay_donation2->fee) ?></td>
           </tr>
           <tr>
               <td>Sponsorships</td>
@@ -137,12 +140,14 @@ $ship_total   = $office->mkt_dash_contrib_total('shipment',$date);
                         echo number_format($ship_total->count-
                                           $ship_shipment->count-
                                           $ship_donation->count-
+                                          $ship_donation2->count-
                                           $ship_sponsor->count)
               ?></td>
               <td align="right"><?php
                         echo number_format($pay_total->totfee-
                                           $pay_shipment->fee-
                                           $pay_donation->fee-
+                                          $pay_donation2->fee-
                                           $pay_sponsor->fee ,2)
               ?></td>
           </tr>
