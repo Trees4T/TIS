@@ -1,4 +1,28 @@
 # TIS
+[17 September 2018]
+Perbaiki dan tambah view_wincheck_log
+
+[14 September 2018]
+new file:   pages/modal/marketing/report/order-shipment.php
+modified:   action/function/class.office.php ok
+modified:   action/search-info-wins.php ok
+modified:   assets/data-table-server-side/config.php
+modified:   css/custom.css ok
+modified:   js/datepicker/daterangepicker.js ok
+modified:   pages/admoff-dash/2.php ok
+modified:   pages/admoff-dash/4.php ok
+modified:   pages/marketing-dash/10.php ok
+modified:   pages/marketing-dash/5.php ok
+modified:   pages/marketing-dash/6.php ok
+modified:   pages/marketing-dash/7.php ok
+modified:   pages/marketing-dash/8.php ok
+modified:   pages/marketing-dash/9.php ok
+modified:   pages/marketing-link-approval-change.php ok
+modified:   pages/marketing-link-part.php ok
+modified:   pages/marketing-member-list.php ok
+modified:   pages/marketing-report/contribution.php ok
+modified:   pages/marketing-report/wincheck.php ok
+
 [6 Agustus 2017]
 + Modul Marketing
 

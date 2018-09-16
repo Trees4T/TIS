@@ -256,7 +256,7 @@
 
     public function mkt_rep_wincheck($id_part,$date_awal,$date_akhir){
       try {
-        $stmt = $this->conn->query("SELECT * FROM t4t_shipment WHERE id_comp='$id_part' AND date(wkt_shipment) BETWEEN '$date_awal%' AND '$date_akhir%'");
+        $stmt = $this->conn->query("SELECT * FROM t4t_web.`view_wincheck_log` WHERE id_part='$id_part' AND date(search_date) BETWEEN '$date_awal%' AND '$date_akhir%'");
         $stmt->execute();
         while ($data= $stmt->fetch(PDO::FETCH_OBJ)) {
           $res[] =$data;

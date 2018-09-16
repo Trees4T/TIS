@@ -200,16 +200,16 @@
 <?php
 
 $no=1;
-$mkt_report = $office->mkt_rep_contrib($kd_part,$date_awal,$date_akhir);
+$mkt_report = $office->mkt_rep_wincheck($kd_part,$date_awal,$date_akhir);
 
 foreach ($mkt_report as $mkt_reports) {
 ?>
   <tr class="even pointer">
-    <td width='10%' align="center"><?php echo $office->datetime_to_date($mkt_reports->wkt_shipment); ?></td>
-    <td></td>
-    <td width='10%' align="center"><?php echo $mkt_reports->no_order; ?></td>
-    <td width='10%' align="center"><?php echo $mkt_reports->no_shipment; ?></td>
-    <td width='10%' align="center"><?php echo $mkt_reports->bl; ?></td>
+    <td width='10%' align="center"><?php echo $office->datetime_to_date($mkt_reports->search_date); ?></td>
+    <td width='10%' align="center"><?php echo $mkt_reports->wins; ?></td>
+    <td width='50%' align="center"><?php echo $mkt_reports->no_order; ?></td>
+    <td width='15%' align="center"><?php echo $mkt_reports->no_shipment; ?></td>
+    <td width='15%' align="center"><?php echo $mkt_reports->bl; ?></td>
 
 
 
