@@ -59,6 +59,12 @@ if ($cek_eror_wins==1) {
     		$bl_files =$_FILES['bl_files'];
     		$tmp_name =$bl_files['tmp_name'];
     		$namafile =$bl_files['name'];
+
+        //mengubah karakter # menjadi -
+        if (strpos($namafile, '#') !== false) {
+            $namafile = str_replace("#","-",$namafile);
+        }
+        
     		$namafile2=$no_shipment.'-'.$waktu.'-'.$namafile;
 
     		$tujuan   ="../gbr/shipment/$namafile2";
