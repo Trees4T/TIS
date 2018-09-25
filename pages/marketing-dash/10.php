@@ -40,7 +40,7 @@ $ship_total   = $office->mkt_dash_contrib_total('shipment',$date);
  ?>
 <div class="x_panel tile" >
  <div class="x_title">
-   <h2>Contributions 
+   <h2>Contributions
    </h2>
      <br><br>
      <ul class="nav navbar-left panel_toolbox">

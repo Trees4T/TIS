@@ -16,16 +16,46 @@
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
+
+      <!-- notifications     -->
+      <?php
+      if ($_SESSION['success']==1) {
+        $alert = "alert-success";
+        $icon  = "check-circle";
+        $status= "Success";
+        $pesan = "'".$_SESSION['message']."' has been accepted";
+      }elseif ($_SESSION['success']==2) {
+        $alert = "alert-success";
+        $icon  = "check-circle";
+        $status= "Success";
+        $pesan = "'".$_SESSION['message']."' has been rejected";
+      }
+
+      if ($_SESSION['message']!='') {
+      ?>
+      <div class="alert <?php echo $alert ?> alert-dismissible fade in" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+          </button>
+          <strong><i class="fa fa-<?php echo $icon ?>"></i> <?php echo $status ?>!</strong> <?php echo $pesan ?>.
+      </div>
+      <?php
+      }
+
+      unset($_SESSION['success']);
+      unset($_SESSION['message']);
+      ?>
+      <!-- notifications     -->
         <table class="table table-striped responsive-utilities jambo_table" border="1" id="orderlist">
           <thead>
             <tr>
               <th width="5%">No.</th>
               <th width="20%">Participant Name</th>
               <th width="20%">Buyer Name</th>
-              <th width="20%">Address</th>
-              <th width="20%">Phone</th>
-              <th width="20%">E-mail</th>
-              <th width="20%">Director</th>
+              <th width="20%">Buyer Code</th>
+              <th width="20%">Buyer Address</th>
+              <th width="20%">Buyer E-mail</th>
+              <th width="20%">Register</th>
+              <th width="20%">Status</th>
               <th width="10%">Action</th>
             </tr>
           </thead>
@@ -34,33 +64,36 @@
           <?php
           $no=1;
           $member = $office->data_ret_acc_list();
-          foreach ($member as $members) {
+          foreach ($member as $buyers) {
 
-            $id_part = $members->id;
-            $tipe    = $members->type;
+            $id_part = $buyers->id_part;
+            $tipe    = $buyers->type;
           ?>
             <tr>
               <td align="center"><?php echo $no ?></td>
-              <td><a href="?<?php echo paramEncrypt('hal=marketing-member-input&id='.$id_part.'&up=1&tipe='.$tipe.'') ?>"><?php echo $members->name.' ['.$members->id.']'; ?></a></td>
-              <td><?php
-                $retailer = $office->retailer_list2($id_part);
-                foreach ($retailer as $retailers) {
-                  $nama_buyer = $office->nama_relation_buyer($id_part,$retailers->repeat_id);
-                  ?>
-                  <a href="#">
-                  <?php
-                  echo $nama_buyer->name;echo ' ['.$retailers->repeat_id.']';
-                  ?>
-                  </a>
-                  <?php
-                  echo "<br>";
-                }
+              <td><?php $partisipan = $office->data_member($id_part); echo $partisipan->name; ?></td>
+              <td><?php echo $buyers->name ?></td>
+              <td><?php echo $buyers->ret_code ?></td>
+              <td><?php echo $buyers->address ?></td>
+              <td><?php echo $buyers->email ?></td>
+              <td><?php echo $buyers->date_register ?></td>
+              <td><?php $status = $buyers->status;
+                  if ($status==0) {
+                    echo "<p class='label label-warning'>Pending</p>";
+                  }elseif ($status==1) {
+                    echo "<p class='label label-success'>Accepted</p>";
+                  }elseif ($status==2) {
+                    echo "<p class='label label-danger'>Rejected</p>";
+                  }
                ?></td>
-               <td align="center"> <button type="button" name="button" class="btn btn-success btn-round"> <i class="fa fa-plus-circle"></i></button> </td>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td></td>
+               <td>
+                 <form class="" action="../action/mkt-approval-retailer.php" method="post">
+                   <input type="hidden" name="id_request" value="<?php echo $buyers->no ?>">
+
+                   <button type="submit" name="acc" class="label label-success"> acc</button>
+                   <button type="submit" name="reject" class="label label-danger"> reject</button>
+                 </form>
+               </td>
             </tr>
           <?php
           $no++;

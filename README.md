@@ -1,4 +1,9 @@
 # TIS
+[18 September 2018]
++ tambah view mkt_rep_sponsor
++ tambah view mkt_rep_supplier
+
+
 [17 September 2018]
 + Perbaiki dan tambah view_wincheck_log
 + Perbaiki karakter # diubah menjadi - saat input file shipment

@@ -582,13 +582,8 @@
 
     public function mkt_rep_sponsor($id_part,$date_awal,$date_akhir){
       try {
-        $stmt = $this->conn->query("SELECT w.wins, h.petani, h.jml_phn, p.nama_pohon
-          FROM `t4t_wins` w
-          LEFT JOIN `t4t_shipment` s ON w.bl=s.bl
-          LEFT JOIN `t4t_htc` h ON w.bl=h.bl
-          LEFT JOIN t4t_lahan l ON h.kd_lahan=l.kd_lahan
-          LEFT JOIN t4t_pohon p ON l.id_pohon2=p.id_pohon
-          WHERE s.id_comp='$id_part' AND date(wkt_shipment) BETWEEN '$date_awal%' AND '$date_akhir%' ");
+        $stmt = $this->conn->query("SELECT * from mkt_rep_sponsor
+          WHERE id_comp='$id_part' AND date(wkt_shipment) BETWEEN '$date_awal%' AND '$date_akhir%' ");
         $stmt->execute();
         while ($data= $stmt->fetch(PDO::FETCH_OBJ)) {
           $res[] =$data;
@@ -601,15 +596,8 @@
 
     public function mkt_rep_supplier($id_part,$date_awal,$date_akhir){
       try {
-        $stmt = $this->conn->query("SELECT w.wins, w.bl, h.petani, h.jml_phn, pt.name
-          FROM `t4t_wins` w
-          LEFT JOIN `t4t_shipment` s ON w.bl=s.bl
-          LEFT JOIN `t4t_htc` h ON w.bl=h.bl
-          LEFT JOIN t4t_lahan l ON h.kd_lahan=l.kd_lahan
-          LEFT JOIN t4t_pohon p ON l.id_pohon2=p.id_pohon
-          LEFT JOIN t4t_idrelation i ON s.buyer=i.repeat_id
-          LEFT JOIN t4t_participant pt ON i.related_part=pt.id
-          WHERE s.id_comp='$id_part' AND s.relation=1
+        $stmt = $this->conn->query("SELECT * from mkt_rep_supplier
+          WHERE id_comp='$id_part'
           AND date(wkt_shipment) BETWEEN '$date_awal%' AND '$date_akhir%'");
         $stmt->execute();
         while ($data= $stmt->fetch(PDO::FETCH_OBJ)) {
