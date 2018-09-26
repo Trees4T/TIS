@@ -1,8 +1,15 @@
 # TIS
+
+[27 September 2018]
++ revision 180926
++ modified:   README.md
++ modified:   pages/admoff-wins-search.php
++ modified:   pages/modal/marketing/marketing-link-add.php
++ new file:   pages/modal/marketing/report/order-shipment.php
+
 [18 September 2018]
 + tambah view mkt_rep_sponsor
 + tambah view mkt_rep_supplier
-
 
 [17 September 2018]
 + Perbaiki dan tambah view_wincheck_log

@@ -294,10 +294,14 @@ if (isset($_SESSION['win'])) {
                                                         </tr>
                                                         <br>
                                                         <tr>
-                                                        <form action="../action/search-no-order.php" method="post">
-                                                          <input type="hidden" name="no_ship" value="<?php echo $shipment['no_shipment']?>">
-                                                          <td><button type="submit" name="search_order" class="btn btn-info">Search Order No</button></td>
-                                                        </form>
+                                                          <?php if ($_SESSION['level']=="mkt"): ?>
+                                                            <?php else: ?>
+                                                              <form action="../action/search-no-order.php" method="post">
+                                                                <input type="hidden" name="no_ship" value="<?php echo $shipment['no_shipment']?>">
+                                                                <td><button type="submit" name="search_order" class="btn btn-info">Search Order No</button></td>
+                                                              </form>
+                                                          <?php endif; ?>
+
                                                         </tr>
                                                       </table>
                                                       <?php } ?>

@@ -29,7 +29,7 @@ $data = $office->data_member($id_part);
     </label>
     <div class="col-md-6 col-sm-6 col-xs-12">
       <select class="form-control " name="buyer" style="">
-        <option value="">- Select Buyer -</option>
+        <option value="">- Select Participant -</option>
         <?php
         $member_list = $office->data_member_list();
         foreach ($member_list as $member_lists):
