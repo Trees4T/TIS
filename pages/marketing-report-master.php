@@ -131,9 +131,15 @@
   <!-- pace -->
   <script src="../js/pace/pace.min.js"></script>
   <!-- Datatables -->
+  <?php if ($url=='03cc14d860d9cad2c68fb2074f3e89f44a37a4b1978a59bcb78d16809720bfa6' or
+  $url=='03cc14d860d9cad2c68fb2074f3e89f484508b59e34966b384f0a9fadc06f8ad'): ?>
+    <link rel="stylesheet" type="text/css" href="../assets/datatable/media/css/jquery.dataTables.css">
+    <script type="text/javascript" language="javascript" src="../assets/datatable/media/js/jquery.dataTables.js"></script>
+    <?php else: ?>
+    <script src="../js/datatables/js/jquery.dataTables.js"></script>
+    <script src="../js/datatables/tools/js/dataTables.tableTools.js"></script>
+  <?php endif; ?>
 
-  <script src="../js/datatables/js/jquery.dataTables.js"></script>
-  <script src="../js/datatables/tools/js/dataTables.tableTools.js"></script>
 
   <script type="text/javascript">
   <?php for ($i=1; $i <= 2 ; $i++) {
@@ -150,6 +156,7 @@
   <?php
   } ?>
   </script>
+
 
 
 </body>

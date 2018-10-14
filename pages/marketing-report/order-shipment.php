@@ -328,14 +328,14 @@ foreach ($mkt_report as $mkt_reports) {
         if ($count2=='1') {
           ?>
             <table>
-              <td><?php echo $ship_details->no_shipment; ?></td>
+              <td><?php echo "<a href='#' class='show-no_shipment' data-id='".$ship_details->no_shipment."'>".$ship_details->no_shipment."</a>"; ?></td>
             </table>
           <?php
 
         }else{
           ?>
             <table>
-              <td><?php echo $ship_details->no_shipment; ?></td>
+              <td><?php echo "<a href='#' class='show-no_shipment' data-id='".$ship_details->no_shipment."'>".$ship_details->no_shipment."</a>"; ?></td>
             </table>
           <?php
         }
@@ -396,6 +396,14 @@ $total_hang[]=$mkt_reports->jml_wins;
   $editable = 'no';
   $id_modal = 'myModal';
   $size = 'md';
+
+  include 'ajax-modal.php';
+
+  $title = 'No Shipment';
+  $editable = 'no';
+  $id_modal = 'myModal2';
+  $size = 'md';
+
   include 'ajax-modal.php';
 ?>
 <!-- datatable -->
@@ -417,6 +425,21 @@ $(function(){
         e.preventDefault();
         $("#myModal").modal('show');
         $.post('../pages/modal/marketing/report/order-shipment.php?edit=<?php echo $editable ?>',
+            {id:$(this).attr('data-id')},
+            function(html){
+                $(".modal-body").html(html);
+            }
+        );
+    });
+});
+</script>
+
+<script>
+$(function(){
+    $(document).on('click','.show-no_shipment',function(e){
+        e.preventDefault();
+        $("#myModal2").modal('show');
+        $.post('../pages/modal/marketing/report/order-shipment-detail.php?edit=<?php echo $editable ?>',
             {id:$(this).attr('data-id')},
             function(html){
                 $(".modal-body").html(html);

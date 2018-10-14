@@ -43,10 +43,10 @@
 
     </ul>
 </li>
-
-<!-- <li><span class="fa fa-chevron-down"></span><a><i class="fa fa-info-circle"></i> Information</a>
+<!--
+<li><span class="fa fa-chevron-down"></span><a><i class="fa fa-info-circle"></i> Information</a>
     <ul class="nav child_menu" style="display: none">
-      <li><a href="?<?php //echo paramEncrypt('hal=x')?>"> Win Check</a></li>
+      <li><a href="?<?php// echo paramEncrypt('hal=blank-page')?>"> aa</a></li>
       <li><a href="?<?php //echo paramEncrypt('hal=admoff-order-list')?>"> Win Missing</a></li>
     </ul>
 </li> -->

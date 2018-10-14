@@ -1,4 +1,11 @@
 # TIS
+[3 Oktober 2018 - 15 Oktober 2018]
++ revision 180926 part2
++ datatable sponsor report
++ datatable supplier report
++ ip address log wincheck (BELUM slow query)
++ excel log wincheck
++ shipment modal ajax order-ship-report
 
 [27 September 2018]
 + revision 180926

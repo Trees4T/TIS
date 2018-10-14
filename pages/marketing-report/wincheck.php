@@ -180,6 +180,18 @@
 
 
 
+<div class="pull-left">
+  <form class="" action="../action/report/excel-report-mkt-wincheck.php" method="post">
+    <input type="hidden" name="id_part" value="<?php echo $kd_part ?>">
+    <input type="hidden" name="awal" value="<?php echo $date_awal ?>">
+    <input type="hidden" name="akhir" value="<?php echo $date_akhir ?>">
+
+    <button type="submit" name="button" class="btn btn-success"> Export to Excel</button>
+  </form>
+</div>
+
+<br><br>
+
 <!-- ################# -->
 <!-- Table -->
 <!-- ################# -->
@@ -193,6 +205,7 @@
     <th><center>No. Order</center> </th>
     <th><center>Shipment</center></th>
     <th><center>BL</center></th>
+    <!-- <th><center>Location</center></th> -->
   </tr>
 </thead>
 
@@ -207,11 +220,10 @@ foreach ($mkt_report as $mkt_reports) {
   <tr class="even pointer">
     <td width='10%' align="center"><?php echo $office->datetime_to_date($mkt_reports->search_date); ?></td>
     <td width='10%' align="center"><?php echo $mkt_reports->wins; ?></td>
-    <td width='50%' align="center"><?php echo $mkt_reports->no_order; ?></td>
+    <td width='35%' align="center"><?php echo $mkt_reports->no_order; ?></td>
     <td width='15%' align="center"><?php echo $mkt_reports->no_shipment; ?></td>
     <td width='15%' align="center"><?php echo $mkt_reports->bl; ?></td>
-
-
+    <!-- <td width='15%' align="center"><?php echo $mkt_reports->ip_address; ?></td> -->
 
   </tr>
 

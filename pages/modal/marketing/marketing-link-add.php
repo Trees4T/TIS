@@ -42,10 +42,10 @@ $data = $office->data_member($id_part);
 
 
   <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Repeat ID <span class="required"></span>
+    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Buyer Code <span class="required"></span>
     </label>
     <div class="col-md-6 col-sm-6 col-xs-12">
-      <input type="text" class="form-control" name="repeat_id" value="" required>
+      <input type="text" class="form-control" name="repeat_id" value="" required placeholder="usually from participants">
     </div>
   </div>
 

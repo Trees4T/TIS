@@ -14,7 +14,7 @@ $date_akhir = $_GET['akhir'];
 <!-- ################# -->
 
 
-<table id="example" class="table table-striped responsive-utilities jambo_table" width='100%' border="1">
+<table id="supplier" class="table table-striped responsive-utilities jambo_table" width='100%' border="0">
 <thead>
   <tr class="headings">
     <th><center>WIN</center></th>
@@ -26,52 +26,16 @@ $date_akhir = $_GET['akhir'];
   </tr>
 </thead>
 
-<tbody>
-<?php
-
-$no=1;
-$mkt_report = $office->mkt_rep_supplier($kd_part,$date_awal,$date_akhir);
-
-foreach ($mkt_report as $mkt_reports) {
-?>
-  <tr class="even pointer">
-    <td width='5%'><?php echo $mkt_reports->wins ?></td>
-    <td width='15%'><?php echo $mkt_reports->petani ?></td>
-    <td width='10%' align='right'><?php echo $mkt_reports->jml_phn ?></td>
-    <td width='20%'><?php echo $mkt_reports->name ?></td>
-    <td width='20%'><?php echo $mkt_reports->bl ?></td>
-    <td width='30%'><a href="https://trees4trees.org/?wins=<?php echo $mkt_reports->wins ?>" target="_blank">
-      https://trees4trees.org/?wins=<?php echo $mkt_reports->wins ?></a></td>
-  </tr>
-
-<?php
-$no++;
-$total_contrib[]=$mkt_reports->jml_phn;
-}
-?>
-</tbody>
-<tfoot>
-   <tr class="font-hijau">
-       <td colspan="2">TOTAL</td>
-       <td align="right" class="font-hijau"><b><?php echo $tot_contrib=number_format(array_sum($total_contrib),2) ?></b></td>
-       <td colspan="2"></td>
-          <?php $_SESSION['tot_contrib']=$tot_contrib ?>
-   </tr>
-</tfoot>
-
 </table>
 
 <!-- #END# Table -->
 
-<!-- datatable -->
-<script>
-  $(function() {
-      $('#example').DataTable( {
-                // "bJQueryUI":true,
-              "bPaginate":true,
-              "sPaginationType": "full_numbers",
-              "iDisplayLength":10
-      } );
-
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#supplier').dataTable( {
+    "processing": true,
+    "serverSide": true,
+    "ajax": "../assets/datatable/scripts/mkt-rep-supplier.php?date1=<?php echo $date_awal ?>&date2=<?php echo $date_akhir ?>&comp=<?php echo $kd_part ?>"
   } );
+ } );
 </script>

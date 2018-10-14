@@ -632,6 +632,53 @@
       return $tanggal;
     }
 
+    public function get_iplocation($IPaddr){
+
+      if ($IPaddr == "") {
+          return 0;
+      } else {
+          $ips = explode(".", "$IPaddr");
+          $ip_long = ($ips[3] + $ips[2] * 256 + $ips[1] * 256 * 256 + $ips[0] * 256 * 256 * 256);
+
+          try {
+
+            $stmt = $this->conn->query("SELECT * FROM ip_location
+              WHERE ip_from <= '$ip_long' AND ip_to >= '$ip_long' ");
+
+            $stmt->execute(array($ip_long));
+            $res = $stmt->fetch(PDO::FETCH_OBJ);
+            return $res;
+          } catch (PDOException $e) {
+            echo $e->getMessage();
+          }
+      }
+
+    }
+
+    function Dot2LongIP($IPaddr)
+    {
+        if ($IPaddr == "") {
+            return 0;
+        } else {
+            $ips = explode(".", "$IPaddr");
+            return ($ips[3] + $ips[2] * 256 + $ips[1] * 256 * 256 + $ips[0] * 256 * 256 * 256);
+        }
+    }
+
+    function is_connected()
+    {
+        $connected = @fsockopen("www.google.com", 80);
+                                            //website, port  (try 80 or 443)
+        if ($connected){
+            $is_conn = true; //action when connected
+            fclose($connected);
+        }else{
+            $is_conn = false; //action in connection failure
+        }
+        return $is_conn;
+
+    }
+
     public function mkt_rep_order_ship($id_part,$date_awal,$date_akhir,$search,$nomor){
       try {
 
