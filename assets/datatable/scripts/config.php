@@ -1,6 +1,8 @@
 <?php
-$db_username 	= 'root';
-$db_password 	= '';
-$db_name 		= 't4t_t4t';
-$db_host 		= 'localhost';
+include '../../../koneksi/koneksi.php';
+
+$db_username 	= $user;
+$db_password 	= $pass;
+$db_name 		= $database;
+$db_host 		= $host;
 ?>

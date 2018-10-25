@@ -949,23 +949,13 @@
     public function data_member_list_activestatus($status){
       try {
         if ($status=='active') {
-          $stmt = $this->conn->prepare("SELECT * FROM t4t_participant WHERE id IN
-                  (
-                   SELECT kode FROM otenuser WHERE active=1
-                  )
-                  ");
-        }elseif($status=='not active with oten') {
-          $stmt = $this->conn->prepare("SELECT * FROM t4t_participant WHERE id IN
-                  (
-                   SELECT kode FROM otenuser WHERE active=0
-                  )
-                  ");
-        }elseif($status=='not active without oten') {
-          $stmt = $this->conn->prepare("SELECT * FROM t4t_participant WHERE id NOT IN
-                  (
-                   SELECT kode FROM otenuser
-                  )
-                  ");
+          $stmt = $this->conn->prepare("SELECT distinct a.`id`,a.`type`,a.`name`,b.`status`,b.`active`
+            from t4t_participant a left join otenuser b
+            on a.`id`=b.`kode` where b.`active`='1'");
+        }elseif($status=='not active') {
+          $stmt = $this->conn->prepare("SELECT distinct a.`id`,a.`type`,a.`name`,b.`status`,b.`active`
+            from t4t_participant a left join otenuser b
+            on a.`id`=b.`kode` where b.`active`!='1' or b.`active` is null");
         }
 
         $stmt->execute(array());

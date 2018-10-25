@@ -9,15 +9,11 @@ $label= 'label label-success';
   }elseif ($sts=='active') {
     $label2 = $label;
     $title_page = 'Active Participant';
-    $descript = 'has an user authentication and is <b>active</b> status';
-  }elseif ($sts=='not active with oten') {
+    $descript = 'all participants with active status';
+  }elseif ($sts=='not active') {
     $label3 = $label;
-    $title_page = 'Inactive Participant With Auth';
-    $descript = 'has an user authentication and is <b>inactive</b> status';
-  }elseif ($sts=='not active without oten') {
-    $label4 = $label;
-    $title_page = 'Inactive Participant Without Auth';
-    $descript = 'does not have user authentication';
+    $title_page = 'Inactive Participant ';
+    $descript = 'all participants with inactive status';
   }
 ?>
 <div class="">
@@ -40,13 +36,11 @@ $label= 'label label-success';
               class="<?php echo $label1 ?>">All</a>
             /
             <a href="?<?php echo paramEncrypt('hal=marketing-member-list&sts=active') ?>"
-               class="<?php echo $label2 ?>">Active with auth user</a>
+               class="<?php echo $label2 ?>">Active Participant</a>
             /
-            <a href="?<?php echo paramEncrypt('hal=marketing-member-list&sts=not active with oten') ?>"
-               class="<?php echo $label3 ?>">Inactive with auth user</a>
-            /
-            <a href="?<?php echo paramEncrypt('hal=marketing-member-list&sts=not active without oten') ?>"
-               class="<?php echo $label4 ?>">Inactive without auth user</a>
+            <a href="?<?php echo paramEncrypt('hal=marketing-member-list&sts=not active') ?>"
+               class="<?php echo $label3 ?>">Inactive Participant</a>
+
         </div>
         <div class="x_content">
             <h3 class="green"><?php echo $title_page ?> </h3><span><?php echo $descript ?></span>

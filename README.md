@@ -1,4 +1,8 @@
 # TIS
+[26 Oktober 2018]
++ revision 180926 part3
++ list participant update just Active and Inactive
+
 [3 Oktober 2018 - 15 Oktober 2018]
 + revision 180926 part2
 + datatable sponsor report
