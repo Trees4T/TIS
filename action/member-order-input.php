@@ -31,8 +31,8 @@ $company      =$conn->query("SELECT name from t4t_participant where id='$kode' "
 //INSERT t4t_order
 // # - no order - id comp - tipe prod - jml wins - kota tujuan - wkt order - # - # - wins1 - wins2 - quantity - #
 $t4t_order=$conn->query("INSERT into t4t_order
-(no,no_order,id_comp,tipe_prod,jml_wins,kota_tujuan,wkt_order,acc,acc2,wins1,wins2,quantity) values
-('','$no_order','$kode','$type_prod','$tags','$destination','$tanggal','','','','','')");
+(no_order,id_comp,tipe_prod,jml_wins,kota_tujuan,wkt_order,acc,acc2,wins1,wins2) values
+('$no_order','$kode','$type_prod','$tags','$destination','$tanggal','0','0','0','0')");
 //$t4t_order->execute();
 
 //echo mysql_error();
