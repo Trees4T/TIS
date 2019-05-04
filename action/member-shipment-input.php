@@ -64,7 +64,7 @@ if ($cek_eror_wins==1) {
         if (strpos($namafile, '#') !== false) {
             $namafile = str_replace("#","-",$namafile);
         }
-        
+
     		$namafile2=$no_shipment.'-'.$waktu.'-'.$namafile;
 
     		$tujuan   ="../gbr/shipment/$namafile2";
@@ -85,9 +85,9 @@ if ($cek_eror_wins==1) {
     		if ($ukuran<=$maxsize && $error_unique_bl==false && $required_cont==true) {
 
     			copy($tmp_name,$tujuan);
-    			$conn->query("INSERT into t4t_shipment
-    	(no, no_shipment, id_comp, bl, bl_tgl, wins_used, wkt_shipment, foto, kota_tujuan, fee, diskon, note, buyer, item_qty, relation) values
-      ('','$no_shipment','$id_comp','$bl','$tgl','$wins_used','$tanggal','$namafile2','$destination','','','$note','$c_code','$item_qty','$relation')");
+    		$shipment_q =	$conn->query("INSERT into t4t_shipment
+    	(no_shipment, id_comp, bl, bl_tgl, wins_used, wkt_shipment, foto, kota_tujuan, diskon, note, buyer, item_qty, relation, acc_paid, tgl_paid) values
+      ('$no_shipment','$id_comp','$bl','$tgl','$wins_used','$tanggal','$namafile2','$destination','0','$note','$c_code','$item_qty','$relation','0','0000-00-00')");
 
 
     		}else{
@@ -127,7 +127,7 @@ if ($cek_eror_wins==1) {
     	$jml_cont[0];
     	for ($i=1; $i <= $jml_cont[0] ; $i++) {
     		$cont=$_POST['cont'.$i];
-    		$conn->query("insert into t4t_ordercontainer (no,no_order,no_cont,jml,tgl_stuf) values ('','$no_shipment','$i','$cont','$tanggal')");
+    		$conn->query("insert into t4t_ordercontainer (no_order,no_cont,jml,tgl_stuf) values ('$no_shipment','$i','$cont','$tanggal')");
     	}
 
     	$no_order_get=$conn->query("SELECT no_order from t4t_shipment where no_shipment='$no_shipment'")->fetch();

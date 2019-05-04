@@ -95,7 +95,7 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                    <canvas id="this_year_shipment" style="height:300px;"></canvas>
+                                    <canvas id="this_year_shipment" style="width:100%"; style="height:300px;"></canvas>
                                 </div>
                             </div>
                         </div>
